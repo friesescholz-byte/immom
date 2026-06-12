@@ -1,0 +1,385 @@
+.formCard {
+  background-color: var(--color-bg-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(15, 45, 30, 0.05);
+  overflow: hidden;
+  width: 100%;
+}
+
+.cardHeader {
+  background-color: var(--color-primary);
+  padding: 1.75rem 2rem;
+  color: var(--color-text-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerInfo h3 {
+  color: var(--color-text-white);
+  font-size: 1.4rem;
+  margin-bottom: 0.25rem;
+}
+
+.accentText {
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.backBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-white);
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: var(--transition-fast);
+}
+
+.backBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-accent);
+}
+
+/* Step Wrapper (Start Choice Screen) */
+.stepWrapper {
+  padding: 2.25rem 2rem;
+}
+
+.introTexts {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.introTexts h4 {
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.5rem;
+}
+
+.introTexts p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.choiceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.25rem;
+}
+
+.choiceBtn {
+  background-color: var(--color-bg-light);
+  border: 1px solid rgba(7, 27, 51, 0.08);
+  border-radius: var(--border-radius-md);
+  padding: 1.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--color-primary);
+}
+
+.choiceBtn svg {
+  color: var(--color-accent-dark);
+  transition: var(--transition-smooth);
+}
+
+.choiceBtn span {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.choiceBtn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.choiceBtn:hover svg {
+  color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.formFooterTrust {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  border-top: 1px solid rgba(7, 27, 51, 0.05);
+  padding-top: 1.25rem;
+  font-size: 0.775rem;
+  color: var(--color-text-light);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Form Elements & Layout */
+.formElement {
+  padding: 2.25rem 2rem;
+}
+
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+}
+
+.progressBar {
+  height: 4px;
+  background-color: var(--color-accent);
+  border-radius: var(--border-radius-full);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.progressText {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.flowContent {
+  width: 100%;
+}
+
+.inputsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.groupLabel {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.formField label {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.textInput, .selectInput {
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(7, 27, 51, 0.12);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+  outline: none;
+  background-color: var(--color-bg-light);
+  transition: var(--transition-fast);
+  width: 100%;
+}
+
+.textInput:focus, .selectInput:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-bg-white);
+  box-shadow: 0 0 0 3px rgba(7, 27, 51, 0.05);
+}
+
+/* Radio & Checkbox Card */
+.optionsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.radioCard {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem;
+  background-color: var(--color-bg-light);
+  border: 1px solid rgba(7, 27, 51, 0.06);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.radioCard input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+}
+
+.radioCard span {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.radioCard:hover {
+  background-color: var(--color-bg-soft);
+}
+
+.radioActive {
+  border-color: var(--color-accent-dark);
+  background-color: rgba(122, 146, 163, 0.08);
+}
+
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.checkCard {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  background-color: var(--color-bg-light);
+  border: 1px solid rgba(7, 27, 51, 0.05);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.checkCard input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.checkCard span {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.checkCard:hover {
+  background-color: var(--color-bg-soft);
+}
+
+.consentCheck {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.consentCheck input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.consentCheck span {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.nextBtn {
+  align-self: flex-end;
+  margin-top: 0.5rem;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 1.1rem !important;
+  margin-top: 1rem;
+}
+
+/* Success State */
+.successState {
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.successIcon {
+  color: var(--color-success);
+  margin-bottom: 1.5rem;
+}
+
+.successState h3 {
+  font-size: 1.5rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 0.75rem;
+}
+
+.successState p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+  max-width: 420px;
+}
+
+.successTag {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-accent-dark);
+}
+
+@media (max-width: 480px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .checkboxGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .choiceGrid {
+    grid-template-columns: 1fr;
+  }
+}

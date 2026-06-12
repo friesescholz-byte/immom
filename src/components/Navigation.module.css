@@ -1,0 +1,317 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: transparent;
+  transition: var(--transition-smooth);
+  padding: 1.5rem 0;
+}
+
+.scrolled {
+  background-color: rgba(250, 248, 245, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0.9rem 0;
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid rgba(15, 45, 30, 0.05);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: clamp(36px, 4.5vw, 48px);
+  width: auto;
+  object-fit: contain;
+}
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navLink {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.navLink:hover {
+  color: var(--color-primary);
+}
+
+.active {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.activeIndicator {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  border-radius: var(--border-radius-full);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.phoneLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius-sm);
+}
+
+.phoneLink:hover {
+  background-color: rgba(15, 45, 30, 0.04);
+}
+
+.phoneIcon {
+  color: var(--color-accent-dark);
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, #1e90ff 50%, #00b4d8 100%);
+  background-size: 200% auto;
+  color: var(--color-text-white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(14, 108, 180, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-fast), background-position 0.5s ease;
+}
+
+.ctaButton:hover {
+  background-position: right center;
+  box-shadow: 0 6px 18px rgba(14, 108, 180, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.ctaButton::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 20%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: shimmerSweep 4s infinite cubic-bezier(0.43, 0.13, 0.23, 0.96);
+  pointer-events: none;
+}
+
+.mobileToggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
+/* Mobile Menu Overlay */
+.mobileOverlay {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(250, 248, 245, 0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border-top: 1px solid rgba(15, 45, 30, 0.05);
+}
+
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobileNavLink {
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(15, 45, 30, 0.05);
+}
+
+.mobileActive {
+  color: var(--color-primary);
+  font-weight: 700;
+  border-bottom-color: var(--color-accent);
+}
+
+.mobileActions {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mobilePhoneLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  padding: 1rem;
+  background-color: rgba(122, 146, 163, 0.1);
+  border-radius: var(--border-radius-md);
+}
+
+.mobileCta {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  padding: 1.1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+}
+
+/* Sticky Bottom Bar for Mobile Conversions */
+.mobileStickyBar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background-color: var(--color-bg-white);
+  border-top: 1px solid rgba(15, 45, 30, 0.08);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+  z-index: 90;
+  padding: 0.75rem 1rem;
+  gap: 1rem;
+}
+
+.mobileStickyBtnSecondary {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-accent);
+  color: var(--color-primary);
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+.mobileStickyBtnPrimary {
+  flex: 1.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 1024px) {
+  .desktopNav {
+    display: none;
+  }
+  
+  .phoneLink {
+    display: none;
+  }
+  
+  .mobileToggle {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    background-color: rgba(250, 248, 245, 0.95);
+    border-bottom: 1px solid rgba(15, 45, 30, 0.05);
+    padding: 0.75rem 0;
+  }
+  
+  .ctaButton {
+    display: none;
+  }
+  
+  .mobileStickyBar {
+    display: flex;
+  }
+  
+  /* Add padding to body so sticky bar doesn't overlap content */
+  :global(body) {
+    padding-bottom: 70px;
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    left: -60%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  30% {
+    left: 140%;
+    opacity: 1;
+  }
+  31% {
+    opacity: 0;
+    left: 140%;
+  }
+  100% {
+    left: -60%;
+    opacity: 0;
+  }
+}

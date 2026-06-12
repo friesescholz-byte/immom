@@ -1,0 +1,383 @@
+.leadSection {
+  background-color: var(--color-bg-light);
+  border-bottom: 1px solid rgba(15, 45, 30, 0.05);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* Left Column: 3D PDF Mockup */
+.mockupCol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.bookContainer {
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bookMockup {
+  position: relative;
+  width: 250px;
+  height: 350px;
+  transform-style: preserve-3d;
+  transform: rotateY(-18deg) rotateX(10deg) rotateZ(-3deg);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bookMockup:hover {
+  transform: rotateY(-6deg) rotateX(5deg) rotateZ(0deg) translateY(-10px);
+}
+
+.bookCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0c1e36 0%, #152e50 50%, #050d18 100%);
+  border-radius: 6px 16px 16px 6px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 12px 12px 35px rgba(12, 30, 54, 0.25), inset -4px 0 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 5;
+}
+
+/* Shiny reflection stripe on the book spine */
+.bookCover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  width: 1px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Book spine depth shadow */
+.bookCover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
+  border-radius: 6px 0 0 6px;
+}
+
+.bookHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brandBadge {
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-accent-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.categoryBadge {
+  background-color: var(--color-accent);
+  color: var(--color-primary-dark);
+  font-family: var(--font-sans);
+  font-size: 0.55rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius-sm);
+  letter-spacing: 0.5px;
+}
+
+.bookBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: -1rem;
+}
+
+.bookIcon {
+  color: var(--color-accent);
+  margin-bottom: 1.25rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.bookTitle {
+  font-family: var(--font-serif);
+  color: var(--color-text-white);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.goldText {
+  color: var(--color-accent);
+}
+
+.bookSubtitle {
+  font-family: var(--font-sans);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.bookFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Stacking pages behind cover */
+.pageBehind {
+  position: absolute;
+  top: 2%;
+  right: -6px;
+  width: 98%;
+  height: 96%;
+  background-color: #ffffff;
+  border: 1px solid rgba(12, 30, 54, 0.1);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+  z-index: 3;
+}
+
+.page2 {
+  top: 4%;
+  right: -12px;
+  height: 92%;
+  background-color: #f6f8fa;
+  border: 1px solid rgba(12, 30, 54, 0.08);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.06);
+  z-index: 1;
+}
+
+/* Right Column: Content styling */
+.magnetCol {
+  display: flex;
+  align-items: center;
+}
+
+.magnetContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.magnetHeading {
+  margin-bottom: 1.25rem;
+  color: var(--color-primary);
+  line-height: 1.25;
+}
+
+.magnetText {
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+.benefitsContainer {
+  width: 100%;
+  margin-bottom: 2.25rem;
+  background-color: rgba(122, 146, 163, 0.04);
+  border: 1px solid rgba(122, 146, 163, 0.1);
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem 1.75rem;
+}
+
+.benefitsContainer h4 {
+  font-family: var(--font-sans);
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.featuresList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.featuresList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.benefitText {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.benefitText strong {
+  color: var(--color-primary);
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+.featureIcon {
+  color: var(--color-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.magnetForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.magnetFormGroup {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.magnetInput {
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(15, 45, 30, 0.12);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  outline: none;
+  background-color: var(--color-bg-white);
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+}
+
+.magnetInput:focus {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 0 0 3px rgba(14, 108, 180, 0.1);
+}
+
+.magnetBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.magnetHint {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  font-weight: 500;
+}
+
+/* Success State */
+.magnetSuccess {
+  width: 100%;
+  background-color: rgba(46, 125, 50, 0.04);
+  border: 1px solid rgba(46, 125, 50, 0.12);
+  padding: 1.5rem;
+  border-radius: var(--border-radius-md);
+}
+
+.successHeader {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.successCheckIcon {
+  color: var(--color-success);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.magnetSuccess h4 {
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-serif);
+}
+
+.magnetSuccess p {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .mockupCol {
+    order: 2;
+    padding: 1rem 0;
+  }
+  
+  .magnetCol {
+    order: 1;
+  }
+  
+  .magnetContent {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .featuresList {
+    text-align: left;
+  }
+  
+  .magnetForm {
+    max-width: 550px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .magnetFormGroup {
+    grid-template-columns: 1fr;
+  }
+  
+  .magnetBtn {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .benefitsContainer {
+    padding: 1.25rem 1.25rem;
+  }
+}

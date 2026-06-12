@@ -1,0 +1,110 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(9, 27, 18, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal {
+  background-color: var(--color-bg-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(15, 45, 30, 0.05);
+  width: 100%;
+  max-width: 680px;
+  max-height: 80vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  padding: 0.25rem;
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.closeBtn:hover {
+  color: var(--color-primary);
+  background-color: rgba(15, 45, 30, 0.04);
+}
+
+.content {
+  padding: 3rem;
+  overflow-y: auto;
+}
+
+/* Custom Scrollbar for legal content */
+.content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: rgba(15, 45, 30, 0.1);
+  border-radius: var(--border-radius-full);
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(15, 45, 30, 0.2);
+}
+
+/* Typography for legal texts */
+.legalText h2 {
+  font-size: 1.8rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 1.5rem;
+}
+
+.legalText h3 {
+  font-size: 1.15rem;
+  color: var(--color-primary);
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.legalText p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.legalText a {
+  color: var(--color-accent-dark);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.legalText a:hover {
+  color: var(--color-primary);
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: 2rem 1.5rem;
+  }
+}
