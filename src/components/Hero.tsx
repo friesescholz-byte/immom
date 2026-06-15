@@ -222,7 +222,7 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
           
           <motion.h1 className={styles.title} variants={itemVariants}>
             Immobilie erfolgreich verkaufen. <br />
-            <span className="highlight-gold">Stressfrei. Sicher. Zum Bestpreis.</span>
+            <span className="highlight-gold">Stressfrei. Sicher. <br />Zum Bestpreis.</span>
           </motion.h1>
           
           <motion.p className={styles.subtitle} variants={itemVariants}>
