@@ -354,6 +354,70 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
           </div>
         </motion.div>
       </div>
+      
+      {/* Curved wave transition divider to WhyUs section */}
+      <div className={styles.waveDivider}>
+        <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            {/* Gradient for Line 1 (primary blue ice glow) */}
+            <linearGradient id="curve-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(14, 108, 180, 0.6)" />
+              <stop offset="50%" stopColor="rgba(122, 146, 163, 0.8)" />
+              <stop offset="100%" stopColor="rgba(14, 108, 180, 0.1)" />
+            </linearGradient>
+            
+            {/* Gradient for Line 2 (deep sapphire royal blue) */}
+            <linearGradient id="curve-grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(12, 30, 54, 0.05)" />
+              <stop offset="35%" stopColor="rgba(14, 108, 180, 0.5)" />
+              <stop offset="70%" stopColor="rgba(217, 162, 74, 0.4)" />
+              <stop offset="100%" stopColor="rgba(14, 108, 180, 0.0)" />
+            </linearGradient>
+
+            {/* Gradient for Line 3 (subtle gold highlights) */}
+            <linearGradient id="curve-grad-3" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="15%" stopColor="rgba(217, 162, 74, 0)" />
+              <stop offset="55%" stopColor="rgba(217, 162, 74, 0.7)" />
+              <stop offset="85%" stopColor="rgba(14, 108, 180, 0.3)" />
+              <stop offset="100%" stopColor="rgba(217, 162, 74, 0)" />
+            </linearGradient>
+          </defs>
+
+          {/* The main solid white wave shape transitioning to the WhyUs section */}
+          <path 
+            d="M0 120 Q 360 210 720 120 T 1440 100 L 1440 200 L 0 200 Z" 
+            fill="#ffffff" 
+          />
+
+          {/* Decorative line 1: medium thickness, primary blue gradient */}
+          <path 
+            d="M0 115 Q 360 205 720 115 T 1440 95" 
+            fill="none" 
+            stroke="url(#curve-grad-1)" 
+            strokeWidth="5" 
+            strokeLinecap="round"
+          />
+
+          {/* Decorative line 2: thickest line, deep gradient with gold accent */}
+          <path 
+            d="M0 135 Q 380 175 750 145 T 1440 115" 
+            fill="none" 
+            stroke="url(#curve-grad-2)" 
+            strokeWidth="8" 
+            strokeLinecap="round"
+            opacity="0.65"
+          />
+
+          {/* Decorative line 3: very thin, precise gold highlight line */}
+          <path 
+            d="M0 100 Q 340 220 700 100 T 1440 80" 
+            fill="none" 
+            stroke="url(#curve-grad-3)" 
+            strokeWidth="2" 
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
     </section>
   );
 };
