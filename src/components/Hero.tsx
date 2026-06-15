@@ -201,7 +201,7 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
         </svg>
 
         {/* Vertical watermark text */}
-        <div className={styles.watermarkText}>SCHOLZ & FRIESE — PROPERTY EXCELLENCE</div>
+        <div className={styles.watermarkText}>IMMOM — EXKLUSIVE IMMOBILIENVERMARKTUNG</div>
         
         {/* Floating light orb */}
         <div className={styles.floatingOrb} />
@@ -221,8 +221,8 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
           </motion.span>
           
           <motion.h1 className={styles.title} variants={itemVariants}>
-            Ihre Immobilie in besten Händen. <br />
-            <span className="highlight-gold">Professionelle Vermarktung mit Herz.</span>
+            Immobilie erfolgreich verkaufen. <br />
+            <span className="highlight-gold">Stressfrei. Sicher. Zum Bestpreis.</span>
           </motion.h1>
           
           <motion.p className={styles.subtitle} variants={itemVariants}>
