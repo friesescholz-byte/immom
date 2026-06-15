@@ -15,8 +15,8 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
 
   const navItems = [
     { label: 'Portfolio', target: 'portfolio', id: 'portfolio', type: 'page' },
-    { label: 'Ablauf', target: '#ablauf', id: 'ablauf', type: 'anchor' },
     { label: 'Über uns', target: '#ueber-uns', id: 'ueber-uns', type: 'anchor' },
+    { label: 'Ablauf', target: '#ablauf', id: 'ablauf', type: 'anchor' },
     { label: 'Referenzen', target: '#referenzen', id: 'referenzen', type: 'anchor' },
     { label: 'Immobilie bewerten', target: '#bewertung', id: 'bewertung', type: 'anchor' },
   ];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Edit3, Key, LogOut, CheckCircle, RefreshCw, X } from 'lucide-react';
+import { Plus, Trash2, Edit3, Key, LogOut, CheckCircle, X } from 'lucide-react';
 import styles from './AdminDashboard.module.css';
 import Button from './ui/Button';
 import Card from './ui/Card';
@@ -27,7 +27,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
     area: '',
     rooms: '',
     img: '',
-    images: '',
+    images: [] as string[],
     status: 'verfuegbar' as 'verfuegbar' | 'reserviert' | 'verkauft',
     statusTag: '',
     description: '',
@@ -46,6 +46,89 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
     buildingType: '',
     renovationYear: ''
   });
+
+  // Helper to compress images on the client side to fit localStorage limits
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 1200;
+          const MAX_HEIGHT = 900;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressed = canvas.toDataURL('image/jpeg', 0.75);
+            resolve(compressed);
+          } else {
+            resolve(event.target?.result as string);
+          }
+        };
+        img.onerror = (err) => reject(err);
+      };
+      reader.onerror = (err) => reject(err);
+    });
+  };
+
+  const handleMainImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      try {
+        const compressed = await compressImage(e.target.files[0]);
+        setFormState(prev => ({ ...prev, img: compressed }));
+      } catch (err) {
+        alert('Fehler beim Hochladen des Bildes. Bitte versuchen Sie es erneut.');
+        console.error(err);
+      }
+    }
+  };
+
+  const handleRemoveMainImage = () => {
+    setFormState(prev => ({ ...prev, img: '' }));
+  };
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      try {
+        const compressedImages = await Promise.all(files.map(compressImage));
+        setFormState(prev => ({
+          ...prev,
+          images: [...prev.images, ...compressedImages]
+        }));
+      } catch (err) {
+        alert('Fehler beim Hochladen der Galeriebilder.');
+        console.error(err);
+      }
+    }
+  };
+
+  const handleRemoveGalleryImage = (index: number) => {
+    setFormState(prev => ({
+      ...prev,
+      images: prev.images.filter((_, idx) => idx !== index)
+    }));
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,8 +160,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       price: '',
       area: '',
       rooms: '',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/website-datein/ImmoM/',
-      images: '',
+      img: '',
+      images: [],
       status: 'verfuegbar',
       statusTag: 'Neu',
       description: '',
@@ -110,7 +193,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       area: property.area.toString(),
       rooms: property.rooms.toString(),
       img: property.img,
-      images: property.images ? property.images.join(', ') : '',
+      images: property.images || [],
       status: property.status,
       statusTag: property.statusTag || '',
       description: property.description || '',
@@ -135,6 +218,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!formState.img) {
+      alert('Bitte laden Sie ein Hauptbild für die Immobilie hoch.');
+      return;
+    }
+
     const preparedProperty: Property = {
       id: editingId !== null ? editingId : Date.now(),
       title: formState.title,
@@ -144,7 +232,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       area: parseFloat(formState.area) || 0,
       rooms: parseInt(formState.rooms) || 0,
       img: formState.img,
-      images: formState.images ? formState.images.split(',').map(s => s.trim()).filter(Boolean) : [formState.img],
+      images: formState.images.length > 0 ? formState.images : [formState.img],
       status: formState.status,
       statusTag: formState.statusTag || undefined,
       description: formState.description || undefined,
@@ -171,13 +259,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
     }
 
     setIsFormOpen(false);
-  };
-
-  const handleResetToDefault = () => {
-    if (confirm('Möchten Sie das Portfolio wirklich auf die Standard-Immobilien zurücksetzen? Ihre Änderungen gehen verloren.')) {
-      localStorage.removeItem('immom_properties');
-      window.location.reload();
-    }
   };
 
   // 1. Render Login Form
@@ -229,10 +310,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
           </div>
           
           <div className={styles.headerActions}>
-            <button className={styles.resetBtn} onClick={handleResetToDefault} title="Auf Standard-Immobilien zurücksetzen">
-              <RefreshCw size={16} />
-              <span>Standard laden</span>
-            </button>
             <button className={styles.logoutBtn} onClick={handleLogout}>
               <LogOut size={16} />
               <span>Abmelden</span>
@@ -527,26 +604,62 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                   <h4 className={styles.sectionFormTitle}>3. Medien & Detailbeschreibungen</h4>
 
                   <div className={styles.formGroup}>
-                    <label>Hauptbild-URL (Muster R2)</label>
-                    <input 
-                      type="text" 
-                      value={formState.img}
-                      onChange={(e) => setFormState({ ...formState, img: e.target.value })}
-                      className={styles.input} 
-                      placeholder="z.B. https://pub-.../efh_nienburg.jpg"
-                      required 
-                    />
+                    <label>Hauptbild</label>
+                    {formState.img ? (
+                      <div className={styles.mainImagePreviewWrapper}>
+                        <img src={formState.img} alt="Vorschau Hauptbild" className={styles.mainImagePreview} />
+                        <button type="button" className={styles.removeImageBtn} onClick={handleRemoveMainImage} title="Bild entfernen">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className={styles.uploadZone}>
+                        <input 
+                          type="file" 
+                          id="main-image-upload"
+                          accept="image/*"
+                          onChange={handleMainImageUpload}
+                          className={styles.fileInputHidden}
+                        />
+                        <label htmlFor="main-image-upload" className={styles.uploadLabel}>
+                          <Plus size={24} />
+                          <span>Hauptbild hochladen</span>
+                        </label>
+                      </div>
+                    )}
                   </div>
 
                   <div className={styles.formGroup}>
-                    <label>Weitere Bilder-URLs (durch Komma getrennt)</label>
-                    <textarea 
-                      rows={2}
-                      value={formState.images}
-                      onChange={(e) => setFormState({ ...formState, images: e.target.value })}
-                      className={styles.textarea} 
-                      placeholder="Bilder-URLs mit Kommas trennen..."
-                    />
+                    <label>Weitere Galeriebilder</label>
+                    <div className={styles.galleryGrid}>
+                      {formState.images.map((imgUrl, idx) => (
+                        <div key={idx} className={styles.galleryThumbWrapper}>
+                          <img src={imgUrl} className={styles.galleryThumb} alt={`Galeriebild ${idx + 1}`} />
+                          <button 
+                            type="button" 
+                            className={styles.thumbDeleteBtn} 
+                            onClick={() => handleRemoveGalleryImage(idx)}
+                            title="Bild entfernen"
+                          >
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      ))}
+                      <div className={styles.galleryAddCard}>
+                        <input 
+                          type="file" 
+                          id="gallery-images-upload"
+                          multiple
+                          accept="image/*"
+                          onChange={handleGalleryUpload}
+                          className={styles.fileInputHidden}
+                        />
+                        <label htmlFor="gallery-images-upload" className={styles.galleryAddLabel}>
+                          <Plus size={20} />
+                          <span>Hinzufügen</span>
+                        </label>
+                      </div>
+                    </div>
                   </div>
 
                   <div className={styles.formGroup}>

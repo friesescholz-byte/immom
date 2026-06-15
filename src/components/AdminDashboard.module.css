@@ -425,3 +425,168 @@
     padding: 2rem;
   }
 }
+
+/* Image upload styling */
+.fileInputHidden {
+  display: none !important;
+}
+
+.uploadZone {
+  border: 2px dashed rgba(7, 27, 51, 0.15);
+  border-radius: var(--border-radius-md);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  background-color: var(--color-bg-light);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.uploadZone:hover {
+  border-color: var(--color-primary-light);
+  background-color: rgba(14, 108, 180, 0.02);
+}
+
+.uploadLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.uploadLabel svg {
+  color: var(--color-primary-light);
+}
+
+.mainImagePreviewWrapper {
+  position: relative;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(7, 27, 51, 0.1);
+  max-width: 320px;
+  aspect-ratio: 16 / 10;
+  background-color: var(--color-bg-light);
+  margin-top: 0.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.mainImagePreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeImageBtn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(211, 47, 47, 0.9);
+  color: var(--color-bg-white);
+  border: none;
+  border-radius: var(--border-radius-full);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.removeImageBtn:hover {
+  background-color: var(--color-error);
+  transform: scale(1.05);
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.galleryThumbWrapper {
+  position: relative;
+  aspect-ratio: 1.2;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(7, 27, 51, 0.08);
+  background-color: var(--color-bg-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.galleryThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbDeleteBtn {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  background-color: rgba(211, 47, 47, 0.95);
+  color: var(--color-bg-white);
+  border: none;
+  border-radius: var(--border-radius-full);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.thumbDeleteBtn:hover {
+  background-color: var(--color-error);
+  transform: scale(1.1);
+}
+
+.galleryAddCard {
+  aspect-ratio: 1.2;
+  border: 2px dashed rgba(7, 27, 51, 0.15);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-light);
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.galleryAddCard:hover {
+  border-color: var(--color-primary-light);
+  background-color: rgba(14, 108, 180, 0.02);
+}
+
+.galleryAddLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.galleryAddLabel svg {
+  color: var(--color-primary-light);
+}

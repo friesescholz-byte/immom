@@ -368,10 +368,10 @@ function App() {
         {currentPage === 'home' ? (
           <>
             <Hero properties={properties} />
+            <WhyUs />
             <Problem />
             <Steps />
             <SalesPrep />
-            <WhyUs />
             <Solution />
             <Comparison />
             <TargetGroups />
