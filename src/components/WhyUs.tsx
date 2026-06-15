@@ -5,11 +5,26 @@ import styles from './WhyUs.module.css';
 
 export const WhyUs: React.FC = () => {
   const points = [
-    'Über 30 Jahre Erfahrung in der Immobilienbranche',
-    'Spezialisiert auf den Verkauf und die Vermittlung',
-    'Persönliche Beratung auf Augenhöhe',
-    'Regionale Marktkenntnis in Nienburg/Weser, Marklohe und Umgebung',
-    'Faire, professionelle und seriöse Begleitung',
+    {
+      title: 'Maßgeschneiderte Vermarktung',
+      description: 'Jede Immobilie erhält eine individuelle Strategie mit hochwertigen Exposés statt Standard-Inseraten.'
+    },
+    {
+      title: 'Tiefgehende Marktkenntnis',
+      description: 'Verwurzelt in Nienburg/Weser, Marklohe und der Region – für eine punktgenaue Kaufpreis-Ermittlung.'
+    },
+    {
+      title: 'Rundum-Sorglos-Begleitung',
+      description: 'Von der ersten Beratung bis zum Notartermin – wir übernehmen die komplette Abwicklung für Sie.'
+    },
+    {
+      title: 'Gezielte Käufervermittlung',
+      description: 'Schnellere Vermittlung durch unsere Datenbank mit aktiv suchenden Kaufinteressenten.'
+    },
+    {
+      title: 'Ehrliche Beratung auf Augenhöhe',
+      description: 'Verlässliche Einschätzungen und transparente Schritte – mit über 30 Jahren Erfahrung.'
+    }
   ];
 
   return (
@@ -24,9 +39,9 @@ export const WhyUs: React.FC = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         >
-          <span className="eyebrow">Ihre Vorteile bei uns</span>
+          <span className={styles.eyebrow}>Ihre Vorteile bei uns</span>
           <h2 className={styles.heading}>
-            Immobilienberatung mit Erfahrung, Nähe und ehrlicher Einschätzung.
+            Immobilienberatung mit <span className={styles.blueAccent}>Erfahrung</span>, <span className={styles.blueAccent}>Nähe</span> und ehrlicher Einschätzung.
           </h2>
           
           <div className={styles.description}>
@@ -41,23 +56,26 @@ export const WhyUs: React.FC = () => {
             </p>
           </div>
 
-          <ul className={`${styles.bulletList} checkmark-list`}>
+          <div className={styles.bulletList}>
             {points.map((point, index) => (
-              <motion.li 
+              <motion.div 
                 key={index} 
-                className="checkmark-item"
-                initial={{ opacity: 0, x: -10 }}
+                className={styles.advantageItem}
+                initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
               >
                 <div className={styles.checkmarkIconWrapper}>
-                  <Check className="checkmark-icon" size={16} />
+                  <Check size={18} />
                 </div>
-                <span>{point}</span>
-              </motion.li>
+                <div className={styles.advantageContent}>
+                  <h4 className={styles.advantageTitle}>{point.title}</h4>
+                  <p className={styles.advantageDesc}>{point.description}</p>
+                </div>
+              </motion.div>
             ))}
-          </ul>
+          </div>
         </motion.div>
 
         {/* Right Column: Executive Profile Card */}
