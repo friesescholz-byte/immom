@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, ArrowLeft, Home, Building, Layers, 
@@ -11,6 +11,79 @@ export const ValuationForm: React.FC = () => {
   const [flow, setFlow] = useState<'start' | 'haus' | 'wohnung' | 'gewerbe' | 'beratung'>('start');
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+
+  const isLastStep = () => {
+    return (
+      (flow === 'haus' && step === 6) ||
+      (flow === 'wohnung' && step === 4) ||
+      (flow === 'gewerbe' && step === 2) ||
+      (flow === 'beratung' && step === 1)
+    );
+  };
+
+  // Turnstile Widget initialisieren (mit Polling & StrictMode-Schutz)
+  useEffect(() => {
+    let interval: any;
+    
+    if (!isLastStep() || isSubmitted) {
+      if (widgetIdRef.current && (window as any).turnstile) {
+        try { (window as any).turnstile.remove(widgetIdRef.current); } catch (e) {}
+        widgetIdRef.current = null;
+      }
+      setTurnstileToken("");
+      return;
+    }
+
+    const renderWidget = () => {
+      if (turnstileRef.current && (window as any).turnstile && !widgetIdRef.current) {
+        try {
+          turnstileRef.current.innerHTML = "";
+          widgetIdRef.current = (window as any).turnstile.render(turnstileRef.current, {
+            sitekey: "0x4AAAAAADlSZ4-_XRQN6CgC",
+            callback: (token: string) => {
+              setTurnstileToken(token);
+              setErrorMessage("");
+            },
+            "expired-callback": () => setTurnstileToken(""),
+            theme: "light",
+          });
+          if (interval) clearInterval(interval);
+        } catch (e) {
+          console.error("Turnstile render error:", e);
+        }
+      }
+    };
+
+    renderWidget();
+
+    if (!widgetIdRef.current) {
+      interval = setInterval(() => {
+        if ((window as any).turnstile) {
+          renderWidget();
+        }
+      }, 100);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+      if (widgetIdRef.current && (window as any).turnstile) {
+        try { (window as any).turnstile.remove(widgetIdRef.current); } catch (e) {}
+        widgetIdRef.current = null;
+      }
+    };
+  }, [flow, step, isSubmitted]);
+
+  const handlePhoneChange = (val: string) => {
+    if (/^[0-9+\s()/-]*$/.test(val)) {
+      setFormData(prev => ({ ...prev, phone: val }));
+    }
+  };
 
   // Form Data State
   const [formData, setFormData] = useState({
@@ -74,10 +147,44 @@ export const ValuationForm: React.FC = () => {
     setStep(1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate submission
-    setIsSubmitted(true);
+    setErrorMessage("");
+
+    if (!turnstileToken) {
+      setErrorMessage("Bitte bestätigen Sie den Spam-Schutz.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://friesescholzwebdesign.pages.dev/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          source: "immom",
+          type: "valuation",
+          turnstileToken,
+          flow,
+          ...formData
+        })
+      });
+
+      const resData = await response.json();
+      if (response.ok && resData.success) {
+        setIsSubmitted(true);
+      } else {
+        setErrorMessage(resData.message || "Es gab einen Fehler beim Absenden. Bitte versuchen Sie es erneut.");
+      }
+    } catch (err: any) {
+      setErrorMessage("Verbindungsfehler zum E-Mail-Server. Bitte überprüfen Sie Ihre Internetverbindung.");
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Determine total steps for active flow
@@ -432,7 +539,7 @@ export const ValuationForm: React.FC = () => {
                       <input 
                         type="tel" 
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
                         className={styles.textInput}
                         required
                       />
@@ -446,10 +553,16 @@ export const ValuationForm: React.FC = () => {
                       />
                       <span>Ich stimme der Datenschutzerklärung zu.</span>
                     </label>
+
+                    {/* Turnstile Widget */}
+                    <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}>
+                      <div ref={turnstileRef}></div>
+                    </div>
+
                     <Button 
                       type="submit" 
                       variant="accent" 
-                      disabled={!formData.email || !formData.phone || !formData.datenschutz}
+                      disabled={!formData.email || !formData.phone || !formData.datenschutz || isSubmitting || !turnstileToken}
                       className={styles.submitButton}
                     >
                       <span>Einschätzung anfordern</span>
@@ -608,7 +721,7 @@ export const ValuationForm: React.FC = () => {
                       <input 
                         type="tel" 
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
                         className={styles.textInput}
                         required
                       />
@@ -622,10 +735,16 @@ export const ValuationForm: React.FC = () => {
                       />
                       <span>Ich stimme der Datenschutzerklärung zu.</span>
                     </label>
+
+                    {/* Turnstile Widget */}
+                    <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}>
+                      <div ref={turnstileRef}></div>
+                    </div>
+
                     <Button 
                       type="submit" 
                       variant="accent" 
-                      disabled={!formData.email || !formData.phone || !formData.datenschutz}
+                      disabled={!formData.email || !formData.phone || !formData.datenschutz || isSubmitting || !turnstileToken}
                       className={styles.submitButton}
                     >
                       <span>Einschätzung anfordern</span>
@@ -725,7 +844,7 @@ export const ValuationForm: React.FC = () => {
                       <input 
                         type="tel" 
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
                         className={styles.textInput}
                         required
                       />
@@ -739,10 +858,16 @@ export const ValuationForm: React.FC = () => {
                       />
                       <span>Ich stimme der Datenschutzerklärung zu.</span>
                     </label>
+
+                    {/* Turnstile Widget */}
+                    <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}>
+                      <div ref={turnstileRef}></div>
+                    </div>
+
                     <Button 
                       type="submit" 
                       variant="accent" 
-                      disabled={!formData.email || !formData.phone || !formData.datenschutz}
+                      disabled={!formData.email || !formData.phone || !formData.datenschutz || isSubmitting || !turnstileToken}
                       className={styles.submitButton}
                     >
                       <span>Einschätzung anfordern</span>
@@ -810,7 +935,7 @@ export const ValuationForm: React.FC = () => {
                       <input 
                         type="tel" 
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
                         className={styles.textInput}
                         required
                       />
@@ -834,10 +959,16 @@ export const ValuationForm: React.FC = () => {
                       />
                       <span>Ich stimme der Datenschutzerklärung zu.</span>
                     </label>
+
+                    {/* Turnstile Widget */}
+                    <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}>
+                      <div ref={turnstileRef}></div>
+                    </div>
+
                     <Button 
                       type="submit" 
                       variant="accent" 
-                      disabled={!formData.email || !formData.phone || !formData.datenschutz}
+                      disabled={!formData.email || !formData.phone || !formData.datenschutz || isSubmitting || !turnstileToken}
                       className={styles.submitButton}
                     >
                       <span>Beratung anfordern</span>
@@ -846,6 +977,11 @@ export const ValuationForm: React.FC = () => {
                   </motion.div>
                 )}
               </div>
+            )}
+            {errorMessage && (
+              <p style={{ color: '#ef4444', textAlign: 'center', marginTop: '1rem', fontSize: '0.875rem' }}>
+                {errorMessage}
+              </p>
             )}
           </form>
         )}

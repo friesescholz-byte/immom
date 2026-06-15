@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, Download, FileText } from 'lucide-react';
 import styles from './LeadMagnet.module.css';
@@ -8,11 +8,94 @@ export const LeadMagnet: React.FC = () => {
   // Checklist Form State
   const [checklistEmail, setChecklistEmail] = useState('');
   const [isChecklistSubmitted, setIsChecklistSubmitted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleChecklistSubmit = (e: React.FormEvent) => {
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+
+  // Turnstile Widget initialisieren (mit Polling & StrictMode-Schutz)
+  useEffect(() => {
+    let interval: any;
+    if (isChecklistSubmitted) return;
+
+    const renderWidget = () => {
+      if (turnstileRef.current && (window as any).turnstile && !widgetIdRef.current) {
+        try {
+          turnstileRef.current.innerHTML = "";
+          widgetIdRef.current = (window as any).turnstile.render(turnstileRef.current, {
+            sitekey: "0x4AAAAAADlSZ4-_XRQN6CgC",
+            callback: (token: string) => {
+              setTurnstileToken(token);
+              setErrorMessage("");
+            },
+            "expired-callback": () => setTurnstileToken(""),
+            theme: "light",
+          });
+          if (interval) clearInterval(interval);
+        } catch (e) {
+          console.error("Turnstile render error:", e);
+        }
+      }
+    };
+
+    renderWidget();
+
+    if (!widgetIdRef.current) {
+      interval = setInterval(() => {
+        if ((window as any).turnstile) {
+          renderWidget();
+        }
+      }, 100);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+      if (widgetIdRef.current && (window as any).turnstile) {
+        try { (window as any).turnstile.remove(widgetIdRef.current); } catch (e) {}
+        widgetIdRef.current = null;
+      }
+    };
+  }, [isChecklistSubmitted]);
+
+  const handleChecklistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate API submission
-    setIsChecklistSubmitted(true);
+    setErrorMessage("");
+
+    if (!turnstileToken) {
+      setErrorMessage("Bitte bestätigen Sie den Spam-Schutz.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://friesescholzwebdesign.pages.dev/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          source: "immom",
+          type: "checklist",
+          turnstileToken,
+          email: checklistEmail
+        })
+      });
+
+      const resData = await response.json();
+      if (response.ok && resData.success) {
+        setIsChecklistSubmitted(true);
+      } else {
+        setErrorMessage(resData.message || "Es gab einen Fehler beim Absenden. Bitte versuchen Sie es erneut.");
+      }
+    } catch (err: any) {
+      setErrorMessage("Verbindungsfehler zum E-Mail-Server. Bitte überprüfen Sie Ihre Internetverbindung.");
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -100,7 +183,7 @@ export const LeadMagnet: React.FC = () => {
 
             <AnimatePresence mode="wait">
               {!isChecklistSubmitted ? (
-                <form onSubmit={handleChecklistSubmit} className={styles.magnetForm}>
+                <form onSubmit={handleChecklistSubmit} className={styles.magnetForm} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   <div className={styles.magnetFormGroup}>
                     <input 
                       type="email" 
@@ -110,12 +193,19 @@ export const LeadMagnet: React.FC = () => {
                       className={styles.magnetInput}
                       required 
                     />
-                    <Button type="submit" variant="primary" className={styles.magnetBtn}>
+                    <Button type="submit" variant="primary" className={styles.magnetBtn} disabled={isSubmitting || !turnstileToken}>
                       <Download size={18} />
                       <span>Jetzt anfordern</span>
                     </Button>
                   </div>
-                  <span className={styles.magnetHint}>Direkt per E-Mail in Ihr Postfach • 100% kostenlos • Kein Spam</span>
+                  
+                  {/* Turnstile Widget */}
+                  <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div ref={turnstileRef}></div>
+                  </div>
+                  {errorMessage && <p style={{ color: '#ef4444', textAlign: 'center', margin: '0', fontSize: '0.875rem' }}>{errorMessage}</p>}
+
+                  <span className={styles.magnetHint} style={{ textAlign: 'center' }}>Direkt per E-Mail in Ihr Postfach • 100% kostenlos • Kein Spam</span>
                 </form>
               ) : (
                 <motion.div 

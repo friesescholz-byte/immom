@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, ArrowRight, Grid, ListFilter, SlidersHorizontal, Info, X, Send, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './Portfolio.module.css';
@@ -54,6 +54,69 @@ export const Portfolio: React.FC<PortfolioProps> = ({
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', msg: '' });
   const [isSent, setIsSent] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+
+  // Turnstile Widget initialisieren (mit Polling & StrictMode-Schutz)
+  useEffect(() => {
+    let interval: any;
+    if (!selectedProperty || isSent) {
+      if (widgetIdRef.current && (window as any).turnstile) {
+        try { (window as any).turnstile.remove(widgetIdRef.current); } catch (e) {}
+        widgetIdRef.current = null;
+      }
+      setTurnstileToken("");
+      return;
+    }
+
+    const renderWidget = () => {
+      if (turnstileRef.current && (window as any).turnstile && !widgetIdRef.current) {
+        try {
+          turnstileRef.current.innerHTML = "";
+          widgetIdRef.current = (window as any).turnstile.render(turnstileRef.current, {
+            sitekey: "0x4AAAAAADlSZ4-_XRQN6CgC",
+            callback: (token: string) => {
+              setTurnstileToken(token);
+              setErrorMessage("");
+            },
+            "expired-callback": () => setTurnstileToken(""),
+            theme: "light",
+          });
+          if (interval) clearInterval(interval);
+        } catch (e) {
+          console.error("Turnstile render error:", e);
+        }
+      }
+    };
+
+    renderWidget();
+
+    if (!widgetIdRef.current) {
+      interval = setInterval(() => {
+        if ((window as any).turnstile) {
+          renderWidget();
+        }
+      }, 100);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+      if (widgetIdRef.current && (window as any).turnstile) {
+        try { (window as any).turnstile.remove(widgetIdRef.current); } catch (e) {}
+        widgetIdRef.current = null;
+      }
+    };
+  }, [selectedProperty, isSent]);
+
+  const handlePhoneChange = (val: string) => {
+    if (/^[0-9+\s()/-]*$/.test(val)) {
+      setContactForm(prev => ({ ...prev, phone: val }));
+    }
+  };
 
   React.useEffect(() => {
     if (initialPropertyId) {
@@ -90,9 +153,51 @@ export const Portfolio: React.FC<PortfolioProps> = ({
       return 0; // Default sorting
     });
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSent(true);
+    setErrorMessage("");
+
+    if (!turnstileToken) {
+      setErrorMessage("Bitte bestätigen Sie den Spam-Schutz.");
+      return;
+    }
+
+    if (!selectedProperty) return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://friesescholzwebdesign.pages.dev/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          source: "immom",
+          type: "expose",
+          turnstileToken,
+          name: contactForm.name,
+          email: contactForm.email,
+          phone: contactForm.phone,
+          msg: contactForm.msg,
+          propertyTitle: selectedProperty.title,
+          propertyLocation: selectedProperty.location,
+          propertyPrice: formatPrice(selectedProperty.price)
+        })
+      });
+
+      const resData = await response.json();
+      if (response.ok && resData.success) {
+        setIsSent(true);
+      } else {
+        setErrorMessage(resData.message || "Es gab einen Fehler beim Absenden. Bitte versuchen Sie es erneut.");
+      }
+    } catch (err: any) {
+      setErrorMessage("Verbindungsfehler zum E-Mail-Server. Bitte überprüfen Sie Ihre Internetverbindung.");
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const formatPrice = (price: number) => {
@@ -514,7 +619,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                             <input 
                               type="tel" 
                               value={contactForm.phone}
-                              onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                              onChange={(e) => handlePhoneChange(e.target.value)}
                               className={styles.input} 
                               required 
                             />
@@ -529,7 +634,13 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                             />
                           </div>
 
-                          <Button type="submit" variant="primary" className={styles.submitBtn}>
+                          {/* Turnstile Widget */}
+                          <div style={{ marginBottom: "1.25rem", display: "flex", justifyContent: "center" }}>
+                            <div ref={turnstileRef}></div>
+                          </div>
+                          {errorMessage && <p style={{ color: '#ef4444', textAlign: 'center', marginBottom: '1rem', fontSize: '0.875rem' }}>{errorMessage}</p>}
+
+                          <Button type="submit" variant="primary" className={styles.submitBtn} disabled={isSubmitting || !turnstileToken}>
                             <span>Jetzt Anfragen</span>
                             <Send size={16} />
                           </Button>
