@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ArrowRight, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './Hero.module.css';
@@ -124,6 +124,15 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
     setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
   };
 
+  // Auto-slide effect for properties (slow, elegant pacing)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev === items.length - 1 ? 0 : prev + 1));
+    }, 7000); // 7 seconds
+    return () => clearInterval(timer);
+  }, [currentIndex, items.length]);
+
   const containerVariants = {
     hidden: {},
     visible: {
@@ -180,8 +189,8 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
           initial="hidden"
           animate="visible"
         >
-          <motion.span className="eyebrow" variants={itemVariants}>
-            Ihr Partner für den Immobilienverkauf
+          <motion.span className={styles.eyebrow} variants={itemVariants}>
+            Ihr Partner für den Immobilienverkauf in Nienburg
           </motion.span>
           
           <motion.h1 className={styles.title} variants={itemVariants}>
