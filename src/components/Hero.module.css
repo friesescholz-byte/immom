@@ -2,8 +2,13 @@
   position: relative;
   padding-top: clamp(120px, 14vw, 180px);
   padding-bottom: clamp(80px, 10vw, 120px);
-  background: radial-gradient(circle at 85% 15%, rgba(122, 146, 163, 0.09) 0%, rgba(250, 251, 252, 1) 65%),
-              radial-gradient(circle at 15% 85%, rgba(14, 108, 180, 0.03) 0%, transparent 50%);
+  background-color: #fafbfc;
+  background-image: 
+    linear-gradient(to right, rgba(250, 251, 252, 1) 32%, rgba(250, 251, 252, 0.88) 55%, rgba(250, 251, 252, 0.35) 100%),
+    url('https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/hero_bg.webp');
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
@@ -11,11 +16,12 @@
   position: absolute;
   top: -200px;
   right: -200px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(122, 146, 163, 0.12) 0%, rgba(250, 251, 252, 0) 70%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(14, 108, 180, 0.07) 0%, rgba(250, 251, 252, 0) 70%),
+              radial-gradient(circle at bottom left, rgba(217, 162, 74, 0.04) 0%, rgba(250, 251, 252, 0) 60%);
   border-radius: var(--border-radius-full);
-  filter: blur(80px);
+  filter: blur(90px);
   z-index: 0;
   pointer-events: none;
 }
@@ -430,68 +436,63 @@
   overflow: hidden;
 }
 
-.blueprintGrid {
+.luxuryGrid {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-size: 50px 50px;
+  background-size: 60px 60px;
   background-image: 
-    linear-gradient(to right, rgba(14, 108, 180, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(14, 108, 180, 0.02) 1px, transparent 1px);
-  mask-image: radial-gradient(circle at 75% 30%, black 20%, transparent 80%);
-  -webkit-mask-image: radial-gradient(circle at 75% 30%, black 20%, transparent 80%);
-  opacity: 0.9;
-}
-
-.blueprintSvg {
-  position: absolute;
-  top: 5%;
-  right: 2%;
-  width: 55%;
-  height: 90%;
+    linear-gradient(to right, rgba(217, 162, 74, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(217, 162, 74, 0.015) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at 75% 30%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 75% 30%, black 20%, transparent 75%);
   opacity: 0.8;
 }
 
-.designerLine1 {
+.geometricSvg {
   position: absolute;
-  left: 8%;
-  top: 0;
-  width: 1px;
-  height: 80%;
-  background: linear-gradient(to bottom, rgba(14, 108, 180, 0.1) 0%, transparent 100%);
+  top: 0%;
+  right: 0%;
+  width: 60%;
+  height: 100%;
+  opacity: 0.85;
 }
 
-.designerLine1::before {
-  content: '0.00m';
-  position: absolute;
-  top: 15%;
-  left: 8px;
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  color: rgba(14, 108, 180, 0.2);
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.designerLine2 {
+.watermarkText {
   position: absolute;
   left: 3%;
-  top: 35%;
-  width: 20%;
-  height: 1px;
-  background: linear-gradient(to right, rgba(14, 108, 180, 0.1) 0%, transparent 100%);
-}
-
-.designerLine2::before {
-  content: 'PLAN_N°_32';
-  position: absolute;
-  bottom: 8px;
-  left: 5%;
+  bottom: 12%;
   font-family: var(--font-sans);
   font-size: 0.65rem;
-  color: rgba(14, 108, 180, 0.2);
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 4px;
+  color: rgba(12, 30, 54, 0.12);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  opacity: 0.6;
+}
+
+.floatingOrb {
+  position: absolute;
+  top: 15%;
+  right: 15%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(217, 162, 74, 0.07) 0%, rgba(250, 251, 252, 0) 70%);
+  filter: blur(60px);
+  z-index: 0;
+  pointer-events: none;
+  animation: floatOrb 25s infinite alternate ease-in-out;
+}
+
+@keyframes floatOrb {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-30px, 40px) scale(1.15);
+  }
 }
