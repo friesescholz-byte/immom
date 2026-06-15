@@ -180,6 +180,26 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
 
   return (
     <section id="start" className={styles.heroSection}>
+      {/* Designer background graphics */}
+      <div className={styles.designerBg}>
+        {/* Architect blueprint grid */}
+        <div className={styles.blueprintGrid} />
+        
+        {/* Abstract house/building blueprint outline */}
+        <svg className={styles.blueprintSvg} viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 450 L350 200 L600 450 Z" stroke="rgba(14, 108, 180, 0.04)" strokeWidth="1.5" />
+          <path d="M150 450 L150 350 L550 350 L550 450" stroke="rgba(14, 108, 180, 0.03)" strokeWidth="1.5" strokeDasharray="5 5" />
+          <line x1="50" y1="450" x2="750" y2="450" stroke="rgba(14, 108, 180, 0.05)" strokeWidth="1.5" />
+          <circle cx="350" cy="200" r="4" fill="var(--color-primary-light)" opacity="0.15" />
+          <line x1="350" y1="100" x2="350" y2="500" stroke="rgba(14, 108, 180, 0.03)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="100" y1="300" x2="600" y2="300" stroke="rgba(14, 108, 180, 0.03)" strokeWidth="1" strokeDasharray="3 3" />
+        </svg>
+
+        {/* Dynamic decorative line elements with coordinate markers */}
+        <div className={styles.designerLine1} />
+        <div className={styles.designerLine2} />
+      </div>
+
       <div className={styles.bgGlow} />
       
       <div className={`${styles.container} container`}>

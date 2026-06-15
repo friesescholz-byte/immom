@@ -128,6 +128,36 @@ export const Contact: React.FC<ContactProps> = ({ currentPage, setCurrentPage })
               </ul>
             </div>
 
+            {/* Col 4: Google Reviews */}
+            <div className={styles.footerCol}>
+              <h3>Bewertungen</h3>
+              <div className={styles.googleReviewCard}>
+                <div className={styles.googleHeader}>
+                  <img 
+                    src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
+                    alt="Google Logo" 
+                    className={styles.googleIcon} 
+                  />
+                  <div className={styles.googleMeta}>
+                    <span className={styles.googleName}>Google Rezensionen</span>
+                    <div className={styles.googleStars}>★★★★★</div>
+                  </div>
+                </div>
+                <p className={styles.googleDesc}>
+                  Helfen Sie uns, noch besser zu werden, oder lesen Sie das Feedback unserer Kunden.
+                </p>
+                <a 
+                  href="https://search.google.com/local/writereview?placeid=ChIJUcP4H1WMsEcReDcsryWewuo" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={styles.googleReviewBtn}
+                >
+                  <span>Rezension schreiben</span>
+                  <ArrowRight size={14} />
+                </a>
+              </div>
+            </div>
+
           </div>
 
           {/* Copyright & Legal Bar */}

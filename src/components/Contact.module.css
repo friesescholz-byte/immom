@@ -74,8 +74,8 @@
 
 .footerGrid {
   display: grid;
-  grid-template-columns: 1.2fr 1.10fr 0.7fr;
-  gap: clamp(3rem, 6vw, 5rem);
+  grid-template-columns: 1.1fr 1fr 0.7fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
   margin-bottom: 4rem;
 }
 
@@ -238,4 +238,89 @@
   .buttonGroup button {
     width: 100%;
   }
+}
+
+/* Google Review card styles */
+.googleReviewCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--border-radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+
+.googleReviewCard:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(14, 108, 180, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.googleHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.googleIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.googleMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.googleName {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-white);
+  line-height: 1.2;
+}
+
+.googleStars {
+  color: #fbbf24;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.googleDesc {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.googleReviewBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-primary-light);
+  color: var(--color-text-white);
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem 1.1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: var(--transition-smooth);
+  width: 100%;
+  border: 1px solid transparent;
+}
+
+.googleReviewBtn:hover {
+  background-color: transparent;
+  color: var(--color-text-white);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(14, 108, 180, 0.2);
 }

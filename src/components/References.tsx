@@ -161,10 +161,29 @@ export const References: React.FC = () => {
 
         {/* Bottom Action & Partner Logos */}
         <div className={styles.footerRow}>
-          <Button variant="primary" onClick={handleCtaClick} className={styles.cta}>
-            <span>Regionale Immobilienberatung anfragen</span>
-            <ArrowRight size={16} />
-          </Button>
+          <div className={styles.actionButtons}>
+            <Button variant="primary" onClick={handleCtaClick} className={styles.cta}>
+              <span>Regionale Immobilienberatung anfragen</span>
+              <ArrowRight size={16} />
+            </Button>
+            
+            <a 
+              href="https://search.google.com/local/writereview?placeid=ChIJUcP4H1WMsEcReDcsryWewuo" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.googleBadgeBtn}
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
+                alt="Google Logo" 
+                className={styles.googleBadgeIcon} 
+              />
+              <div className={styles.googleBadgeText}>
+                <span className={styles.badgeStars}>★★★★★</span>
+                <span className={styles.badgeLinkText}>Auf Google bewerten</span>
+              </div>
+            </a>
+          </div>
 
           <div className={styles.partnerSection}>
             <span className={styles.partnerTitle}>Auswahl unserer Partner & Auszeichnungen</span>
