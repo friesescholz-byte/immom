@@ -30,6 +30,14 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
     }
   ];
 
+  const handleScrollToValuation = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const el = document.getElementById('bewertung-nienburg');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className={styles.nienburgPage}>
       
@@ -68,7 +76,7 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
           </div>
 
           <div className={styles.heroCtas}>
-            <a href="#bewertung-nienburg">
+            <a href="#bewertung-nienburg" onClick={handleScrollToValuation}>
               <Button variant="accent">
                 <span>Immobilie in Nienburg gratis bewerten</span>
                 <ArrowRight size={18} />
@@ -130,7 +138,7 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
-                <a href="#bewertung-nienburg">
+                <a href="#bewertung-nienburg" onClick={handleScrollToValuation}>
                   <Button variant="primary">
                     <span>Immobilie in Nienburg jetzt gratis bewerten</span>
                     <ArrowRight size={16} />
@@ -159,7 +167,7 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
                 Die Nachfrage nach gepflegten Einfamilienhäusern, Eigentumswohnungen und Baugrundstücken in Nienburg ist auf einem anhaltend hohen Niveau. Wir kennen die Besonderheiten der einzelnen Stadtteile und Gemeindeteile genau.
               </p>
               <div style={{ display: 'flex', gap: '1rem' }}>
-                <a href="#bewertung-nienburg">
+                <a href="#bewertung-nienburg" onClick={handleScrollToValuation}>
                   <Button variant="accent">
                     <span>Jetzt Marktwert in Nienburg kostenlos prüfen</span>
                     <ArrowRight size={16} />

@@ -108,7 +108,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isDarkHeroPage = currentPage === 'home' || currentPage === 'location-nienburg';
+  const isDarkHeroPage = currentPage === 'location-nienburg';
 
   return (
     <>

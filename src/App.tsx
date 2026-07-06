@@ -323,6 +323,8 @@ function App() {
       window.history.pushState(null, '', '/admin');
     } else if (currentPage === 'portfolio' && path !== '/portfolio') {
       window.history.pushState(null, '', '/portfolio');
+    } else if (currentPage === 'location-nienburg' && path !== '/nienburg') {
+      window.history.pushState(null, '', '/nienburg');
     } else if (currentPage === 'home' && path !== '/') {
       window.history.pushState(null, '', '/');
     }
@@ -336,6 +338,8 @@ function App() {
         setCurrentPage('admin');
       } else if (path === '/portfolio') {
         setCurrentPage('portfolio');
+      } else if (path === '/nienburg') {
+        setCurrentPage('location-nienburg');
       } else {
         setCurrentPage('home');
       }
