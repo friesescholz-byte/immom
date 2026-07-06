@@ -90,7 +90,7 @@ export const WhyUs: React.FC = () => {
             <div className={styles.avatarWrapper}>
               <img 
                 src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/profile_32106_ergebnis.webp" 
-                alt="Carsten Meier" 
+                alt="Carsten Meyer" 
                 className={styles.avatarImage}
                 onError={(e) => {
                   (e.target as HTMLElement).style.display = 'none';
@@ -99,7 +99,7 @@ export const WhyUs: React.FC = () => {
             </div>
             
             <div className={styles.profileInfo}>
-              <h3 className={styles.profileName}>Carsten Meier</h3>
+              <h3 className={styles.profileName}>Carsten Meyer</h3>
               <p className={styles.profileTitle}>Inhaber & Immobilienmakler</p>
               
               <div className={styles.profileDivider} />
