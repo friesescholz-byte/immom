@@ -100,7 +100,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
         <div className={`${styles.container} container`}>
           <a href="#start" className={styles.logoContainer} onClick={handleLogoClick}>
             <img 
-              src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/01-Logo_ImmoM_NEU_frei_240303-2-768x252_ergebnis.webp" 
+              src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/_01-Logo-ImmoM-IhrMaklerVorOrt_20250722-plast_ergebnis.webp" 
               alt="ImmoM Logo" 
               className={styles.logo} 
             />

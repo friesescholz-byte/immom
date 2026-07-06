@@ -104,20 +104,22 @@ export const LeadMagnet: React.FC = () => {
         
         {/* Left Column: 3D PDF Mockup */}
         <div className={styles.mockupCol}>
-          <div className={styles.bookContainer}>
-            <div className={styles.bookMockup}>
+          <div className={styles.booksWrapper}>
+            
+            {/* Book 1: Haus-Verkauf */}
+            <div className={`${styles.bookMockup} ${styles.book1}`}>
               <div className={styles.bookGlow} />
               <div className={styles.bookCover}>
                 <div className={styles.bookHeader}>
                   <span className={styles.brandBadge}>CM-Immobilien</span>
-                  <span className={styles.categoryBadge}>Ratgeber</span>
+                  <span className={styles.categoryBadge}>Ratgeber 1</span>
                 </div>
                 <div className={styles.bookBody}>
-                  <FileText className={styles.bookIcon} size={44} />
+                  <FileText className={styles.bookIcon} size={40} />
                   <h3 className={styles.bookTitle}>
                     Checkliste <br />
-                    <span className={styles.goldText}>Immobilien-</span> <br />
-                    <span>verkauf</span>
+                    <span className={styles.goldText}>Haus-</span> <br />
+                    <span>Verkauf</span>
                   </h3>
                   <p className={styles.bookSubtitle}>
                     10 Fehler vermeiden & den besten Preis erzielen
@@ -128,10 +130,37 @@ export const LeadMagnet: React.FC = () => {
                   <span>PDF Ratgeber</span>
                 </div>
               </div>
-              {/* Stacked pages effect behind the cover */}
               <div className={`${styles.pageBehind} ${styles.page1}`} />
               <div className={`${styles.pageBehind} ${styles.page2}`} />
             </div>
+
+            {/* Book 2: Aufbereitung */}
+            <div className={`${styles.bookMockup} ${styles.book2}`}>
+              <div className={styles.bookGlow} />
+              <div className={styles.bookCover} style={{ background: 'linear-gradient(135deg, #102A4C 0%, #1a3c68 50%, #081628 100%)' }}>
+                <div className={styles.bookHeader}>
+                  <span className={styles.brandBadge}>CM-Immobilien</span>
+                  <span className={styles.categoryBadge} style={{ backgroundColor: '#a5b5c1', color: '#071B33' }}>Ratgeber 2</span>
+                </div>
+                <div className={styles.bookBody}>
+                  <FileText className={styles.bookIcon} size={40} style={{ color: '#a5b5c1' }} />
+                  <h3 className={styles.bookTitle}>
+                    Objekt- <br />
+                    <span className={styles.goldText} style={{ color: '#a5b5c1' }}>Aufbereitung</span>
+                  </h3>
+                  <p className={styles.bookSubtitle}>
+                    Wertsteigerung & perfekte Verkaufs-Vorbereitung
+                  </p>
+                </div>
+                <div className={styles.bookFooter}>
+                  <span>100% Kostenlos</span>
+                  <span>PDF Ratgeber</span>
+                </div>
+              </div>
+              <div className={`${styles.pageBehind} ${styles.page1}`} />
+              <div className={`${styles.pageBehind} ${styles.page2}`} />
+            </div>
+
           </div>
         </div>
 
@@ -139,16 +168,16 @@ export const LeadMagnet: React.FC = () => {
         <div className={styles.magnetCol}>
           <div className={styles.magnetContent}>
             <span className="eyebrow">Exklusiver Ratgeber</span>
-            <h2 className={styles.magnetHeading}>Kostenlose Checkliste für Eigentümer</h2>
+            <h2 className={styles.magnetHeading}>Kostenlose Checklisten für Eigentümer</h2>
             
             <p className={styles.magnetText}>
               Sie planen den Verkauf Ihrer Immobilie oder möchten sich erst einmal unverbindlich informieren? 
-              Unsere ausführliche Checkliste leitet Sie Schritt für Schritt durch den gesamten Verkaufsprozess, 
-              hilft Ihnen bei der rechtssicheren Beschaffung aller Unterlagen und bewahrt Sie vor teuren Fehlern.
+              Unsere beiden ausführlichen Checklisten leiten Sie Schritt für Schritt durch den gesamten Verkaufsprozess, 
+              helfen Ihnen bei der rechtssicheren Beschaffung aller Unterlagen und zeigen Ihnen einfache Kniffe zur optischen Wertsteigerung.
             </p>
 
             <div className={styles.benefitsContainer}>
-              <h4>Was Sie in diesem Ratgeber erwartet:</h4>
+              <h4>Was Sie in diesen Ratgebern erwartet:</h4>
               <ul className={styles.featuresList}>
                 <li>
                   <CheckCircle2 size={18} className={styles.featureIcon} />
@@ -216,8 +245,8 @@ export const LeadMagnet: React.FC = () => {
                   <div className={styles.successHeader}>
                     <CheckCircle2 size={32} className={styles.successCheckIcon} />
                     <div>
-                      <h4>Checkliste ist auf dem Weg!</h4>
-                      <p>Wir haben den Ratgeber an <strong>{checklistEmail}</strong> versendet. Bitte prüfen Sie Ihr E-Mail-Postfach.</p>
+                      <h4>Checklisten sind auf dem Weg!</h4>
+                      <p>Wir haben die beiden Ratgeber an <strong>{checklistEmail}</strong> versendet. Bitte prüfen Sie Ihr E-Mail-Postfach.</p>
                     </div>
                   </div>
                 </motion.div>

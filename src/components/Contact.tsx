@@ -88,8 +88,8 @@ export const Contact: React.FC<ContactProps> = ({ currentPage, setCurrentPage })
               </p>
               <div className={styles.logoWrapper}>
                 <img 
-                  src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Logo_ergebnis.webp" 
-                  alt="ImmoM Logo Schwarz Weiß" 
+                  src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/_01-Logo-ImmoM-IhrMaklerVorOrt_20250722-plast_ergebnis.webp" 
+                  alt="ImmoM Logo" 
                   className={styles.footerLogo}
                 />
               </div>
