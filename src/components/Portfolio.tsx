@@ -32,6 +32,7 @@ export interface Property {
   energyClass?: string;
   buildingType?: string;
   renovationYear?: string;
+  exposeUrl?: string;
 }
 
 interface PortfolioProps {
@@ -182,7 +183,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({
           msg: contactForm.msg,
           propertyTitle: selectedProperty.title,
           propertyLocation: selectedProperty.location,
-          propertyPrice: formatPrice(selectedProperty.price)
+          propertyPrice: formatPrice(selectedProperty.price),
+          exposeUrl: selectedProperty.exposeUrl || ''
         })
       });
 

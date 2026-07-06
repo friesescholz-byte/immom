@@ -18,6 +18,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
     { label: 'Über uns', target: '#ueber-uns', id: 'ueber-uns', type: 'anchor' },
     { label: 'Ablauf', target: '#ablauf', id: 'ablauf', type: 'anchor' },
     { label: 'Referenzen', target: '#referenzen', id: 'referenzen', type: 'anchor' },
+    { label: 'Tippgeber', target: '#tippgeber', id: 'tippgeber', type: 'anchor' },
     { label: 'Immobilie bewerten', target: '#bewertung', id: 'bewertung', type: 'anchor' },
   ];
 

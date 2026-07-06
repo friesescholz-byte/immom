@@ -10,6 +10,7 @@ import Comparison from './components/Comparison';
 import TargetGroups from './components/TargetGroups';
 import References from './components/References';
 import LeadMagnet from './components/LeadMagnet';
+import Tippgeber from './components/Tippgeber';
 import Contact from './components/Contact';
 import Portfolio, { type Property } from './components/Portfolio';
 import AdminDashboard from './components/AdminDashboard';
@@ -376,6 +377,7 @@ function App() {
             <Comparison />
             <TargetGroups />
             <References />
+            <Tippgeber />
             <LeadMagnet />
           </>
         ) : currentPage === 'portfolio' ? (

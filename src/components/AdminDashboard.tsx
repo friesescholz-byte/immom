@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Edit3, Key, LogOut, CheckCircle, X } from 'lucide-react';
+import { Plus, Trash2, Edit3, Key, LogOut, CheckCircle, X, FileText } from 'lucide-react';
 import styles from './AdminDashboard.module.css';
 import Button from './ui/Button';
 import Card from './ui/Card';
@@ -44,7 +44,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
     hotWater: '',
     energyClass: '',
     buildingType: '',
-    renovationYear: ''
+    renovationYear: '',
+    exposeUrl: ''
   });
 
   // Helper to compress images on the client side to fit localStorage limits
@@ -178,7 +179,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       hotWater: '',
       energyClass: '',
       buildingType: '',
-      renovationYear: ''
+      renovationYear: '',
+      exposeUrl: ''
     });
     setIsFormOpen(true);
   };
@@ -210,7 +212,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       hotWater: property.hotWater || '',
       energyClass: property.energyClass || '',
       buildingType: property.buildingType || '',
-      renovationYear: property.renovationYear || ''
+      renovationYear: property.renovationYear || '',
+      exposeUrl: property.exposeUrl || ''
     });
     setIsFormOpen(true);
   };
@@ -249,7 +252,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       hotWater: formState.hotWater || undefined,
       energyClass: formState.energyClass || undefined,
       buildingType: formState.buildingType || undefined,
-      renovationYear: formState.renovationYear || undefined
+      renovationYear: formState.renovationYear || undefined,
+      exposeUrl: formState.exposeUrl || undefined
     };
 
     if (editingId !== null) {
@@ -660,6 +664,23 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                         </label>
                       </div>
                     </div>
+                  </div>
+
+                  <div className={styles.formGroup}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }}>
+                      <FileText size={16} style={{ color: 'var(--color-accent)' }} />
+                      <span>Exposé-PDF Link (URL) für automatischen E-Mail-Versand</span>
+                    </label>
+                    <input 
+                      type="url" 
+                      value={formState.exposeUrl}
+                      onChange={(e) => setFormState({ ...formState, exposeUrl: e.target.value })}
+                      className={styles.input} 
+                      placeholder="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Expose-Objekt-1.pdf" 
+                    />
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem', display: 'block' }}>
+                      Fügen Sie hier den R2/PDF-Link ein. Interessenten erhalten diese PDF-Datei automatisch per E-Mail nach der Exposé-Anforderung.
+                    </span>
                   </div>
 
                   <div className={styles.formGroup}>
