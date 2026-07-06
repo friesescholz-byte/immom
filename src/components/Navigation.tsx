@@ -108,9 +108,11 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const isDarkHeroPage = currentPage === 'home' || currentPage === 'location-nienburg';
+
   return (
     <>
-      <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+      <header className={`${styles.header} ${isScrolled ? styles.scrolled : (isDarkHeroPage ? styles.darkHero : styles.lightHero)}`}>
         <div className={`${styles.container} container`}>
           <a href="#start" className={styles.logoContainer} onClick={handleLogoClick}>
             <img 

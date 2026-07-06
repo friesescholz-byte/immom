@@ -41,34 +41,58 @@
   gap: 1.75rem;
 }
 
-/* Unscrolled header (transparent over dark hero backgrounds) */
-.header:not(.scrolled) .navLink {
-  color: rgba(255, 255, 255, 0.9);
+/* 1. Unscrolled header over Dark Hero (home & location-nienburg) */
+.darkHero .navLink {
+  color: rgba(255, 255, 255, 0.92) !important;
 }
-.header:not(.scrolled) .navLink:hover {
-  color: #ffffff;
+.darkHero .navLink:hover {
+  color: #ffffff !important;
 }
-.header:not(.scrolled) .active {
+.darkHero .active {
   color: var(--color-accent) !important;
   font-weight: 700;
 }
-.header:not(.scrolled) .phoneLink {
-  color: #ffffff;
+.darkHero .phoneLink {
+  color: #ffffff !important;
+}
+.darkHero .phoneIcon {
+  color: var(--color-accent) !important;
 }
 
-/* Scrolled header (white background) */
+/* 2. Unscrolled header over Light Pages (portfolio & admin) */
+.lightHero .navLink {
+  color: var(--color-primary) !important;
+}
+.lightHero .navLink:hover {
+  color: var(--color-accent-dark) !important;
+}
+.lightHero .active {
+  color: var(--color-primary-dark) !important;
+  font-weight: 700;
+}
+.lightHero .phoneLink {
+  color: var(--color-primary) !important;
+}
+.lightHero .phoneIcon {
+  color: var(--color-accent-dark) !important;
+}
+
+/* 3. Scrolled header (white glassmorphism background on all pages) */
 .scrolled .navLink {
-  color: var(--color-primary);
+  color: var(--color-primary) !important;
 }
 .scrolled .navLink:hover {
-  color: var(--color-accent-dark);
+  color: var(--color-accent-dark) !important;
 }
 .scrolled .active {
-  color: var(--color-primary-dark);
+  color: var(--color-primary-dark) !important;
   font-weight: 700;
 }
 .scrolled .phoneLink {
-  color: var(--color-primary);
+  color: var(--color-primary) !important;
+}
+.scrolled .phoneIcon {
+  color: var(--color-accent-dark) !important;
 }
 
 .navLink {

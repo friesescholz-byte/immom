@@ -394,6 +394,55 @@
   margin: 0;
 }
 
+/* Valuation Section Card Container */
+.valuationSection {
+  padding: 5.5rem 0;
+  background-color: var(--color-bg-light);
+}
+
+.valuationCardWrapper {
+  max-width: 1050px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: var(--border-radius-lg);
+  padding: clamp(2rem, 4vw, 3.5rem);
+  box-shadow: 0 15px 45px rgba(7, 27, 51, 0.08);
+  border: 1px solid rgba(7, 27, 51, 0.08);
+}
+
+.valuationCardHeader {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+}
+
+.valuationCardHeader h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.valuationCardHeader p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.eyebrowBadgeLight {
+  background: rgba(14, 108, 180, 0.1);
+  color: var(--color-primary-light);
+  border: 1px solid rgba(14, 108, 180, 0.2);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--border-radius-full);
+  font-size: 0.785rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
 @media (max-width: 1024px) {
   .aboutGrid, .weserGrid {
     grid-template-columns: 1fr;

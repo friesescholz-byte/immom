@@ -129,12 +129,18 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
                 </div>
               </div>
 
-              <a href="tel:050218601001">
-                <Button variant="primary">
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+                <a href="#bewertung-nienburg">
+                  <Button variant="primary">
+                    <span>Immobilie in Nienburg jetzt gratis bewerten</span>
+                    <ArrowRight size={16} />
+                  </Button>
+                </a>
+                <a href="tel:050218601001" className={styles.phoneBtnLink} style={{ color: 'var(--color-primary)', borderColor: 'rgba(7, 27, 51, 0.2)', background: 'transparent' }}>
                   <Phone size={16} />
-                  <span>Jetzt direkt Christian Menzel anrufen</span>
-                </Button>
-              </a>
+                  <span>05021 - 860 10 01</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -155,7 +161,7 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
               <div style={{ display: 'flex', gap: '1rem' }}>
                 <a href="#bewertung-nienburg">
                   <Button variant="accent">
-                    <span>Jetzt Marktwert in Nienburg prüfen</span>
+                    <span>Jetzt Marktwert in Nienburg kostenlos prüfen</span>
                     <ArrowRight size={16} />
                   </Button>
                 </a>
@@ -244,10 +250,19 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
         </div>
       </section>
 
-      {/* 6. SINGLE Valuation Form Section */}
-      <div id="bewertung-nienburg">
-        <ValuationForm />
-      </div>
+      {/* 6. SINGLE Valuation Form Section Card Container */}
+      <section id="bewertung-nienburg" className={styles.valuationSection}>
+        <div className="container">
+          <div className={styles.valuationCardWrapper}>
+            <div className={styles.valuationCardHeader}>
+              <span className={styles.eyebrowBadgeLight}>Kostenlos & Unverbindlich</span>
+              <h2>Immobilie in Nienburg jetzt online bewerten lassen</h2>
+              <p>Ermitteln Sie in weniger als 2 Minuten den aktuellen Marktwert Ihrer Immobilie im Raum Nienburg & Umgebung.</p>
+            </div>
+            <ValuationForm />
+          </div>
+        </div>
+      </section>
 
     </div>
   );
