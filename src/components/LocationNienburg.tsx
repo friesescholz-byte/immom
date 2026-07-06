@@ -14,19 +14,19 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
   // References showcase
   const referenceList = [
     {
-      title: 'Einfamilienhaus in Nienburg (Nord)',
-      sub: 'Erfolgreich vermittelt zum Höchstpreis',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Screenshot%202026-07-06%20120228_ergebnis.webp'
+      title: 'Klassisches Einfamilienhaus',
+      sub: 'Erfolgreich vermittelt zum Bestpreis in Nienburg',
+      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/EFH-Nienburg-1024x768_ergebnis.webp'
     },
     {
-      title: 'Wohn- & Geschäftshaus Nienburg Altstadt',
-      sub: 'Zügige Abwicklung für Eigentümer',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp'
+      title: 'Großes Wohnhaus mit Naturgarten',
+      sub: 'Zügige Abwicklung für Eigentümer in Nienburg',
+      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/5_ergebnis.webp'
     },
     {
-      title: 'Gepflegtes Reihenhaus Nienburg Weser',
-      sub: 'Diskrete Off-Market Vermittlung',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp'
+      title: 'Massives Klinker-Einfamilienhaus',
+      sub: 'Diskrete Off-Market Vermittlung in Nienburg',
+      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/EFH-Nienburg-1_ergebnis.webp'
     }
   ];
 
