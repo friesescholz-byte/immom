@@ -236,7 +236,7 @@ export const ValuationForm: React.FC = () => {
             <CheckCircle2 size={56} className={styles.successIcon} />
             <h3>Anfrage erfolgreich!</h3>
             <p>
-              Vielen Dank für Ihre Daten. Wir werten Ihre Angaben umgehend aus und Christian Menzel 
+              Vielen Dank für Ihre Daten. Wir werten Ihre Angaben umgehend aus und Carsten Meyer 
               wird sich persönlich bei Ihnen für eine ehrliche Experten-Einschätzung melden.
             </p>
             <span className={styles.successTag}>✓ Spezialisiert auf Nienburg u. die Region</span>

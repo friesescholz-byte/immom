@@ -39,7 +39,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
               <p><strong>Angaben gemäß § 5 TMG:</strong></p>
               <p>
                 ImmoM / CM-Immobilien<br />
-                Inhaber: Christian Menzel<br />
+                Inhaber: Carsten Meyer<br />
                 Postfach 1109, 31607 Marklohe<br />
                 Büro: An den Teichen 30, 31608 Marklohe
               </p>

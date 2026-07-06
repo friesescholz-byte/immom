@@ -71,7 +71,7 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
             </div>
             <div className={styles.trustItem}>
               <CheckCircle2 size={16} style={{ color: 'var(--color-accent)' }} />
-              <span>Persönlich durch Christian Menzel</span>
+              <span>Persönlich durch Carsten Meyer</span>
             </div>
           </div>
 
@@ -90,7 +90,7 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
         </div>
       </section>
 
-      {/* 2. Über Christian Menzel Section */}
+      {/* 2. Über Carsten Meyer Section */}
       <section className={styles.aboutSection}>
         <div className="container">
           <div className={styles.aboutGrid}>
@@ -99,15 +99,16 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
                 src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp" 
                 alt="Altstadt Nienburg" 
                 className={styles.altstadtBgImg} 
+                
               />
               <div className={styles.profileCardFloat}>
                 <img 
                   src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/profile_32106_ergebnis.webp" 
-                  alt="Christian Menzel" 
+                  alt="Carsten Meyer" 
                   className={styles.profileThumb} 
                 />
                 <div className={styles.profileInfo}>
-                  <strong>Christian Menzel</strong>
+                  <strong>Carsten Meyer</strong>
                   <span>Gründer & Ihr Makler vor Ort</span>
                 </div>
               </div>
@@ -119,7 +120,7 @@ export const LocationNienburg: React.FC<LocationNienburgProps> = () => {
                 Ihr persönlicher Ansprechpartner in Nienburg
               </h2>
               <p className={styles.aboutText}>
-                Mein Name ist Christian Menzel. Seit über 25 Jahren begleite ich Eigentümer im Landkreis Nienburg (Weser) beim erfolgreichen Verkauf ihrer Immobilie. Bei ImmoM gibt es keine anonymen Callcenter oder wechselnden Sachbearbeiter – ich kümmere mich persönlich um Ihren Verkaufserfolg.
+                Mein Name ist Carsten Meyer. Seit über 25 Jahren begleite ich Eigentümer im Landkreis Nienburg (Weser) beim erfolgreichen Verkauf ihrer Immobilie. Bei ImmoM gibt es keine anonymen Callcenter oder wechselnden Sachbearbeiter – ich kümmere mich persönlich um Ihren Verkaufserfolg.
               </p>
               
               <div className={styles.benefitsList}>
