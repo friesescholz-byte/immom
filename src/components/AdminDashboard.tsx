@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Edit3, Key, LogOut, CheckCircle, X, FileText } from 'lucide-react';
+import { Plus, Trash2, Edit3, Key, LogOut, CheckCircle, X, FileText, Inbox, Search, Clock } from 'lucide-react';
 import styles from './AdminDashboard.module.css';
 import Button from './ui/Button';
 import Card from './ui/Card';
 import { type Property } from './Portfolio';
+import { getLeads, updateLeadStatus, deleteLead, type LeadInquiry } from '../utils/leadStorage';
 
 interface AdminDashboardProps {
   properties: Property[];
@@ -15,6 +16,45 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [authError, setAuthError] = useState(false);
+
+  // Tab & Lead State
+  const [activeTab, setActiveTab] = useState<'properties' | 'leads'>('properties');
+  const [leadsFilter, setLeadsFilter] = useState<'all' | 'expose' | 'valuation' | 'checklist'>('all');
+  const [leads, setLeads] = useState<LeadInquiry[]>([]);
+  const [leadSearch, setLeadSearch] = useState('');
+
+  React.useEffect(() => {
+    setLeads(getLeads());
+  }, []);
+
+  const handleToggleLeadStatus = (id: string, currentStatus: 'neu' | 'bearbeitet') => {
+    const newStatus = currentStatus === 'neu' ? 'bearbeitet' : 'neu';
+    const updated = updateLeadStatus(id, newStatus);
+    setLeads(updated);
+  };
+
+  const handleDeleteLead = (id: string) => {
+    if (window.confirm('Möchten Sie diese Anfrage wirklich löschen?')) {
+      const updated = deleteLead(id);
+      setLeads(updated);
+    }
+  };
+
+  const handleExposePdfUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.type !== 'application/pdf') {
+        alert('Bitte wählen Sie eine gültige PDF-Datei aus.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        setFormState(prev => ({ ...prev, exposeUrl: result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Form State
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -321,66 +361,205 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
           </div>
         </div>
 
-        {/* Properties List Table */}
-        <div className={styles.dashboardBody}>
-          <div className={styles.listHeader}>
-            <h3>Aktuelle Immobilien ({properties.length})</h3>
-            <Button variant="accent" onClick={handleOpenCreate} className={styles.createBtn}>
-              <Plus size={18} />
-              <span>Neue Immobilie anlegen</span>
-            </Button>
-          </div>
-
-          <div className={styles.tableWrapper}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  <th>Vorschau</th>
-                  <th>Titel</th>
-                  <th>Ort</th>
-                  <th>Preis</th>
-                  <th>Fläche / Zimmer</th>
-                  <th>Status</th>
-                  <th style={{ textAlign: 'right' }}>Aktionen</th>
-                </tr>
-              </thead>
-              <tbody>
-                {properties.map(p => (
-                  <tr key={p.id}>
-                    <td>
-                      <div className={styles.previewWrapper}>
-                        <img src={p.img} alt={p.title} className={styles.previewImg} />
-                      </div>
-                    </td>
-                    <td>
-                      <strong>{p.title}</strong>
-                      <span className={styles.badgeMuted}>{p.type}</span>
-                    </td>
-                    <td>{p.location}</td>
-                    <td>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(p.price)}</td>
-                    <td>{p.area} m² / {p.rooms} Zi.</td>
-                    <td>
-                      <span className={`${styles.statusLabel} ${styles[p.status]}`}>
-                        {p.status === 'verfuegbar' ? 'Verfügbar' : p.status === 'reserviert' ? 'Reserviert' : 'Verkauft'}
-                      </span>
-                    </td>
-                    <td style={{ textAlign: 'right' }}>
-                      <div className={styles.actionsCell}>
-                        <button className={styles.editCellBtn} onClick={() => handleOpenEdit(p)} title="Bearbeiten">
-                          <Edit3 size={16} />
-                        </button>
-                        <button className={styles.deleteCellBtn} onClick={() => handleDelete(p.id)} title="Löschen">
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {/* Tab Navigation Bar */}
+        <div className={styles.tabNav}>
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'properties' ? styles.tabBtnActive : ''}`}
+            onClick={() => setActiveTab('properties')}
+          >
+            <FileText size={18} />
+            <span>Immobilien-Portfolio ({properties.length})</span>
+          </button>
+          
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'leads' ? styles.tabBtnActive : ''}`}
+            onClick={() => setActiveTab('leads')}
+          >
+            <Inbox size={18} />
+            <span>Anfragen & Leads</span>
+            {leads.filter(l => l.status === 'neu').length > 0 && (
+              <span className={styles.tabBadge}>
+                {leads.filter(l => l.status === 'neu').length} Neu
+              </span>
+            )}
+          </button>
         </div>
 
+        {/* TAB 1: PROPERTIES MANAGEMENT */}
+        {activeTab === 'properties' ? (
+          <div className={styles.dashboardBody}>
+            <div className={styles.listHeader}>
+              <h3>Aktuelle Immobilien ({properties.length})</h3>
+              <Button variant="accent" onClick={handleOpenCreate} className={styles.createBtn}>
+                <Plus size={18} />
+                <span>Neue Immobilie anlegen</span>
+              </Button>
+            </div>
+
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Vorschau</th>
+                    <th>Titel</th>
+                    <th>Ort</th>
+                    <th>Preis</th>
+                    <th>Fläche / Zimmer</th>
+                    <th>Status</th>
+                    <th style={{ textAlign: 'right' }}>Aktionen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {properties.map(p => (
+                    <tr key={p.id}>
+                      <td>
+                        <div className={styles.previewWrapper}>
+                          <img src={p.img} alt={p.title} className={styles.previewImg} />
+                        </div>
+                      </td>
+                      <td>
+                        <strong>{p.title}</strong>
+                        <span className={styles.badgeMuted}>{p.type}</span>
+                        {p.exposeUrl && (
+                          <span style={{ display: 'block', fontSize: '0.7rem', color: '#16a34a', marginTop: '2px' }}>
+                            ✓ PDF-Exposé hinterlegt
+                          </span>
+                        )}
+                      </td>
+                      <td>{p.location}</td>
+                      <td>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(p.price)}</td>
+                      <td>{p.area} m² / {p.rooms} Zi.</td>
+                      <td>
+                        <span className={`${styles.statusBadge} ${styles[p.status]}`}>
+                          {p.statusTag || p.status}
+                        </span>
+                      </td>
+                      <td style={{ textAlign: 'right' }}>
+                        <div className={styles.actionBtns}>
+                          <button className={styles.editCellBtn} onClick={() => handleOpenEdit(p)} title="Bearbeiten">
+                            <Edit3 size={16} />
+                          </button>
+                          <button className={styles.deleteCellBtn} onClick={() => handleDelete(p.id)} title="Löschen">
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : (
+          /* TAB 2: LEADS & ANFRAGEN MANAGEMENT */
+          <div className={styles.dashboardBody}>
+            <div className={styles.leadsFilterBar}>
+              <div className={styles.filterGroup}>
+                <button 
+                  className={`${styles.filterPill} ${leadsFilter === 'all' ? styles.filterPillActive : ''}`}
+                  onClick={() => setLeadsFilter('all')}
+                >
+                  Alle ({leads.length})
+                </button>
+                <button 
+                  className={`${styles.filterPill} ${leadsFilter === 'expose' ? styles.filterPillActive : ''}`}
+                  onClick={() => setLeadsFilter('expose')}
+                >
+                  Exposés ({leads.filter(l => l.type === 'expose').length})
+                </button>
+                <button 
+                  className={`${styles.filterPill} ${leadsFilter === 'valuation' ? styles.filterPillActive : ''}`}
+                  onClick={() => setLeadsFilter('valuation')}
+                >
+                  Wertermittlungen ({leads.filter(l => l.type === 'valuation').length})
+                </button>
+                <button 
+                  className={`${styles.filterPill} ${leadsFilter === 'checklist' ? styles.filterPillActive : ''}`}
+                  onClick={() => setLeadsFilter('checklist')}
+                >
+                  Checklisten ({leads.filter(l => l.type === 'checklist').length})
+                </button>
+              </div>
+
+              <div style={{ position: 'relative', width: '260px' }}>
+                <input 
+                  type="text" 
+                  placeholder="Suchen nach Name/E-Mail..."
+                  value={leadSearch}
+                  onChange={(e) => setLeadSearch(e.target.value)}
+                  className={styles.input}
+                  style={{ paddingLeft: '2.5rem', fontSize: '0.85rem' }}
+                />
+                <Search size={16} style={{ position: 'absolute', left: '0.85rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+              </div>
+            </div>
+
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>Datum</th>
+                    <th>Typ</th>
+                    <th>Name / Kontaktdaten</th>
+                    <th>Details / Anliegen</th>
+                    <th>Status</th>
+                    <th style={{ textAlign: 'right' }}>Aktionen</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {leads
+                    .filter(l => leadsFilter === 'all' || l.type === leadsFilter)
+                    .filter(l => !leadSearch || l.name.toLowerCase().includes(leadSearch.toLowerCase()) || l.email.toLowerCase().includes(leadSearch.toLowerCase()))
+                    .map(lead => (
+                      <tr key={lead.id}>
+                        <td style={{ fontSize: '0.8rem', color: '#64748b', whiteSpace: 'nowrap' }}>
+                          <Clock size={12} style={{ display: 'inline', marginRight: '4px' }} />
+                          {lead.date}
+                        </td>
+                        <td>
+                          <span className={styles.badgeMuted} style={{ background: lead.type === 'expose' ? '#e0f2fe' : lead.type === 'valuation' ? '#fef3c7' : '#f3e8ff', color: '#071B33', fontWeight: 700 }}>
+                            {lead.type === 'expose' ? '🏡 Exposé' : lead.type === 'valuation' ? '🏛️ Wertermittlung' : '📚 Checkliste'}
+                          </span>
+                        </td>
+                        <td>
+                          <strong style={{ display: 'block', fontSize: '0.9rem' }}>{lead.name}</strong>
+                          <div style={{ fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                            <a href={`mailto:${lead.email}`} style={{ color: '#0284c7', textDecoration: 'none' }}>{lead.email}</a>
+                            {lead.phone && <a href={`tel:${lead.phone}`} style={{ color: '#475569', textDecoration: 'none' }}>{lead.phone}</a>}
+                          </div>
+                        </td>
+                        <td style={{ maxWidth: '300px' }}>
+                          {lead.propertyTitle && (
+                            <strong style={{ display: 'block', fontSize: '0.8rem', color: '#071B33', marginBottom: '2px' }}>
+                              Objekt: {lead.propertyTitle}
+                            </strong>
+                          )}
+                          <span style={{ fontSize: '0.8rem', color: '#64748b', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {lead.details}
+                          </span>
+                        </td>
+                        <td>
+                          <button 
+                            onClick={() => handleToggleLeadStatus(lead.id, lead.status)}
+                            className={lead.status === 'neu' ? styles.statusBadgeNeu : styles.statusBadgeDone}
+                            style={{ border: 'none', cursor: 'pointer' }}
+                            title="Klicken um Status zu ändern"
+                          >
+                            {lead.status === 'neu' ? '⚡ Neu' : '✓ Erledigt'}
+                          </button>
+                        </td>
+                        <td style={{ textAlign: 'right' }}>
+                          <button className={styles.deleteCellBtn} onClick={() => handleDeleteLead(lead.id)} title="Anfrage löschen">
+                            <Trash2 size={16} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}     
       </div>
 
       {/* Create / Edit Form Modal */}
@@ -669,18 +848,53 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                   <div className={styles.formGroup}>
                     <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600 }}>
                       <FileText size={16} style={{ color: 'var(--color-accent)' }} />
-                      <span>Exposé-PDF Link (URL) für automatischen E-Mail-Versand</span>
+                      <span>Exposé-PDF (Upload von PC oder Web-Link)</span>
                     </label>
-                    <input 
-                      type="url" 
-                      value={formState.exposeUrl}
-                      onChange={(e) => setFormState({ ...formState, exposeUrl: e.target.value })}
-                      className={styles.input} 
-                      placeholder="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Expose-Objekt-1.pdf" 
-                    />
-                    <span style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.25rem', display: 'block' }}>
-                      Fügen Sie hier den R2/PDF-Link ein. Interessenten erhalten diese PDF-Datei automatisch per E-Mail nach der Exposé-Anforderung.
-                    </span>
+
+                    {formState.exposeUrl ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: '#f1f5f9', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+                        <FileText size={24} style={{ color: '#0284c7' }} />
+                        <div style={{ flex: 1, overflow: 'hidden' }}>
+                          <strong style={{ fontSize: '0.85rem', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: '#071B33' }}>
+                            {formState.exposeUrl.startsWith('data:application/pdf') ? '📄 PDF-Datei erfolgreich hochgeladen' : formState.exposeUrl}
+                          </strong>
+                          <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Wird Interessenten nach der Anfrage automatisch zugesendet</span>
+                        </div>
+                        <button 
+                          type="button" 
+                          onClick={() => setFormState(prev => ({ ...prev, exposeUrl: '' }))}
+                          style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.4rem 0.6rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem' }}
+                        >
+                          <Trash2 size={14} />
+                          <span>Entfernen</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <div className={styles.uploadZone} style={{ padding: '1rem' }}>
+                          <input 
+                            type="file" 
+                            id="expose-pdf-upload"
+                            accept="application/pdf"
+                            onChange={handleExposePdfUpload}
+                            className={styles.fileInputHidden}
+                          />
+                          <label htmlFor="expose-pdf-upload" className={styles.uploadLabel} style={{ flexDirection: 'row', gap: '0.5rem' }}>
+                            <Plus size={18} />
+                            <FileText size={18} />
+                            <span>PDF-Exposé von Festplatte hochladen</span>
+                          </label>
+                        </div>
+                        <span style={{ textAlign: 'center', fontSize: '0.75rem', color: '#94a3b8' }}>oder direkten R2 PDF-Link eingeben:</span>
+                        <input 
+                          type="url" 
+                          value={formState.exposeUrl}
+                          onChange={(e) => setFormState({ ...formState, exposeUrl: e.target.value })}
+                          className={styles.input} 
+                          placeholder="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Expose-Objekt-1.pdf" 
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className={styles.formGroup}>

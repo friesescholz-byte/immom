@@ -14,6 +14,7 @@ import Tippgeber from './components/Tippgeber';
 import Contact from './components/Contact';
 import Portfolio, { type Property } from './components/Portfolio';
 import AdminDashboard from './components/AdminDashboard';
+import LocationNienburg from './components/LocationNienburg';
 
 const DEFAULT_PROPERTIES: Property[] = [
   {
@@ -283,7 +284,7 @@ const DEFAULT_PROPERTIES: Property[] = [
 ];
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'portfolio' | 'admin'>(() => {
+  const [currentPage, setCurrentPage] = useState<'home' | 'portfolio' | 'admin' | 'location-nienburg'>(() => {
     const path = window.location.pathname;
     if (path === '/admin') return 'admin';
     if (path === '/portfolio') return 'portfolio';
@@ -386,6 +387,8 @@ function App() {
             initialPropertyId={initialPropertyId} 
             setInitialPropertyId={setInitialPropertyId} 
           />
+        ) : currentPage === 'location-nienburg' ? (
+          <LocationNienburg properties={properties} setCurrentPage={setCurrentPage} />
         ) : (
           <AdminDashboard properties={properties} setProperties={setProperties} />
         )}

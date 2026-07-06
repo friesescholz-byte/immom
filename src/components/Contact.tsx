@@ -7,8 +7,8 @@ import LegalModal from './LegalModal';
 import ValuationForm from './ValuationForm';
 
 interface ContactProps {
-  currentPage: 'home' | 'portfolio' | 'admin';
-  setCurrentPage: (page: 'home' | 'portfolio' | 'admin') => void;
+  currentPage: 'home' | 'portfolio' | 'admin' | 'location-nienburg';
+  setCurrentPage: (page: 'home' | 'portfolio' | 'admin' | 'location-nienburg') => void;
 }
 
 export const Contact: React.FC<ContactProps> = ({ currentPage, setCurrentPage }) => {

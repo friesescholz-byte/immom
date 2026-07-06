@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import styles from './ValuationForm.module.css';
 import Button from './ui/Button';
+import { saveLead } from '../utils/leadStorage';
 
 export const ValuationForm: React.FC = () => {
   const [flow, setFlow] = useState<'start' | 'haus' | 'wohnung' | 'gewerbe' | 'beratung'>('start');
@@ -176,6 +177,13 @@ export const ValuationForm: React.FC = () => {
       const resData = await response.json();
       if (response.ok && resData.success) {
         setIsSubmitted(true);
+        saveLead({
+          type: 'valuation',
+          name: `${formData.vorname || ''} ${formData.nachname || ''}`.trim() || 'Interessent',
+          email: formData.email || '',
+          phone: formData.phone || '',
+          details: `Online-Wertermittlung (${flow.toUpperCase()})`
+        });
       } else {
         setErrorMessage(resData.message || "Es gab einen Fehler beim Absenden. Bitte versuchen Sie es erneut.");
       }

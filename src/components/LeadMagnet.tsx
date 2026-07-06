@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, Download, FileText } from 'lucide-react';
 import styles from './LeadMagnet.module.css';
 import Button from './ui/Button';
+import { saveLead } from '../utils/leadStorage';
 
 export const LeadMagnet: React.FC = () => {
   // Checklist Form State
@@ -87,6 +88,12 @@ export const LeadMagnet: React.FC = () => {
       const resData = await response.json();
       if (response.ok && resData.success) {
         setIsChecklistSubmitted(true);
+        saveLead({
+          type: 'checklist',
+          name: 'Interessent (' + checklistEmail + ')',
+          email: checklistEmail,
+          details: 'Eigentümer-Ratgeber Checklisten angefordert'
+        });
       } else {
         setErrorMessage(resData.message || "Es gab einen Fehler beim Absenden. Bitte versuchen Sie es erneut.");
       }

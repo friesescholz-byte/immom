@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Phone, Menu, X, ArrowRight } from 'lucide-react';
+import { Phone, Menu, X, ArrowRight, ChevronDown, MapPin } from 'lucide-react';
 import styles from './Navigation.module.css';
 
 interface NavigationProps {
-  currentPage: 'home' | 'portfolio' | 'admin';
-  setCurrentPage: (page: 'home' | 'portfolio' | 'admin') => void;
+  currentPage: 'home' | 'portfolio' | 'admin' | 'location-nienburg';
+  setCurrentPage: (page: 'home' | 'portfolio' | 'admin' | 'location-nienburg') => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentPage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const navItems = [
     { label: 'Portfolio', target: 'portfolio', id: 'portfolio', type: 'page' },
@@ -32,6 +33,10 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
       }
       if (currentPage === 'admin') {
         setActiveSection('admin');
+        return;
+      }
+      if (currentPage === 'location-nienburg') {
+        setActiveSection('standorte');
         return;
       }
 
@@ -69,6 +74,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
 
   const handleNavClick = (item: typeof navItems[0]) => {
     setIsMobileMenuOpen(false);
+    setIsDropdownOpen(false);
     if (item.type === 'page') {
       setCurrentPage('portfolio');
       setActiveSection('portfolio');
@@ -95,6 +101,14 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
     setActiveSection('');
   };
 
+  const handleSelectNienburg = () => {
+    setIsDropdownOpen(false);
+    setIsMobileMenuOpen(false);
+    setCurrentPage('location-nienburg');
+    setActiveSection('standorte');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <>
       <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
@@ -109,7 +123,90 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
 
           {/* Desktop Navigation */}
           <nav className={styles.desktopNav}>
-            {navItems.map((item) => (
+            {navItems.slice(0, 4).map((item) => (
+              <a
+                key={item.id}
+                href={item.type === 'anchor' ? item.target : '#'}
+                className={`${styles.navLink} ${activeSection === item.id ? styles.active : ''}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(item);
+                }}
+              >
+                {item.label}
+                {activeSection === item.id && (
+                  <motion.span 
+                    layoutId="activeIndicator" 
+                    className={styles.activeIndicator}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            ))}
+
+            {/* Standorte Dropdown */}
+            <div 
+              className={styles.dropdownWrapper}
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+            >
+              <button 
+                className={`${styles.navLink} ${activeSection === 'standorte' ? styles.active : ''}`}
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+              >
+                <span>Standorte</span>
+                <ChevronDown size={14} style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+                {activeSection === 'standorte' && (
+                  <motion.span 
+                    layoutId="activeIndicator" 
+                    className={styles.activeIndicator}
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </button>
+
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.div 
+                    className={styles.dropdownMenu}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <div 
+                      className={styles.dropdownItem} 
+                      onClick={handleSelectNienburg}
+                    >
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <MapPin size={14} style={{ color: 'var(--color-accent-dark)' }} />
+                        Nienburg (Weser)
+                      </span>
+                      <span className={styles.dropdownBadge}>Aktiv</span>
+                    </div>
+
+                    <div className={styles.dropdownItem} style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <MapPin size={14} />
+                        Marklohe
+                      </span>
+                      <span className={styles.dropdownBadgeMuted}>Demnächst</span>
+                    </div>
+
+                    <div className={styles.dropdownItem} style={{ opacity: 0.6, cursor: 'not-allowed' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <MapPin size={14} />
+                        Verden
+                      </span>
+                      <span className={styles.dropdownBadgeMuted}>Demnächst</span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {navItems.slice(4).map((item) => (
               <a
                 key={item.id}
                 href={item.type === 'anchor' ? item.target : '#'}
@@ -179,6 +276,18 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
                   {item.label}
                 </a>
               ))}
+
+              <div style={{ padding: '0.75rem 0', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '0.5rem' }}>Standorte</span>
+                <button 
+                  onClick={handleSelectNienburg} 
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(217, 162, 74, 0.15)', color: '#D9A24A', border: '1px solid #D9A24A', padding: '0.75rem 1rem', borderRadius: '8px', width: '100%', fontWeight: 700 }}
+                >
+                  <MapPin size={18} />
+                  <span>Standort Nienburg (Weser)</span>
+                </button>
+              </div>
+
               <div className={styles.mobileActions}>
                 <a href="tel:+4950218601001" className={styles.mobilePhoneLink}>
                   <Phone size={20} />

@@ -4,6 +4,7 @@ import { MapPin, ArrowRight, Grid, ListFilter, SlidersHorizontal, Info, X, Send,
 import styles from './Portfolio.module.css';
 import Button from './ui/Button';
 import Card from './ui/Card';
+import { saveLead } from '../utils/leadStorage';
 
 export interface Property {
   id: number;
@@ -191,6 +192,14 @@ export const Portfolio: React.FC<PortfolioProps> = ({
       const resData = await response.json();
       if (response.ok && resData.success) {
         setIsSent(true);
+        saveLead({
+          type: 'expose',
+          name: contactForm.name,
+          email: contactForm.email,
+          phone: contactForm.phone,
+          details: contactForm.msg,
+          propertyTitle: selectedProperty.title
+        });
       } else {
         setErrorMessage(resData.message || "Es gab einen Fehler beim Absenden. Bitte versuchen Sie es erneut.");
       }

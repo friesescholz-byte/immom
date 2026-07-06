@@ -69,6 +69,68 @@
   border-radius: var(--border-radius-full);
 }
 
+/* Standorte Dropdown Menu */
+.dropdownWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(7, 27, 51, 0.1);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 12px 35px rgba(7, 27, 51, 0.15);
+  padding: 0.5rem;
+  min-width: 200px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: rgba(122, 146, 163, 0.1);
+  color: var(--color-accent-dark);
+}
+
+.dropdownBadge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  background: var(--color-accent);
+  color: var(--color-primary-dark);
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--border-radius-sm);
+  text-transform: uppercase;
+}
+
+.dropdownBadgeMuted {
+  font-size: 0.65rem;
+  font-weight: 600;
+  background: #f1f5f9;
+  color: #94a3b8;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--border-radius-sm);
+}
+
 .actions {
   display: flex;
   align-items: center;
