@@ -22,6 +22,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
   const [leadsFilter, setLeadsFilter] = useState<'all' | 'expose' | 'valuation' | 'checklist'>('all');
   const [leads, setLeads] = useState<LeadInquiry[]>([]);
   const [leadSearch, setLeadSearch] = useState('');
+  const [selectedLead, setSelectedLead] = useState<LeadInquiry | null>(null);
 
   React.useEffect(() => {
     setLeads(getLeads());
@@ -511,7 +512,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                     .filter(l => leadsFilter === 'all' || l.type === leadsFilter)
                     .filter(l => !leadSearch || l.name.toLowerCase().includes(leadSearch.toLowerCase()) || l.email.toLowerCase().includes(leadSearch.toLowerCase()))
                     .map(lead => (
-                      <tr key={lead.id}>
+                      <tr 
+                        key={lead.id} 
+                        style={{ cursor: 'pointer' }} 
+                        onClick={() => setSelectedLead(lead)}
+                        title="Klicken für vollständige Details"
+                      >
                         <td style={{ fontSize: '0.8rem', color: '#64748b', whiteSpace: 'nowrap' }}>
                           <Clock size={12} style={{ display: 'inline', marginRight: '4px' }} />
                           {lead.date}
@@ -524,8 +530,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                         <td>
                           <strong style={{ display: 'block', fontSize: '0.9rem' }}>{lead.name}</strong>
                           <div style={{ fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                            <a href={`mailto:${lead.email}`} style={{ color: '#0284c7', textDecoration: 'none' }}>{lead.email}</a>
-                            {lead.phone && <a href={`tel:${lead.phone}`} style={{ color: '#475569', textDecoration: 'none' }}>{lead.phone}</a>}
+                            <a href={`mailto:${lead.email}`} style={{ color: '#0284c7', textDecoration: 'none' }} onClick={(e) => e.stopPropagation()}>{lead.email}</a>
+                            {lead.phone && <a href={`tel:${lead.phone}`} style={{ color: '#475569', textDecoration: 'none' }} onClick={(e) => e.stopPropagation()}>{lead.phone}</a>}
                           </div>
                         </td>
                         <td style={{ maxWidth: '300px' }}>
@@ -540,7 +546,10 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                         </td>
                         <td>
                           <button 
-                            onClick={() => handleToggleLeadStatus(lead.id, lead.status)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleToggleLeadStatus(lead.id, lead.status);
+                            }}
                             className={lead.status === 'neu' ? styles.statusBadgeNeu : styles.statusBadgeDone}
                             style={{ border: 'none', cursor: 'pointer' }}
                             title="Klicken um Status zu ändern"
@@ -549,7 +558,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                           </button>
                         </td>
                         <td style={{ textAlign: 'right' }}>
-                          <button className={styles.deleteCellBtn} onClick={() => handleDeleteLead(lead.id)} title="Anfrage löschen">
+                          <button 
+                            className={styles.deleteCellBtn} 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteLead(lead.id);
+                            }} 
+                            title="Anfrage löschen"
+                          >
                             <Trash2 size={16} />
                           </button>
                         </td>
@@ -999,6 +1015,106 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                     <span>{editingId !== null ? 'Änderungen speichern' : 'Objekt anlegen'}</span>
                   </Button>
                 </form>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Lead Details Modal */}
+        {selectedLead && (
+          <motion.div 
+            className={styles.modalBackdrop}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedLead(null)}
+          >
+            <motion.div 
+              className={styles.modal}
+              initial={{ scale: 0.95, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{ maxWidth: '600px' }}
+            >
+              <button className={styles.closeBtn} onClick={() => setSelectedLead(null)}>
+                <X size={24} />
+              </button>
+
+              <div className={styles.modalBody} style={{ padding: '2rem 1.5rem 1rem' }}>
+                <span className={styles.badgeMuted} style={{ background: selectedLead.type === 'expose' ? '#e0f2fe' : selectedLead.type === 'valuation' ? '#fef3c7' : '#f3e8ff', color: '#071B33', fontWeight: 800, fontSize: '0.8rem', padding: '0.35rem 0.75rem', borderRadius: '4px', textTransform: 'uppercase', marginBottom: '1.25rem', display: 'inline-block' }}>
+                  {selectedLead.type === 'expose' ? '🏡 Exposé-Anfrage' : selectedLead.type === 'valuation' ? '🏛️ Online-Wertermittlung' : '📚 Ratgeber-Checkliste'}
+                </span>
+                
+                <h3 style={{ margin: '0 0 1.5rem 0', fontFamily: 'var(--font-serif)', fontSize: '1.6rem', color: 'var(--color-primary)' }}>Anfrage Details</h3>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', borderBottom: '1px solid #e2e8f0', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
+                  <div>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>Datum / Uhrzeit</span>
+                    <strong style={{ color: '#071B33', fontSize: '0.95rem' }}>{selectedLead.date}</strong>
+                  </div>
+
+                  <div>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>Name des Interessenten</span>
+                    <strong style={{ color: '#071B33', fontSize: '1.1rem' }}>{selectedLead.name}</strong>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div>
+                      <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>E-Mail-Adresse</span>
+                      <a href={`mailto:${selectedLead.email}`} style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'none', fontSize: '0.95rem' }}>{selectedLead.email}</a>
+                    </div>
+                    {selectedLead.phone && (
+                      <div>
+                        <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>Telefonnummer</span>
+                        <a href={`tel:${selectedLead.phone}`} style={{ color: '#0284c7', fontWeight: 600, textDecoration: 'none', fontSize: '0.95rem' }}>{selectedLead.phone}</a>
+                      </div>
+                    )}
+                  </div>
+
+                  {selectedLead.propertyTitle && (
+                    <div>
+                      <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>Interesse an Objekt</span>
+                      <strong style={{ color: '#071B33', fontSize: '0.95rem' }}>{selectedLead.propertyTitle}</strong>
+                    </div>
+                  )}
+                </div>
+
+                <div style={{ marginBottom: '2rem' }}>
+                  <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.5rem' }}>Nachricht / Details</span>
+                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '1.25rem', color: '#334155', fontSize: '0.95rem', lineHeight: '1.6', whiteSpace: 'pre-wrap', maxHeight: '200px', overflowY: 'auto' }}>
+                    {selectedLead.details}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+                  <button 
+                    onClick={() => {
+                      handleToggleLeadStatus(selectedLead.id, selectedLead.status);
+                      setSelectedLead(null);
+                    }}
+                    style={{ background: selectedLead.status === 'neu' ? '#10b981' : '#64748b', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.6rem 1.2rem', cursor: 'pointer', fontWeight: 700, fontSize: '0.85rem' }}
+                  >
+                    {selectedLead.status === 'neu' ? 'Als erledigt markieren' : 'Als neu markieren'}
+                  </button>
+                  
+                  <button 
+                    onClick={() => {
+                      handleDeleteLead(selectedLead.id);
+                      setSelectedLead(null);
+                    }}
+                    style={{ background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', padding: '0.6rem 1.2rem', cursor: 'pointer', fontWeight: 700, fontSize: '0.85rem' }}
+                  >
+                    Löschen
+                  </button>
+                  
+                  <button 
+                    onClick={() => setSelectedLead(null)}
+                    style={{ background: '#e2e8f0', color: '#475569', border: 'none', borderRadius: '6px', padding: '0.6rem 1.2rem', cursor: 'pointer', fontWeight: 700, fontSize: '0.85rem' }}
+                  >
+                    Schließen
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
