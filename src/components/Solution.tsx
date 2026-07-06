@@ -14,7 +14,7 @@ export const Solution: React.FC = () => {
     {
       icon: <ShieldCheck size={28} />,
       title: 'Sicher & Zielgerichtet',
-      text: 'Zugriff auf unsere umfangreiche Datenbank vorgemerkter, bonitätsgeprüfter Kaufinteressenten in der Region.',
+      text: 'Zugriff auf unsere umfangreiche Datenbank vorgemerkter, bonitätsgeprüfter Kaufinteressenten – regional & überregional.',
     },
     {
       icon: <HeartHandshake size={28} />,

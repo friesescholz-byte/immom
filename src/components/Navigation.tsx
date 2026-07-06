@@ -124,7 +124,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
 
           {/* Desktop Navigation */}
           <nav className={styles.desktopNav}>
-            {navItems.slice(0, 3).map((item) => (
+            {navItems.map((item) => (
               <a
                 key={item.id}
                 href={item.type === 'anchor' ? item.target : '#'}
@@ -189,27 +189,6 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
                 )}
               </AnimatePresence>
             </div>
-
-            {navItems.slice(3).map((item) => (
-              <a
-                key={item.id}
-                href={item.type === 'anchor' ? item.target : '#'}
-                className={`${styles.navLink} ${activeSection === item.id ? styles.active : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item);
-                }}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <motion.span 
-                    layoutId="activeIndicator" 
-                    className={styles.activeIndicator}
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </a>
-            ))}
           </nav>
 
           {/* Action Area */}

@@ -217,7 +217,7 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
           animate="visible"
         >
           <motion.span className={styles.eyebrow} variants={itemVariants}>
-            Ihr Partner für den Immobilienverkauf in Nienburg
+            Ihr Partner für den Immobilienverkauf – regional & überregional
           </motion.span>
           
           <motion.h1 className={styles.title} variants={itemVariants}>
@@ -226,7 +226,7 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
           </motion.h1>
           
           <motion.p className={styles.subtitle} variants={itemVariants}>
-            Immobilienverkauf für Eigentümer in Nienburg/Weser, Marklohe und der Region – 
+            Immobilienverkauf für Eigentümer im Landkreis Nienburg, der Weserregion sowie überregional – 
             mit über 30 Jahren Erfahrung, einem starken Netzwerk und maßgeschneiderten Vermarktungskonzepten.
           </motion.p>
           

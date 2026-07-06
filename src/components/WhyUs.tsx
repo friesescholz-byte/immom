@@ -11,7 +11,7 @@ export const WhyUs: React.FC = () => {
     },
     {
       title: 'Tiefgehende Marktkenntnis',
-      description: 'Verwurzelt in Nienburg/Weser, Marklohe und der Region – für eine punktgenaue Kaufpreis-Ermittlung.'
+      description: 'Tätig im Landkreis Nienburg, den angrenzenden Regionen sowie überregional – für eine punktgenaue Kaufpreis-Ermittlung.'
     },
     {
       title: 'Rundum-Sorglos-Begleitung',
@@ -50,7 +50,7 @@ export const WhyUs: React.FC = () => {
               Unser Anspruch ist eine Vermarktung, die verständlich, persönlich und verlässlich ist.
             </p>
             <p>
-              Wir kennen die Region, die Käufergruppen und die Besonderheiten des lokalen Marktes. 
+              Wir kennen die Käufergruppen, die regionalen Märkte im Norden und arbeiten überregional vernetzt. 
               Genau dieses Wissen macht den Unterschied, wenn aus einer Immobilie ein erfolgreicher Verkauf 
               werden soll.
             </p>
