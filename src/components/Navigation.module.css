@@ -10,12 +10,12 @@
 }
 
 .scrolled {
-  background-color: rgba(250, 248, 245, 0.85);
+  background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 0.9rem 0;
-  box-shadow: var(--shadow-sm);
-  border-bottom: 1px solid rgba(15, 45, 30, 0.05);
+  box-shadow: 0 4px 20px rgba(7, 27, 51, 0.08);
+  border-bottom: 1px solid rgba(7, 27, 51, 0.08);
 }
 
 .container {
@@ -38,25 +38,46 @@
 .desktopNav {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.75rem;
+}
+
+/* Unscrolled header (transparent over dark hero backgrounds) */
+.header:not(.scrolled) .navLink {
+  color: rgba(255, 255, 255, 0.9);
+}
+.header:not(.scrolled) .navLink:hover {
+  color: #ffffff;
+}
+.header:not(.scrolled) .active {
+  color: var(--color-accent) !important;
+  font-weight: 700;
+}
+.header:not(.scrolled) .phoneLink {
+  color: #ffffff;
+}
+
+/* Scrolled header (white background) */
+.scrolled .navLink {
+  color: var(--color-primary);
+}
+.scrolled .navLink:hover {
+  color: var(--color-accent-dark);
+}
+.scrolled .active {
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+.scrolled .phoneLink {
+  color: var(--color-primary);
 }
 
 .navLink {
   font-family: var(--font-sans);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--color-text-muted);
   position: relative;
   padding: 0.5rem 0;
-}
-
-.navLink:hover {
-  color: var(--color-primary);
-}
-
-.active {
-  color: var(--color-primary);
-  font-weight: 700;
+  transition: var(--transition-fast);
 }
 
 .activeIndicator {

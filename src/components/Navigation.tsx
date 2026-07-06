@@ -18,7 +18,6 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
     { label: 'Portfolio', target: 'portfolio', id: 'portfolio', type: 'page' },
     { label: 'Über uns', target: '#ueber-uns', id: 'ueber-uns', type: 'anchor' },
     { label: 'Ablauf', target: '#ablauf', id: 'ablauf', type: 'anchor' },
-    { label: 'Referenzen', target: '#referenzen', id: 'referenzen', type: 'anchor' },
     { label: 'Tippgeber', target: '#tippgeber', id: 'tippgeber', type: 'anchor' },
     { label: 'Immobilie bewerten', target: '#bewertung', id: 'bewertung', type: 'anchor' },
   ];
@@ -123,7 +122,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
 
           {/* Desktop Navigation */}
           <nav className={styles.desktopNav}>
-            {navItems.slice(0, 4).map((item) => (
+            {navItems.slice(0, 3).map((item) => (
               <a
                 key={item.id}
                 href={item.type === 'anchor' ? item.target : '#'}
@@ -179,34 +178,17 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
                       className={styles.dropdownItem} 
                       onClick={handleSelectNienburg}
                     >
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <MapPin size={14} style={{ color: 'var(--color-accent-dark)' }} />
-                        Nienburg (Weser)
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <MapPin size={16} style={{ color: 'var(--color-accent-dark)' }} />
+                        <strong>Nienburg (Weser)</strong>
                       </span>
-                      <span className={styles.dropdownBadge}>Aktiv</span>
-                    </div>
-
-                    <div className={styles.dropdownItem} style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <MapPin size={14} />
-                        Marklohe
-                      </span>
-                      <span className={styles.dropdownBadgeMuted}>Demnächst</span>
-                    </div>
-
-                    <div className={styles.dropdownItem} style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <MapPin size={14} />
-                        Verden
-                      </span>
-                      <span className={styles.dropdownBadgeMuted}>Demnächst</span>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
-            {navItems.slice(4).map((item) => (
+            {navItems.slice(3).map((item) => (
               <a
                 key={item.id}
                 href={item.type === 'anchor' ? item.target : '#'}

@@ -3,128 +3,132 @@
   min-height: 100vh;
 }
 
+/* Hero Section with Full-Width Nienburg Background Image */
 .heroSection {
-  background: linear-gradient(135deg, #071B33 0%, #102A4C 100%);
-  color: #ffffff;
-  padding: clamp(4rem, 8vw, 7rem) 0 4rem;
   position: relative;
-  overflow: hidden;
+  min-height: clamp(520px, 75vh, 700px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/csm_Marktplatz-Nienburg_0268aff2a2_ergebnis.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #ffffff;
+  padding: 8rem 0 5rem;
 }
 
-.heroContainer {
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 3.5rem;
-  align-items: center;
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(7, 27, 51, 0.94) 0%,
+    rgba(16, 42, 76, 0.88) 50%,
+    rgba(7, 27, 51, 0.96) 100%
+  );
+  z-index: 1;
 }
 
 .heroContent {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .eyebrowBadge {
-  background: rgba(217, 162, 74, 0.15);
+  background: rgba(217, 162, 74, 0.2);
   color: var(--color-accent);
-  border: 1px solid rgba(217, 162, 74, 0.3);
-  padding: 0.35rem 0.85rem;
+  border: 1px solid rgba(217, 162, 74, 0.4);
+  padding: 0.4rem 1.1rem;
   border-radius: var(--border-radius-full);
-  font-size: 0.8rem;
+  font-size: 0.825rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1.25rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
 }
 
 .heroTitle {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
   color: #ffffff;
-  line-height: 1.18;
+  line-height: 1.15;
   margin-bottom: 1.25rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .heroTitle span {
   color: var(--color-accent);
+  display: inline-block;
 }
 
 .heroSubline {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.65;
   margin-bottom: 2.25rem;
+  max-width: 780px;
+}
+
+.trustBadgesRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--border-radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .heroCtas {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .phoneBtnLink {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.9rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.9rem 1.6rem;
   border-radius: var(--border-radius-md);
   text-decoration: none;
   font-weight: 700;
   font-size: 0.95rem;
   transition: var(--transition-fast);
+  backdrop-filter: blur(10px);
 }
 
 .phoneBtnLink:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.22);
   border-color: var(--color-accent);
   color: var(--color-accent);
 }
 
-/* Hero Image Grid Visual */
-.heroImageWrapper {
-  position: relative;
-  border-radius: var(--border-radius-lg);
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.mainHeroImg {
-  width: 100%;
-  height: 380px;
-  object-fit: cover;
-  display: block;
-}
-
-.heroBadgeFloat {
-  position: absolute;
-  bottom: 1.25rem;
-  left: 1.25rem;
-  right: 1.25rem;
-  background: rgba(7, 27, 51, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 0.85rem 1.25rem;
-  border-radius: var(--border-radius-sm);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-/* Gallery Section */
-.gallerySection {
-  padding: 5rem 0;
-  background-color: var(--color-bg-white);
-}
-
+/* Section Header Styling */
 .sectionHeader {
   text-align: center;
   max-width: 750px;
@@ -144,131 +148,265 @@
   line-height: 1.6;
 }
 
-.galleryGrid {
+/* About Christian Menzel Section */
+.aboutSection {
+  padding: 5.5rem 0;
+  background-color: var(--color-bg-white);
+}
+
+.aboutGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3.5rem;
+  align-items: center;
 }
 
-.galleryCard {
+.aboutVisualWrapper {
   position: relative;
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  height: 250px;
-  border: 1px solid rgba(12, 30, 54, 0.08);
 }
 
-.galleryCardLarge {
-  grid-column: span 2;
-}
-
-.galleryImg {
+.altstadtBgImg {
   width: 100%;
-  height: 100%;
+  height: 380px;
   object-fit: cover;
-  display: block;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(7, 27, 51, 0.08);
 }
 
-.galleryCard:hover .galleryImg {
-  transform: scale(1.05);
-}
-
-.galleryOverlay {
+.profileCardFloat {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(7, 27, 51, 0.85) 0%, rgba(7, 27, 51, 0) 60%);
+  bottom: -20px;
+  right: -20px;
+  background: #ffffff;
+  padding: 1rem 1.25rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 15px 35px rgba(7, 27, 51, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgba(217, 162, 74, 0.3);
+  max-width: 280px;
+}
+
+.profileThumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-accent);
+}
+
+.profileInfo strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+}
+
+.profileInfo span {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.aboutContent {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 1.25rem;
-  color: #ffffff;
+  align-items: flex-start;
 }
 
-.galleryOverlay h4 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
+.aboutText {
+  font-size: 1.025rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
 }
 
-.galleryOverlay p {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
+.benefitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
 }
 
-/* Local Benefits Cards */
-.benefitsSection {
-  padding: 4rem 0 5rem;
+.benefitItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+
+.checkIcon {
+  color: var(--color-accent-dark);
+}
+
+/* Nienburg Living & Locations Section */
+.locationsSection {
+  padding: 5rem 0;
   background-color: var(--color-bg-light);
 }
 
-.cardsGrid {
+.locationsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.locationCard {
+  background: #ffffff;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(7, 27, 51, 0.08);
+  transition: var(--transition-normal);
+}
+
+.locationCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.locationCardImg {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.locationCardBody {
+  padding: 1.75rem;
+}
+
+.locationCardBody h3 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.locationCardBody p {
+  font-size: 0.925rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Weser Banner Section */
+.weserBanner {
+  background: linear-gradient(135deg, #071B33 0%, #102A4C 100%);
+  color: #ffffff;
+  padding: 4.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.weserGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.weserImg {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.weserText h2 {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.weserText p {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.65;
+  margin-bottom: 1.75rem;
+}
+
+/* Referenzen Nienburg Section */
+.referencesSection {
+  padding: 5.5rem 0;
+  background-color: #ffffff;
+}
+
+.refGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
-.benefitCard {
-  background: #ffffff;
-  padding: 2.25rem 1.75rem;
+.refCard {
+  background: var(--color-bg-light);
   border-radius: var(--border-radius-md);
-  border: 1px solid rgba(12, 30, 54, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(7, 27, 51, 0.08);
   box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  transition: var(--transition-normal);
+  position: relative;
 }
 
-.benefitCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
-  border-color: rgba(217, 162, 74, 0.4);
+.refImgWrapper {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
 }
 
-.iconWrapper {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: rgba(217, 162, 74, 0.12);
-  color: var(--color-accent-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.25rem;
+.refImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.cardTitle {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
+.verkauftRibbon {
+  position: absolute;
+  top: 18px;
+  right: -32px;
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+  color: #ffffff;
+  font-size: 0.725rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 0.35rem 2.8rem;
+  transform: rotate(42deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+}
+
+.refBody {
+  padding: 1.25rem 1.5rem;
+}
+
+.refBody h4 {
+  font-size: 1.05rem;
   color: var(--color-primary);
-  margin-bottom: 0.75rem;
-  font-weight: 700;
+  margin-bottom: 0.25rem;
 }
 
-.cardText {
-  font-size: 0.925rem;
+.refBody p {
+  font-size: 0.85rem;
   color: var(--color-text-muted);
-  line-height: 1.6;
+  margin: 0;
 }
 
 @media (max-width: 1024px) {
-  .heroContainer {
+  .aboutGrid, .weserGrid {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 2.5rem;
   }
   
-  .galleryGrid {
+  .locationsGrid, .refGrid {
     grid-template-columns: 1fr;
   }
-  
-  .galleryCardLarge {
-    grid-column: span 1;
-  }
-  
-  .cardsGrid {
-    grid-template-columns: 1fr;
+
+  .profileCardFloat {
+    position: static;
+    margin-top: 1rem;
+    max-width: 100%;
   }
 }
