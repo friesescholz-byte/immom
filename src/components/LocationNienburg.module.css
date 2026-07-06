@@ -42,10 +42,10 @@
 }
 
 .eyebrowBadge {
-  background: rgba(217, 162, 74, 0.2);
-  color: var(--color-accent);
-  border: 1px solid rgba(217, 162, 74, 0.4);
-  padding: 0.4rem 1.1rem;
+  background: rgba(217, 162, 74, 0.15);
+  color: #ffffff;
+  border: 1px solid #d9a24a;
+  padding: 0.45rem 1.25rem;
   border-radius: var(--border-radius-full);
   font-size: 0.825rem;
   font-weight: 800;
@@ -65,8 +65,9 @@
 }
 
 .heroTitle span {
-  color: var(--color-accent);
+  color: #d9a24a;
   display: inline-block;
+  text-shadow: 0 0 15px rgba(217, 162, 74, 0.3);
 }
 
 .heroSubline {
