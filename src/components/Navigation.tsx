@@ -118,7 +118,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
           {/* Brand Logo */}
           <a 
             href="#" 
-            className={styles.logo}
+            className={styles.logoContainer}
             onClick={(e) => {
               e.preventDefault();
               setCurrentPage('home');
@@ -128,12 +128,12 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
             <img 
               src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/_01-Logo-ImmoM-IhrMaklerVorOrt_20250722-plast_ergebnis.webp" 
               alt="ImmoM Logo" 
-              className={styles.logoImg}
+              className={styles.logo}
             />
           </a>
 
           {/* Desktop Navigation */}
-          <nav className={styles.nav}>
+          <nav className={styles.desktopNav}>
             {navItems.map((item) => (
               <a
                 key={item.id}

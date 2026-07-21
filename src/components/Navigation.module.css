@@ -31,8 +31,11 @@
 
 .logo {
   height: clamp(36px, 4.5vw, 48px);
+  max-height: 48px;
+  max-width: 220px;
   width: auto;
   object-fit: contain;
+  display: block;
 }
 
 .desktopNav {
