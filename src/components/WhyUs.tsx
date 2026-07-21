@@ -39,7 +39,15 @@ export const WhyUs: React.FC = () => {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
         >
-          <span className={styles.eyebrow}>Ihre Vorteile bei uns</span>
+          <div className={styles.brandHeaderRow}>
+            <img 
+              src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/_01-Logo-ImmoM-IhrMaklerVorOrt_20250722-plast_ergebnis.webp" 
+              alt="ImmoM - Ihr Makler vor Ort" 
+              className={styles.whyUsLogo} 
+            />
+            <span className={styles.eyebrow}>Ihre Vorteile bei uns</span>
+          </div>
+
           <h2 className={styles.heading}>
             Immobilienberatung mit <span className={styles.blueAccent}>Erfahrung</span>, <span className={styles.blueAccent}>Nähe</span> und ehrlicher Einschätzung.
           </h2>
@@ -87,6 +95,13 @@ export const WhyUs: React.FC = () => {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.2 }}
         >
           <div className={styles.profileCard}>
+            <div className={styles.cardLogoHeader}>
+              <img 
+                src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/_01-Logo-ImmoM-IhrMaklerVorOrt_20250722-plast_ergebnis.webp" 
+                alt="ImmoM Logo" 
+                className={styles.cardLogo} 
+              />
+            </div>
             <div className={styles.avatarWrapper}>
               <img 
                 src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/profile_32106_ergebnis.webp" 

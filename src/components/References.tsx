@@ -142,6 +142,10 @@ export const References: React.FC = () => {
                 >
                   <div className={styles.imageWrapper}>
                     <img src={item.img} alt={item.title} className={styles.refImage} loading="lazy" />
+                    <div className={styles.soldBadge}>
+                      <span className={styles.soldBadgeDot} />
+                      <span>VERKAUFT</span>
+                    </div>
                     <div className={styles.overlay}>
                       <Maximize2 size={20} className={styles.zoomIcon} />
                     </div>

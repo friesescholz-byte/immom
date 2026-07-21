@@ -29,11 +29,16 @@ export const Tippgeber: React.FC = () => {
 
   return (
     <section id="tippgeber" className={`${styles.section} section-padding`}>
+      {/* Background ambient lighting for special Tippgeber section */}
+      <div className={styles.bgGlowCyan} />
+      <div className={styles.bgGlowBlue} />
+      <div className={styles.luxuryGridPattern} />
+
       <div className={`${styles.container} container`}>
         
         {/* Section Header */}
         <div className={styles.header}>
-          <span className="eyebrow">Ihr Tipp ist bares Geld wert</span>
+          <span className={styles.cyanEyebrow}>Ihr Tipp ist bares Geld wert</span>
           <h2 className={styles.title}>
             Werden Sie <span className={styles.titleHighlight}>Tippgeber</span> & kassieren Sie Prämie
           </h2>

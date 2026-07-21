@@ -17,6 +17,21 @@
   align-items: flex-start;
 }
 
+.brandHeaderRow {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.whyUsLogo {
+  height: 46px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(12, 30, 54, 0.08));
+}
+
 .eyebrow {
   display: inline-block;
   font-family: var(--font-sans);
@@ -29,7 +44,6 @@
   padding: 0.5rem 1.15rem;
   border-radius: var(--border-radius-full);
   border: 1px solid rgba(14, 108, 180, 0.12);
-  margin-bottom: 1.25rem;
 }
 
 .heading {
@@ -143,7 +157,7 @@
 .profileCard {
   background-color: var(--color-bg-white);
   border-radius: var(--border-radius-lg);
-  padding: 2.5rem 2rem;
+  padding: 2.25rem 2rem 2.5rem;
   box-shadow: var(--shadow-lg), var(--shadow-accent);
   border: 1px solid rgba(122, 146, 163, 0.15);
   display: flex;
@@ -153,6 +167,21 @@
   max-width: 400px;
   width: 100%;
   transition: var(--transition-smooth);
+  position: relative;
+}
+
+.cardLogoHeader {
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.cardLogo {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.95;
 }
 
 .profileCard:hover {
