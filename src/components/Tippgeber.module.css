@@ -86,12 +86,23 @@
   position: relative;
   display: inline-block;
   font-weight: 800;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+  line-height: 1.25;
 }
 
 .subtitle {
   font-size: 1.1rem;
   color: rgba(226, 232, 240, 0.88);
   line-height: 1.65;
+}
+
+.heroExplanationText {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  margin: 0;
+  font-family: var(--font-sans);
 }
 
 /* Main Hero Grid inside Tippgeber */

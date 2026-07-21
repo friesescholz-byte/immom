@@ -1,32 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Coins, Mail, Phone, MapPin, Gift } from 'lucide-react';
+import { Coins, Mail, Phone, Gift } from 'lucide-react';
 import styles from './Tippgeber.module.css';
 
 export const Tippgeber: React.FC = () => {
-  const soldProperties = [
-    {
-      title: 'Einfamilienhaus',
-      location: 'Nienburg',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/EFH-Nienburg-1024x768_ergebnis.webp'
-    },
-    {
-      title: 'Winkelbungalow',
-      location: 'Marklohe',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/Bungalow-Marklohe-1024x614_ergebnis.webp'
-    },
-    {
-      title: 'Stadthaus & Garten',
-      location: 'Husum',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/Stadthaus-Husum-1-1024x768_ergebnis.webp'
-    },
-    {
-      title: 'Mehrfamilienhaus 8WE',
-      location: 'Verden',
-      img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/MFH-8WE-Verden-300x201_ergebnis.webp'
-    }
-  ];
-
   return (
     <section id="tippgeber" className={`${styles.section} section-padding`}>
       {/* Background ambient lighting for special Tippgeber section */}
@@ -64,7 +41,7 @@ export const Tippgeber: React.FC = () => {
               </p>
             </div>
 
-            <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.6', fontSize: '0.95rem' }}>
+            <p className={styles.heroExplanationText}>
               Ob Nachbarn, Bekannte, Arbeitskollegen oder Verwandte – verhilft Ihr Hinweis zum erfolgreichen Verkauf einer Immobilie über ImmoM / CM-Immobilien, erhalten Sie eine attraktive Prämie auf Ihr Konto.
             </p>
           </div>
@@ -116,30 +93,6 @@ export const Tippgeber: React.FC = () => {
               Nach erfolgreicher Beurkundung & Verkauf erhalten Sie Ihre Tippgeberprämie von bis zu 5.000 € auf Ihr Konto.
             </p>
           </motion.div>
-        </div>
-
-        {/* Sold Properties Showcase Grid */}
-        <div className={styles.showcaseHeader}>
-          <h3>Erfolgreich vermittelte Referenz-Objekte</h3>
-          <p>Durch wertvolle Tipps aus der Region konnten wir bereits zahlreiche Objekte erfolgreich verkaufen:</p>
-        </div>
-
-        <div className={styles.soldGrid}>
-          {soldProperties.map((prop, idx) => (
-            <div key={idx} className={styles.soldCard}>
-              <div className={styles.soldImgWrapper}>
-                <img src={prop.img} alt={prop.title} className={styles.soldImg} />
-                <div className={styles.verkauftBadge}>VERKAUFT</div>
-              </div>
-              <div className={styles.soldInfo}>
-                <div className={styles.soldTitle}>{prop.title}</div>
-                <div className={styles.soldLocation}>
-                  <MapPin size={12} style={{ color: 'var(--color-accent-dark)' }} />
-                  <span>{prop.location} & Region</span>
-                </div>
-              </div>
-            </div>
-          ))}
         </div>
 
         {/* CTA Bar */}
