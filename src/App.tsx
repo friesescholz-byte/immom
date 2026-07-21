@@ -14,7 +14,8 @@ import Tippgeber from './components/Tippgeber';
 import Contact from './components/Contact';
 import Portfolio, { type Property } from './components/Portfolio';
 import AdminDashboard from './components/AdminDashboard';
-import LocationNienburg from './components/LocationNienburg';
+import LocationPage from './components/LocationPage';
+import { LOCATIONS_DATA } from './data/locationData';
 
 const DEFAULT_PROPERTIES: Property[] = [
   {
@@ -284,8 +285,10 @@ const DEFAULT_PROPERTIES: Property[] = [
 ];
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'portfolio' | 'admin' | 'location-nienburg'>(() => {
+  const [currentPage, setCurrentPage] = useState<string>(() => {
     const path = window.location.pathname;
+    const matchedLoc = LOCATIONS_DATA.find(l => l.path === path);
+    if (matchedLoc) return matchedLoc.pageKey;
     if (path === '/admin') return 'admin';
     if (path === '/portfolio') return 'portfolio';
     return 'home';
@@ -319,12 +322,14 @@ function App() {
   // Sync state with browser URL path
   useEffect(() => {
     const path = window.location.pathname;
+    const matchedLoc = LOCATIONS_DATA.find(l => l.pageKey === currentPage);
+
     if (currentPage === 'admin' && path !== '/admin') {
       window.history.pushState(null, '', '/admin');
     } else if (currentPage === 'portfolio' && path !== '/portfolio') {
       window.history.pushState(null, '', '/portfolio');
-    } else if (currentPage === 'location-nienburg' && path !== '/nienburg') {
-      window.history.pushState(null, '', '/nienburg');
+    } else if (matchedLoc && path !== matchedLoc.path) {
+      window.history.pushState(null, '', matchedLoc.path);
     } else if (currentPage === 'home' && path !== '/') {
       window.history.pushState(null, '', '/');
     }
@@ -334,12 +339,13 @@ function App() {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname;
-      if (path === '/admin') {
+      const matchedLoc = LOCATIONS_DATA.find(l => l.path === path);
+      if (matchedLoc) {
+        setCurrentPage(matchedLoc.pageKey);
+      } else if (path === '/admin') {
         setCurrentPage('admin');
       } else if (path === '/portfolio') {
         setCurrentPage('portfolio');
-      } else if (path === '/nienburg') {
-        setCurrentPage('location-nienburg');
       } else {
         setCurrentPage('home');
       }
@@ -391,8 +397,8 @@ function App() {
             initialPropertyId={initialPropertyId} 
             setInitialPropertyId={setInitialPropertyId} 
           />
-        ) : currentPage === 'location-nienburg' ? (
-          <LocationNienburg properties={properties} setCurrentPage={setCurrentPage} />
+        ) : currentPage.startsWith('location-') ? (
+          <LocationPage locationId={currentPage.replace('location-', '')} />
         ) : (
           <AdminDashboard properties={properties} setProperties={setProperties} />
         )}

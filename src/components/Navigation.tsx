@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Menu, X, ArrowRight, ChevronDown, MapPin } from 'lucide-react';
 import styles from './Navigation.module.css';
+import { LOCATIONS_DATA, type LocationConfig } from '../data/locationData';
 
 interface NavigationProps {
-  currentPage: 'home' | 'portfolio' | 'admin' | 'location-nienburg';
-  setCurrentPage: (page: 'home' | 'portfolio' | 'admin' | 'location-nienburg') => void;
+  currentPage: string;
+  setCurrentPage: (page: any) => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentPage }) => {
@@ -34,7 +35,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
         setActiveSection('admin');
         return;
       }
-      if (currentPage === 'location-nienburg') {
+      if (currentPage.startsWith('location-')) {
         setActiveSection('standorte');
         return;
       }
@@ -49,10 +50,10 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
       let matched = false;
       for (const item of navItems) {
         if (item.type === 'anchor') {
-          const el = document.querySelector(item.target);
-          if (el) {
-            const top = (el as HTMLElement).offsetTop;
-            const height = (el as HTMLElement).offsetHeight;
+          const element = document.querySelector(item.target);
+          if (element) {
+            const top = (element as HTMLElement).offsetTop;
+            const height = (element as HTMLElement).offsetHeight;
             if (scrollPosition >= top && scrollPosition < top + height) {
               setActiveSection(item.id);
               matched = true;
@@ -67,7 +68,7 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentPage]);
 
@@ -75,59 +76,68 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
     setIsMobileMenuOpen(false);
     setIsDropdownOpen(false);
     if (item.type === 'page') {
-      setCurrentPage('portfolio');
-      setActiveSection('portfolio');
+      setCurrentPage(item.target);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       if (currentPage !== 'home') {
         setCurrentPage('home');
         setTimeout(() => {
-          const el = document.querySelector(item.target);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          const element = document.querySelector(item.target);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
         }, 100);
       } else {
-        const el = document.querySelector(item.target);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        const element = document.querySelector(item.target);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }
-      setActiveSection(item.id);
     }
   };
 
-  const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setCurrentPage('home');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setActiveSection('');
-  };
-
-  const handleSelectNienburg = () => {
+  const handleSelectLocation = (loc: LocationConfig) => {
     setIsDropdownOpen(false);
     setIsMobileMenuOpen(false);
-    setCurrentPage('location-nienburg');
-    setActiveSection('standorte');
+    setCurrentPage(loc.pageKey);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isDarkHeroPage = currentPage === 'location-nienburg';
+  const isDarkHeroPage = currentPage.startsWith('location-');
 
   return (
     <>
-      <header className={`${styles.header} ${isScrolled ? styles.scrolled : (isDarkHeroPage ? styles.darkHero : styles.lightHero)}`}>
+      <header 
+        className={`
+          ${styles.header} 
+          ${isScrolled ? styles.scrolled : ''} 
+          ${isDarkHeroPage && !isScrolled ? styles.darkHero : ''}
+        `}
+      >
         <div className={`${styles.container} container`}>
-          <a href="#start" className={styles.logoContainer} onClick={handleLogoClick}>
+          {/* Brand Logo */}
+          <a 
+            href="#" 
+            className={styles.logo}
+            onClick={(e) => {
+              e.preventDefault();
+              setCurrentPage('home');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
             <img 
               src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/_01-Logo-ImmoM-IhrMaklerVorOrt_20250722-plast_ergebnis.webp" 
               alt="ImmoM Logo" 
-              className={styles.logo} 
+              className={styles.logoImg}
             />
           </a>
 
           {/* Desktop Navigation */}
-          <nav className={styles.desktopNav}>
+          <nav className={styles.nav}>
             {navItems.map((item) => (
               <a
                 key={item.id}
-                href={item.type === 'anchor' ? item.target : '#'}
+                href={item.target}
                 className={`${styles.navLink} ${activeSection === item.id ? styles.active : ''}`}
                 onClick={(e) => {
                   e.preventDefault();
@@ -176,15 +186,18 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.15 }}
                   >
-                    <div 
-                      className={styles.dropdownItem} 
-                      onClick={handleSelectNienburg}
-                    >
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <MapPin size={16} style={{ color: 'var(--color-accent-dark)' }} />
-                        <strong>Nienburg (Weser)</strong>
-                      </span>
-                    </div>
+                    {LOCATIONS_DATA.map((loc) => (
+                      <div 
+                        key={loc.id}
+                        className={`${styles.dropdownItem} ${currentPage === loc.pageKey ? styles.activeLocation : ''}`} 
+                        onClick={() => handleSelectLocation(loc)}
+                      >
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <MapPin size={15} style={{ color: currentPage === loc.pageKey ? '#38bdf8' : 'var(--color-accent-dark)' }} />
+                          <strong style={{ fontSize: '0.85rem' }}>{loc.name}</strong>
+                        </span>
+                      </div>
+                    ))}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -242,13 +255,18 @@ export const Navigation: React.FC<NavigationProps> = ({ currentPage, setCurrentP
 
               <div style={{ padding: '0.75rem 0', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
                 <span style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', display: 'block', marginBottom: '0.5rem' }}>Standorte</span>
-                <button 
-                  onClick={handleSelectNienburg} 
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(217, 162, 74, 0.15)', color: '#D9A24A', border: '1px solid #D9A24A', padding: '0.75rem 1rem', borderRadius: '8px', width: '100%', fontWeight: 700 }}
-                >
-                  <MapPin size={18} />
-                  <span>Standort Nienburg (Weser)</span>
-                </button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', maxHeight: '220px', overflowY: 'auto' }}>
+                  {LOCATIONS_DATA.map((loc) => (
+                    <button 
+                      key={loc.id}
+                      onClick={() => handleSelectLocation(loc)} 
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: currentPage === loc.pageKey ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.05)', color: currentPage === loc.pageKey ? '#38bdf8' : '#ffffff', border: '1px solid rgba(255, 255, 255, 0.1)', padding: '0.55rem 0.85rem', borderRadius: '6px', width: '100%', fontSize: '0.85rem', fontWeight: 600, textAlign: 'left', cursor: 'pointer' }}
+                    >
+                      <MapPin size={14} style={{ color: '#38bdf8' }} />
+                      <span>{loc.name}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div className={styles.mobileActions}>
