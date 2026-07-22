@@ -22,10 +22,10 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    135deg,
-    rgba(7, 27, 51, 0.94) 0%,
-    rgba(16, 42, 76, 0.88) 50%,
-    rgba(7, 27, 51, 0.96) 100%
+    180deg,
+    rgba(7, 27, 51, 0.55) 0%,
+    rgba(7, 27, 51, 0.42) 50%,
+    rgba(7, 27, 51, 0.78) 100%
   );
   z-index: 1;
 }
@@ -42,7 +42,7 @@
 }
 
 .eyebrowBadge {
-  background: rgba(217, 162, 74, 0.15);
+  background: rgba(7, 27, 51, 0.65);
   color: #ffffff;
   border: 1px solid #d9a24a;
   padding: 0.45rem 1.25rem;
@@ -53,6 +53,7 @@
   letter-spacing: 1.5px;
   margin-bottom: 1.5rem;
   backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .heroTitle {
@@ -61,21 +62,22 @@
   color: #ffffff;
   line-height: 1.15;
   margin-bottom: 1.25rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 .heroTitle span {
   color: #d9a24a;
   display: inline-block;
-  text-shadow: 0 0 15px rgba(217, 162, 74, 0.3);
+  text-shadow: 0 0 15px rgba(217, 162, 74, 0.4), 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .heroSubline {
   font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.95);
   line-height: 1.65;
   margin-bottom: 2.25rem;
   max-width: 780px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
 }
 
 .trustBadgesRow {

@@ -46,7 +46,7 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
       {/* 1. Hero Section with Full-Width Background Image */}
       <section 
         className={styles.heroSection}
-        style={loc.heroBgImg ? { backgroundImage: `linear-gradient(rgba(7, 27, 51, 0.72), rgba(7, 27, 51, 0.85)), url("${loc.heroBgImg}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+        style={loc.heroBgImg ? { backgroundImage: `url("${loc.heroBgImg}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
       >
         <div className={styles.heroOverlay} />
         

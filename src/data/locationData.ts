@@ -295,11 +295,11 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationTitle: 'Immobilie in Petershagen gratis bewerten lassen',
     valuationDesc: 'Erfahren Sie jetzt unkompliziert den aktuellen Wert Ihrer Immobilie in Petershagen.',
     cardWrapperId: 'bewertung-petershagen',
-    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
-    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp',
-    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
-    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp',
-    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp'
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Petershagen/Petershagen_Aerial_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Petershagen/Petershagen_Aerial_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Petershagen/Bibliothek_Petershagen-Eggersdorf_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Petershagen/Petershagen_Weser_Fachwerk02_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Petershagen/Wind-_und_Wasserm%C3%BChle_Petershagen-Lahde_(Wind)_ergebnis.webp'
   },
   {
     id: 'sulingen',
