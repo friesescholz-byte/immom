@@ -44,7 +44,10 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
     <div className={styles.nienburgPage}>
       
       {/* 1. Hero Section with Full-Width Background Image */}
-      <section className={styles.heroSection}>
+      <section 
+        className={styles.heroSection}
+        style={loc.heroBgImg ? { backgroundImage: `linear-gradient(rgba(7, 27, 51, 0.72), rgba(7, 27, 51, 0.85)), url("${loc.heroBgImg}")`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
+      >
         <div className={styles.heroOverlay} />
         
         <div className={`${styles.heroContent} container`}>
@@ -97,8 +100,8 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
           <div className={styles.aboutGrid}>
             <div className={styles.aboutVisualWrapper}>
               <img 
-                src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp" 
-                alt={`Altstadt ${loc.shortName}`} 
+                src={loc.aboutImg || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp"} 
+                alt={`Impression ${loc.shortName}`} 
                 className={styles.altstadtBgImg} 
               />
               <div className={styles.profileCardFloat}>
@@ -179,7 +182,7 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
 
             <div>
               <img 
-                src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp" 
+                src={loc.bannerImg || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp"} 
                 alt={`Impression ${loc.shortName}`} 
                 className={styles.weserImg}
               />
@@ -202,7 +205,7 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
           <div className={styles.locationsGrid}>
             <div className={styles.locationCard}>
               <img 
-                src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp" 
+                src={loc.showcaseImg1 || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp"} 
                 alt={`${loc.shortName} Wohnquartiere`} 
                 className={styles.locationCardImg}
               />
@@ -216,7 +219,7 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
 
             <div className={styles.locationCard}>
               <img 
-                src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp" 
+                src={loc.showcaseImg2 || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp"} 
                 alt={`${loc.shortName} Innenstadt & Flair`} 
                 className={styles.locationCardImg}
               />

@@ -22,6 +22,12 @@ export interface LocationConfig {
   valuationTitle: string;
   valuationDesc: string;
   cardWrapperId: string;
+  // Specific images per location
+  heroBgImg?: string;
+  aboutImg?: string;
+  bannerImg?: string;
+  showcaseImg1?: string;
+  showcaseImg2?: string;
 }
 
 export const LOCATIONS_DATA: LocationConfig[] = [
@@ -48,7 +54,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Nienburg jetzt online bewerten lassen',
     valuationDesc: 'Ermitteln Sie in weniger als 2 Minuten den aktuellen Marktwert Ihrer Immobilie im Raum Nienburg & Umgebung.',
-    cardWrapperId: 'bewertung-nienburg'
+    cardWrapperId: 'bewertung-nienburg',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp'
   },
   {
     id: 'neustadt',
@@ -73,7 +84,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Neustadt am Rbge. online bewerten lassen',
     valuationDesc: 'Erfahren Sie gratis und unverbindlich den aktuellen Marktwert Ihrer Immobilie in der Region Neustadt am Rübenberge.',
-    cardWrapperId: 'bewertung-neustadt'
+    cardWrapperId: 'bewertung-neustadt',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Neustadt/31535_Neustadt_am_R%C3%BCbenberge%2C_Germany_-_panoramio_(102)_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Neustadt/31535_Neustadt_am_R%C3%BCbenberge%2C_Germany_-_panoramio_(102)_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Neustadt/Kapelle_Mardorf_(Neustadt_am_R%C3%BCbenberge)_01_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Neustadt/Lindenstra%C3%9Fe_13_(Neustadt_am_R%C3%BCbenberge)%2C_Sitz_der_Musikschule_Neustadt_e.V._(29119)_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Neustadt/Stolpersteine_vor_dem_Geb%C3%A4ude_Mittelstra%C3%9Fe_1_in_Neustadt_am_R%C3%BCbenberge_ergebnis.webp'
   },
   {
     id: 'verden',
@@ -98,7 +114,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Verden (Aller) jetzt bewerten lassen',
     valuationDesc: 'Nutzen Sie unsere kostenlose Online-Wertermittlung für Ihre Immobilie in Verden und Umgebung.',
-    cardWrapperId: 'bewertung-verden'
+    cardWrapperId: 'bewertung-verden',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Verden%20(Aller)/Rathaus_in_Verden_an_der_Aller_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Verden%20(Aller)/Rathaus_in_Verden_an_der_Aller_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Verden%20(Aller)/Deutsches_Pferdemuseum_in_Verden_(Aller)_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Verden%20(Aller)/M%C3%BChlentor_18_%26_16_in_Verden_(Aller)_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Verden%20(Aller)/Nikolaiwall_18_in_Verden-Aller_(2026)_ergebnis.webp'
   },
   {
     id: 'heidekreis',
@@ -123,7 +144,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie im Heidekreis jetzt online bewerten lassen',
     valuationDesc: 'Kostenfreie Marktpreiseinschätzung für Ihr Haus oder Ihre Wohnung im Heidekreis.',
-    cardWrapperId: 'bewertung-heidekreis'
+    cardWrapperId: 'bewertung-heidekreis',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/heidekreis/Walsrode_Rathaus_1758_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/heidekreis/Walsrode_Rathaus_1758_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/heidekreis/Town_hall_of_Soltau_(1)_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/heidekreis/Sisyphus%2C_Walsrode%2C_Mohamed_Abla_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/heidekreis/Kloster_Walsrode_innen_ergebnis.webp'
   },
   {
     id: 'hannover',
@@ -148,7 +174,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in der Region Hannover jetzt gratis bewerten',
     valuationDesc: 'Prüfen Sie den aktuellen Marktwert Ihrer Immobilie in der Region Hannover schnell und unkompliziert.',
-    cardWrapperId: 'bewertung-hannover'
+    cardWrapperId: 'bewertung-hannover',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hannover/Neues_Rathaus_Hannover_2013_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hannover/Neues_Rathaus_Hannover_2013_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hannover/Hohenzollernstrasse_56_Hannover-List_15_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hannover/Hannover_Limmer_Wasserstadt_2024_IMGP9927_06_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hannover/2020-10-21_Warmb%C3%BCchenstra%C3%9Fe_Hannover_01_ergebnis.webp'
   },
   {
     id: 'hildesheim',
@@ -173,32 +204,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Hildesheim gratis bewerten lassen',
     valuationDesc: 'Erhalten Sie eine fundierte Online-Wertermittlung für Ihre Immobilie im Raum Hildesheim.',
-    cardWrapperId: 'bewertung-hildesheim'
-  },
-  {
-    id: 'walsrode',
-    pageKey: 'location-walsrode',
-    path: '/walsrode',
-    name: 'Region Walsrode',
-    shortName: 'Walsrode',
-    titleSpan: 'Walsrode',
-    heroEyebrow: 'Standort Region Walsrode',
-    heroTitle: 'Ihr Immobilienmakler in',
-    heroSubline: 'Persönlicher Service und professionelle Immobilienvermarktung in Walsrode und den umliegenden Orten.',
-    aboutTitle: 'Ihr persönlicher Ansprechpartner in Walsrode',
-    aboutText: 'Mein Name ist Carsten Meyer. Seit über 25 Jahren stehe ich Eigentümern in Walsrode beim erfolgreichen Verkauf ihrer Immobilie zur Seite.',
-    bannerTag: 'Lokal & Kompetent',
-    bannerTitle: 'Immobilienverkauf in Walsrode & Umgebung',
-    bannerText: 'Walsrode bietet eine familienfreundliche Atmosphäre und naturnahes Wohnen. Wir vermitteln Ihre Immobilie stressfrei zum Bestpreis.',
-    showcaseEyebrow: 'Wohnqualitäten',
-    showcaseTitle: 'Beliebte Wohnlagen im Raum Walsrode',
-    showcaseDesc: 'Wir sprechen gezielt Kaufinteressenten an, die nach Immobilien in Walsrode suchen.',
-    refTitle: 'Referenzen in der Region Walsrode',
-    refDesc: 'Erfolgreiche Immobilienverkäufe in Walsrode und den Nachbargemeinden.',
-    valuationEyebrow: 'Kostenlos & Unverbindlich',
-    valuationTitle: 'Immobilie in Walsrode jetzt online bewerten lassen',
-    valuationDesc: 'Nutzen Sie unsere kostenlose Wertermittlung für Ihr Haus oder Ihre Wohnung in Walsrode.',
-    cardWrapperId: 'bewertung-walsrode'
+    cardWrapperId: 'bewertung-hildesheim',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hildesheim/Hildesheim_-_Blick_vom_Bergh%C3%B6zchen_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hildesheim/Hildesheim_-_Blick_vom_Bergh%C3%B6zchen_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hildesheim/Br%C3%BChl%2C_1%2C_Hildesheim%2C_Landkreis_Hildesheim_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hildesheim/Ke%C3%9Flerstra%C3%9Fe%2C_1%2C_Hildesheim%2C_Landkreis_Hildesheim_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Hildesheim/K%C3%B6nigsteich%2C_1%2C_Moritzberg%2C_Hildesheim%2C_Landkreis_Hildesheim_ergebnis.webp'
   },
   {
     id: 'wunstorf',
@@ -223,7 +234,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Wunstorf online bewerten lassen',
     valuationDesc: 'Prüfen Sie kostenlos den aktuellen Marktwert Ihrer Immobilie in Wunstorf.',
-    cardWrapperId: 'bewertung-wunstorf'
+    cardWrapperId: 'bewertung-wunstorf',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Wunstorf/Wunstorf_Pedestrianzone_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Wunstorf/Wunstorf_Pedestrianzone_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Wunstorf/Wunstorf%2C_Germany_-_panoramio_(132)_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Wunstorf/Wunstorf%2C_Germany_-_panoramio_(120)_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Wunstorf/2024-11-14_Foto_Stolperstein-Verlegung_in_Wunstorf_32_ergebnis.webp'
   },
   {
     id: 'stadthagen-obernkirchen',
@@ -248,7 +264,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Stadthagen & Obernkirchen gratis bewerten',
     valuationDesc: 'Kostenlose Online-Wertermittlung für Ihr Objekt in Stadthagen, Obernkirchen und Umgebung.',
-    cardWrapperId: 'bewertung-stadthagen-obernkirchen'
+    cardWrapperId: 'bewertung-stadthagen-obernkirchen',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Stadthagen%20%26%20Obernkirchen/Aerial_image_of_Schloss_Stadthagen_(view_from_the_southeast)_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Stadthagen%20%26%20Obernkirchen/Aerial_image_of_Schloss_Stadthagen_(view_from_the_southeast)_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Stadthagen%20%26%20Obernkirchen/Bahnhof_Obernkirchen_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Stadthagen%20%26%20Obernkirchen/Obernkirchen_Rathaus_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Stadthagen%20%26%20Obernkirchen/Stadthagen4_ergebnis.webp'
   },
   {
     id: 'petershagen',
@@ -273,7 +294,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Petershagen gratis bewerten lassen',
     valuationDesc: 'Erfahren Sie jetzt unkompliziert den aktuellen Wert Ihrer Immobilie in Petershagen.',
-    cardWrapperId: 'bewertung-petershagen'
+    cardWrapperId: 'bewertung-petershagen',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp'
   },
   {
     id: 'sulingen',
@@ -298,7 +324,12 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationEyebrow: 'Kostenlos & Unverbindlich',
     valuationTitle: 'Immobilie in Sulingen jetzt online bewerten lassen',
     valuationDesc: 'Nutzen Sie unsere kostenfreie Wertermittlung für Ihre Immobilie in Sulingen.',
-    cardWrapperId: 'bewertung-sulingen'
+    cardWrapperId: 'bewertung-sulingen',
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp'
   }
 ];
 
