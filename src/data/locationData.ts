@@ -325,11 +325,11 @@ export const LOCATIONS_DATA: LocationConfig[] = [
     valuationTitle: 'Immobilie in Sulingen jetzt online bewerten lassen',
     valuationDesc: 'Nutzen Sie unsere kostenfreie Wertermittlung für Ihre Immobilie in Sulingen.',
     cardWrapperId: 'bewertung-sulingen',
-    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
-    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/thumb_die-altstadt_ergebnis.webp',
-    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/Nienburg-Blog-13-1024x576_ergebnis.webp',
-    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp',
-    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp'
+    heroBgImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Sulingen/Wasserm%C3%BChle_Sulingen_IMG_0498_ergebnis.webp',
+    bannerImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Sulingen/Wasserm%C3%BChle_Sulingen_IMG_0498_ergebnis.webp',
+    showcaseImg1: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Sulingen/439sulingen_ergebnis.webp',
+    showcaseImg2: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Sulingen/Sulingen_Juli_2010_014_ergebnis.webp',
+    aboutImg: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Sulingen/Sulingen_Juli_2010_067_ergebnis.webp'
   }
 ];
 
