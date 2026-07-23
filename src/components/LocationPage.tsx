@@ -204,11 +204,13 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
 
           <div className={styles.locationsGrid}>
             <div className={styles.locationCard}>
-              <img 
-                src={loc.showcaseImg1 || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp"} 
-                alt={`${loc.shortName} Wohnquartiere`} 
-                className={styles.locationCardImg}
-              />
+              <div className={styles.locationCardImgWrapper}>
+                <img 
+                  src={loc.showcaseImg1 || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/images%20(2)_ergebnis.webp"} 
+                  alt={`${loc.shortName} Wohnquartiere`} 
+                  className={styles.locationCardImg}
+                />
+              </div>
               <div className={styles.locationCardBody}>
                 <h3>Familienfreundliche Wohnquartiere</h3>
                 <p>
@@ -218,11 +220,13 @@ export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienbu
             </div>
 
             <div className={styles.locationCard}>
-              <img 
-                src={loc.showcaseImg2 || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp"} 
-                alt={`${loc.shortName} Innenstadt & Flair`} 
-                className={styles.locationCardImg}
-              />
+              <div className={styles.locationCardImgWrapper}>
+                <img 
+                  src={loc.showcaseImg2 || "https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Nienburg/webp%20(2)_ergebnis.webp"} 
+                  alt={`${loc.shortName} Innenstadt & Flair`} 
+                  className={styles.locationCardImg}
+                />
+              </div>
               <div className={styles.locationCardBody}>
                 <h3>Zentrumsnahes Wohnen mit Flair</h3>
                 <p>
