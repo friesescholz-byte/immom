@@ -170,6 +170,29 @@
   position: relative;
 }
 
+.cornerBracket {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.cornerTopLeft {
+  top: 12px;
+  left: 12px;
+  border-top: 2px solid var(--color-accent);
+  border-left: 2px solid var(--color-accent);
+  border-top-left-radius: 4px;
+}
+
+.cornerBottomRight {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 2px solid var(--color-accent);
+  border-right: 2px solid var(--color-accent);
+  border-bottom-right-radius: 4px;
+}
+
 .cardLogoHeader {
   margin-bottom: 1.25rem;
   display: flex;

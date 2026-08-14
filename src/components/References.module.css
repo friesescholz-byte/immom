@@ -20,6 +20,26 @@
   color: var(--color-primary-dark);
 }
 
+.designerAccentLine {
+  width: 90px;
+  height: 2px;
+  background: linear-gradient(90deg, #D9A24A 0%, rgba(217, 162, 74, 0.4) 70%, transparent 100%);
+  margin: 1.25rem 0 0.5rem;
+  position: relative;
+}
+
+.accentDot {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(217, 162, 74, 0.8);
+}
+
 .descArea {
   display: flex;
   flex-direction: column;

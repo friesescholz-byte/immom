@@ -116,6 +116,9 @@ export const References: React.FC = () => {
               Erfahrung aus der Region. <br />
               <span className="highlight-gold">Für Immobilien in der Region.</span>
             </h2>
+            <div className={styles.designerAccentLine}>
+              <span className={styles.accentDot} />
+            </div>
           </div>
           <div className={styles.descArea}>
             <p>

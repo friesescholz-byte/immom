@@ -95,6 +95,8 @@ export const WhyUs: React.FC = () => {
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.2 }}
         >
           <div className={styles.profileCard}>
+            <div className={`${styles.cornerBracket} ${styles.cornerTopLeft}`} />
+            <div className={`${styles.cornerBracket} ${styles.cornerBottomRight}`} />
             <div className={styles.cardLogoHeader}>
               <img 
                 src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/_01-Logo-ImmoM-IhrMaklerVorOrt_20250722-plast_ergebnis.webp" 

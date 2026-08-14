@@ -189,15 +189,74 @@ export const Tippgeber: React.FC = () => {
   };
 
   return (
-    <section id="tippgeber" className={`${styles.section} section-padding`}>
-      <div className="container">
+    <section id="tippgeber" className={styles.section}>
+      
+      {/* ── Top Curved Wave Transition with Designer Gradient Lines ── */}
+      <div className={styles.topWaveDivider}>
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="tipp-top-grad-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(217, 162, 74, 0.05)" />
+              <stop offset="50%" stopColor="rgba(217, 162, 74, 0.6)" />
+              <stop offset="100%" stopColor="rgba(14, 108, 180, 0.3)" />
+            </linearGradient>
+            <linearGradient id="tipp-top-grad-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(14, 108, 180, 0.4)" />
+              <stop offset="60%" stopColor="rgba(7, 27, 51, 0.3)" />
+              <stop offset="100%" stopColor="rgba(217, 162, 74, 0.1)" />
+            </linearGradient>
+          </defs>
+
+          {/* Solid fill wave connecting from white/light section into creamy #F7F1E8 */}
+          <path 
+            d="M0 0 L 1440 0 L 1440 60 Q 1080 140 720 70 T 0 90 Z" 
+            fill="#ffffff" 
+          />
+
+          {/* Designer curve line 1 (Gold gradient glow) */}
+          <path 
+            d="M0 90 Q 360 140 720 70 T 1440 60" 
+            fill="none" 
+            stroke="url(#tipp-top-grad-gold)" 
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+          />
+
+          {/* Designer curve line 2 (Sapphire wave accent) */}
+          <path 
+            d="M0 105 Q 400 160 760 85 T 1440 75" 
+            fill="none" 
+            stroke="url(#tipp-top-grad-blue)" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            opacity="0.75" 
+          />
+        </svg>
+      </div>
+
+      {/* Background ambient lighting */}
+      <div className={styles.bgAmbientGlow} />
+      <div className={styles.bgGridLines} />
+
+      <div className={`${styles.mainContainer} container section-padding`}>
         
-        {/* Section Header */}
+        {/* Section Header with Designer Badges */}
         <div className={styles.header}>
-          <span className="eyebrow">Tippgeber-Prämie</span>
+          <div className={styles.eyebrowWrapper}>
+            <span className="eyebrow">
+              <Sparkles size={13} style={{ display: 'inline', marginRight: '6px', verticalAlign: '-1px' }} />
+              Tippgeber-Prämie
+            </span>
+          </div>
+          
           <h2 className={styles.title}>
             Ihr Immobilien-Tipp ist <span className="highlight-gold">bares Geld</span> wert
           </h2>
+          
+          <div className={styles.designerAccentLine}>
+            <span className={styles.accentDot} />
+          </div>
+
           <p className={styles.subtitle}>
             Sie wissen von einem anstehenden Immobilienverkauf in Nienburg, Marklohe oder der Region? 
             Melden Sie uns Ihren Hinweis – nach erfolgreichem Verkauf belohnen wir Ihre Empfehlung mit bis zu 5.000 € Prämie!
@@ -207,12 +266,16 @@ export const Tippgeber: React.FC = () => {
         {/* Main 2-Column Hero Card */}
         <div className={styles.heroGrid}>
           <div className={styles.leftCard}>
+            {/* Corner designer brackets */}
+            <div className={`${styles.cornerBracket} ${styles.cornerTopLeft}`} />
+            <div className={`${styles.cornerBracket} ${styles.cornerBottomRight}`} />
+
             <div className={styles.praemieBanner}>
               <div className={styles.praemieIconWrapper}>
                 <Coins size={28} className={styles.praemieIcon} />
               </div>
               <div>
-                <span className={styles.praemieLabel}>Empfehlungs-Prämie</span>
+                <span className={styles.praemieLabel}>Exklusive Empfehlungs-Prämie</span>
                 <div className={styles.praemieAmount}>
                   bis zu <span>5.000 €</span>
                 </div>
@@ -220,7 +283,7 @@ export const Tippgeber: React.FC = () => {
             </div>
 
             <p className={styles.explanationText}>
-              Ob Nachbarn, Bekannte, Arbeitskollegen oder Verwandte – verhilft Ihr Hinweis zum erfolgreichen Verkauf einer Immobilie über ImmoM / CM-Immobilien, erhalten Sie eine attraktive Prämie auf Ihr Konto.
+              Ob Nachbarn, Bekannte, Arbeitskollegen oder Verwandte – verhilft Ihr Hinweis zum erfolgreichen Verkauf einer Immobilie über ImmoM / CM-Immobilien, erhalten Sie eine attraktive Prämie direkt auf Ihr Konto überwiesen.
             </p>
 
             <ul className={styles.benefitList}>
@@ -248,6 +311,9 @@ export const Tippgeber: React.FC = () => {
           </div>
 
           <div className={styles.rightImageCard}>
+            {/* Glowing gradient aura behind image */}
+            <div className={styles.imageAuraGlow} />
+
             <div className={styles.imageWrapper}>
               <img 
                 src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Screenshot%202026-07-06%20120228_ergebnis.webp" 
@@ -255,7 +321,7 @@ export const Tippgeber: React.FC = () => {
                 className={styles.heroImg} 
               />
               <div className={styles.imageFloatingBadge}>
-                <Gift size={20} className={styles.goldGiftIcon} />
+                <Gift size={22} className={styles.goldGiftIcon} />
                 <div>
                   <strong>Attraktive Prämie</strong>
                   <span>Sichern Sie sich Ihren Anteil</span>
@@ -265,16 +331,20 @@ export const Tippgeber: React.FC = () => {
           </div>
         </div>
 
-        {/* 3-Steps Process */}
+        {/* 3-Steps Process with Flowing Connection Line */}
         <div className={styles.stepsSection}>
           <div className={styles.stepsHeader}>
+            <span className={styles.stepsMiniTag}>Einfacher Ablauf</span>
             <h3 className={styles.stepsMainTitle}>In 3 einfachen Schritten zur Prämie</h3>
             <p className={styles.stepsMainSubtitle}>Unkompliziert, transparent und fair abgewickelt.</p>
           </div>
 
           <div className={styles.stepsGrid}>
             <div className={styles.stepCard}>
-              <div className={styles.stepBadge}>01</div>
+              <div className={styles.stepHeaderRow}>
+                <div className={styles.stepBadge}>01</div>
+                <div className={styles.stepLineIndicator} />
+              </div>
               <h4 className={styles.stepTitle}>Tipp einreichen</h4>
               <p className={styles.stepDesc}>
                 Klicken Sie auf „Tipp einreichen“ und füllen Sie das kurze Online-Formular aus – oder rufen Sie uns direkt an.
@@ -282,7 +352,10 @@ export const Tippgeber: React.FC = () => {
             </div>
 
             <div className={styles.stepCard}>
-              <div className={styles.stepBadge}>02</div>
+              <div className={styles.stepHeaderRow}>
+                <div className={styles.stepBadge}>02</div>
+                <div className={styles.stepLineIndicator} />
+              </div>
               <h4 className={styles.stepTitle}>Diskrete Kontaktaufnahme</h4>
               <p className={styles.stepDesc}>
                 Wir nehmen feinfühlig, professionell und diskret Kontakt zum Eigentümer der Immobilie auf.
@@ -290,7 +363,10 @@ export const Tippgeber: React.FC = () => {
             </div>
 
             <div className={styles.stepCard}>
-              <div className={styles.stepBadge}>03</div>
+              <div className={styles.stepHeaderRow}>
+                <div className={styles.stepBadge}>03</div>
+                <div className={styles.stepLineIndicator} />
+              </div>
               <h4 className={styles.stepTitle}>Prämie erhalten</h4>
               <p className={styles.stepDesc}>
                 Nach erfolgreicher notarieller Beurkundung & Vermittlung wird Ihre Prämie von bis zu 5.000 € direkt ausgezahlt.
@@ -301,6 +377,9 @@ export const Tippgeber: React.FC = () => {
 
         {/* Bottom Contact CTA Box */}
         <div className={styles.ctaBox}>
+          {/* Inner designer ambient light */}
+          <div className={styles.ctaGlowElement} />
+
           <div className={styles.ctaContent}>
             <h3>Möchten Sie Ihren Tipp lieber telefonisch besprechen?</h3>
             <p>Rufen Sie uns direkt an oder schreiben Sie uns eine E-Mail – wir beraten Sie jederzeit gerne persönlich.</p>
@@ -321,6 +400,49 @@ export const Tippgeber: React.FC = () => {
           </div>
         </div>
 
+      </div>
+
+      {/* ── Bottom Curved Wave Transition with Designer Gradient Lines ── */}
+      <div className={styles.bottomWaveDivider}>
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="tipp-bot-grad-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(14, 108, 180, 0.2)" />
+              <stop offset="50%" stopColor="rgba(217, 162, 74, 0.65)" />
+              <stop offset="100%" stopColor="rgba(217, 162, 74, 0.05)" />
+            </linearGradient>
+            <linearGradient id="tipp-bot-grad-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(217, 162, 74, 0.1)" />
+              <stop offset="40%" stopColor="rgba(7, 27, 51, 0.4)" />
+              <stop offset="100%" stopColor="rgba(14, 108, 180, 0.3)" />
+            </linearGradient>
+          </defs>
+
+          {/* Solid fill wave transitioning to following section */}
+          <path 
+            d="M0 100 Q 360 20 720 90 T 1440 70 L 1440 160 L 0 160 Z" 
+            fill="#ffffff" 
+          />
+
+          {/* Designer curve line 1 (Gold gradient glow) */}
+          <path 
+            d="M0 100 Q 360 20 720 90 T 1440 70" 
+            fill="none" 
+            stroke="url(#tipp-bot-grad-gold)" 
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+          />
+
+          {/* Designer curve line 2 (Sapphire wave accent) */}
+          <path 
+            d="M0 85 Q 320 5 680 75 T 1440 55" 
+            fill="none" 
+            stroke="url(#tipp-bot-grad-blue)" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            opacity="0.75" 
+          />
+        </svg>
       </div>
 
       {/* ──────────────── POPUP MODAL FÜR TIPPGEBER FORMULAR ──────────────── */}
