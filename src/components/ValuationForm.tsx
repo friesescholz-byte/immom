@@ -119,6 +119,8 @@ export const ValuationForm: React.FC = () => {
     anrede: 'herr',
     vorname: '',
     nachname: '',
+    street: '',
+    zipCity: '',
     email: '',
     phone: '',
     terminwunsch: '',
@@ -157,9 +159,15 @@ export const ValuationForm: React.FC = () => {
       return;
     }
 
+    if (!formData.street.trim() || !formData.zipCity.trim()) {
+      setErrorMessage("Bitte geben Sie Ihre vollständige Anschrift (Straße, Hausnummer, PLZ und Ort) an.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      const fullAddress = `${formData.street.trim()}, ${formData.zipCity.trim()}`;
       const response = await fetch("https://friesescholzwebdesign.pages.dev/api/send-email", {
         method: "POST",
         headers: {
@@ -170,6 +178,7 @@ export const ValuationForm: React.FC = () => {
           type: "valuation",
           turnstileToken,
           flow,
+          address: fullAddress,
           ...formData
         })
       });
@@ -182,7 +191,10 @@ export const ValuationForm: React.FC = () => {
           name: `${formData.vorname || ''} ${formData.nachname || ''}`.trim() || 'Interessent',
           email: formData.email || '',
           phone: formData.phone || '',
-          details: `Online-Wertermittlung (${flow.toUpperCase()})`
+          street: formData.street,
+          zipCity: formData.zipCity,
+          address: fullAddress,
+          details: `Online-Wertermittlung (${flow.toUpperCase()})\nAnschrift: ${fullAddress}${formData.terminwunsch ? `\nWunschtermin: ${formData.terminwunsch}` : ''}`
         });
       } else {
         setErrorMessage(resData.message || "Es gab einen Fehler beim Absenden. Bitte versuchen Sie es erneut.");
@@ -512,28 +524,54 @@ export const ValuationForm: React.FC = () => {
                     </div>
                     <div className={styles.formRow}>
                       <div className={styles.formField}>
-                        <label>Vorname</label>
+                        <label>Vorname *</label>
                         <input 
                           type="text" 
                           value={formData.vorname}
                           onChange={(e) => setFormData({...formData, vorname: e.target.value})}
                           className={styles.textInput}
+                          placeholder="Ihr Vorname"
                           required
                         />
                       </div>
                       <div className={styles.formField}>
-                        <label>Nachname</label>
+                        <label>Nachname *</label>
                         <input 
                           type="text" 
                           value={formData.nachname}
                           onChange={(e) => setFormData({...formData, nachname: e.target.value})}
+                          className={styles.textInput}
+                          placeholder="Ihr Nachname"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.formRow}>
+                      <div className={styles.formField}>
+                        <label>Straße & Hausnummer *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. Musterstraße 12"
+                          value={formData.street}
+                          onChange={(e) => setFormData({...formData, street: e.target.value})}
+                          className={styles.textInput}
+                          required
+                        />
+                      </div>
+                      <div className={styles.formField}>
+                        <label>PLZ & Ort *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. 31582 Nienburg"
+                          value={formData.zipCity}
+                          onChange={(e) => setFormData({...formData, zipCity: e.target.value})}
                           className={styles.textInput}
                           required
                         />
                       </div>
                     </div>
                     <div className={styles.formField}>
-                      <label>E-Mail-Adresse</label>
+                      <label>E-Mail-Adresse *</label>
                       <input 
                         type="email" 
                         value={formData.email}
@@ -694,28 +732,54 @@ export const ValuationForm: React.FC = () => {
                     <label className={styles.groupLabel}>Ihre Kontaktdaten:</label>
                     <div className={styles.formRow}>
                       <div className={styles.formField}>
-                        <label>Vorname</label>
+                        <label>Vorname *</label>
                         <input 
                           type="text" 
                           value={formData.vorname}
                           onChange={(e) => setFormData({...formData, vorname: e.target.value})}
                           className={styles.textInput}
+                          placeholder="Ihr Vorname"
                           required
                         />
                       </div>
                       <div className={styles.formField}>
-                        <label>Nachname</label>
+                        <label>Nachname *</label>
                         <input 
                           type="text" 
                           value={formData.nachname}
                           onChange={(e) => setFormData({...formData, nachname: e.target.value})}
+                          className={styles.textInput}
+                          placeholder="Ihr Nachname"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.formRow}>
+                      <div className={styles.formField}>
+                        <label>Straße & Hausnummer *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. Musterstraße 12"
+                          value={formData.street}
+                          onChange={(e) => setFormData({...formData, street: e.target.value})}
+                          className={styles.textInput}
+                          required
+                        />
+                      </div>
+                      <div className={styles.formField}>
+                        <label>PLZ & Ort *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. 31582 Nienburg"
+                          value={formData.zipCity}
+                          onChange={(e) => setFormData({...formData, zipCity: e.target.value})}
                           className={styles.textInput}
                           required
                         />
                       </div>
                     </div>
                     <div className={styles.formField}>
-                      <label>E-Mail-Adresse</label>
+                      <label>E-Mail-Adresse *</label>
                       <input 
                         type="email" 
                         value={formData.email}
@@ -817,28 +881,54 @@ export const ValuationForm: React.FC = () => {
                     <label className={styles.groupLabel}>Kontaktdaten für das Gutachten:</label>
                     <div className={styles.formRow}>
                       <div className={styles.formField}>
-                        <label>Vorname</label>
+                        <label>Vorname *</label>
                         <input 
                           type="text" 
                           value={formData.vorname}
                           onChange={(e) => setFormData({...formData, vorname: e.target.value})}
                           className={styles.textInput}
+                          placeholder="Ihr Vorname"
                           required
                         />
                       </div>
                       <div className={styles.formField}>
-                        <label>Nachname</label>
+                        <label>Nachname *</label>
                         <input 
                           type="text" 
                           value={formData.nachname}
                           onChange={(e) => setFormData({...formData, nachname: e.target.value})}
+                          className={styles.textInput}
+                          placeholder="Ihr Nachname"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.formRow}>
+                      <div className={styles.formField}>
+                        <label>Straße & Hausnummer *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. Musterstraße 12"
+                          value={formData.street}
+                          onChange={(e) => setFormData({...formData, street: e.target.value})}
+                          className={styles.textInput}
+                          required
+                        />
+                      </div>
+                      <div className={styles.formField}>
+                        <label>PLZ & Ort *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. 31582 Nienburg"
+                          value={formData.zipCity}
+                          onChange={(e) => setFormData({...formData, zipCity: e.target.value})}
                           className={styles.textInput}
                           required
                         />
                       </div>
                     </div>
                     <div className={styles.formField}>
-                      <label>E-Mail-Adresse</label>
+                      <label>E-Mail-Adresse *</label>
                       <input 
                         type="email" 
                         value={formData.email}
@@ -908,28 +998,54 @@ export const ValuationForm: React.FC = () => {
                     </div>
                     <div className={styles.formRow}>
                       <div className={styles.formField}>
-                        <label>Vorname</label>
+                        <label>Vorname *</label>
                         <input 
                           type="text" 
                           value={formData.vorname}
                           onChange={(e) => setFormData({...formData, vorname: e.target.value})}
                           className={styles.textInput}
+                          placeholder="Ihr Vorname"
                           required
                         />
                       </div>
                       <div className={styles.formField}>
-                        <label>Nachname</label>
+                        <label>Nachname *</label>
                         <input 
                           type="text" 
                           value={formData.nachname}
                           onChange={(e) => setFormData({...formData, nachname: e.target.value})}
+                          className={styles.textInput}
+                          placeholder="Ihr Nachname"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.formRow}>
+                      <div className={styles.formField}>
+                        <label>Straße & Hausnummer *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. Musterstraße 12"
+                          value={formData.street}
+                          onChange={(e) => setFormData({...formData, street: e.target.value})}
+                          className={styles.textInput}
+                          required
+                        />
+                      </div>
+                      <div className={styles.formField}>
+                        <label>PLZ & Ort *</label>
+                        <input 
+                          type="text" 
+                          placeholder="z.B. 31582 Nienburg"
+                          value={formData.zipCity}
+                          onChange={(e) => setFormData({...formData, zipCity: e.target.value})}
                           className={styles.textInput}
                           required
                         />
                       </div>
                     </div>
                     <div className={styles.formField}>
-                      <label>E-Mail-Adresse</label>
+                      <label>E-Mail-Adresse *</label>
                       <input 
                         type="email" 
                         value={formData.email}

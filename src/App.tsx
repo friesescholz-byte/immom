@@ -314,9 +314,13 @@ function App() {
     return DEFAULT_PROPERTIES;
   });
 
-  // Sync state with localStorage
+  // Sync state with localStorage safely
   useEffect(() => {
-    localStorage.setItem('immom_properties', JSON.stringify(properties));
+    try {
+      localStorage.setItem('immom_properties', JSON.stringify(properties));
+    } catch (e) {
+      console.warn('LocalStorage quota reached when saving properties:', e);
+    }
   }, [properties]);
 
   // Sync state with browser URL path

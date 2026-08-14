@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, ArrowRight, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './Hero.module.css';
 import Button from './ui/Button';
-import { type Property } from './Portfolio';
+import { type Property, formatPropertyPrice } from './Portfolio';
 
 interface HeroProps {
   properties?: Property[];
@@ -305,7 +305,7 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
                       <div className={styles.specItem}>
                         <span className={styles.specLabel}>Kaufpreis</span>
                         <span className={styles.specValue}>
-                          {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(currentItem.price)}
+                          {formatPropertyPrice(currentItem)}
                         </span>
                       </div>
                       <div className={styles.specItem}>

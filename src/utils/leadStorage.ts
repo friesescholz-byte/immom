@@ -5,6 +5,9 @@ export interface LeadInquiry {
   name: string;
   email: string;
   phone?: string;
+  street?: string;
+  zipCity?: string;
+  address?: string;
   details: string;
   propertyTitle?: string;
   status: 'neu' | 'bearbeitet';

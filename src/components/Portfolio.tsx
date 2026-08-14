@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, ArrowRight, Grid, ListFilter, SlidersHorizontal, Info, X, Send, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, ArrowRight, Grid, SlidersHorizontal, Info, X, Send, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './Portfolio.module.css';
 import Button from './ui/Button';
 import Card from './ui/Card';
@@ -12,6 +12,8 @@ export interface Property {
   type: 'haus' | 'wohnung' | 'mehrfamilienhaus';
   location: string;
   price: number;
+  priceType?: 'festpreis' | 'auf_anfrage' | 'gegen_gebot';
+  customPriceText?: string;
   area: number;
   rooms: number;
   img: string;
@@ -36,6 +38,22 @@ export interface Property {
   exposeUrl?: string;
 }
 
+export const formatPropertyPrice = (item: { price: number; priceType?: string; customPriceText?: string } | number) => {
+  if (typeof item === 'number') {
+    return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(item);
+  }
+  if (item.priceType === 'auf_anfrage') {
+    return 'Auf Anfrage';
+  }
+  if (item.priceType === 'gegen_gebot') {
+    return item.customPriceText && item.customPriceText.trim() ? item.customPriceText.trim() : 'Gegen Gebot';
+  }
+  if (item.price === 0 && item.priceType !== 'festpreis') {
+    return 'Auf Anfrage';
+  }
+  return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(item.price);
+};
+
 interface PortfolioProps {
   properties: Property[];
   initialPropertyId?: number | null;
@@ -47,14 +65,13 @@ export const Portfolio: React.FC<PortfolioProps> = ({
   initialPropertyId, 
   setInitialPropertyId 
 }) => {
-  const [filterType, setFilterType] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('default');
   
   // Modals state
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', msg: '' });
+  const [contactForm, setContactForm] = useState({ name: '', email: '', phone: '', street: '', zipCity: '', msg: '' });
   const [isSent, setIsSent] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -120,29 +137,23 @@ export const Portfolio: React.FC<PortfolioProps> = ({
     }
   };
 
-  React.useEffect(() => {
-    if (initialPropertyId) {
-      const property = properties.find(p => p.id === initialPropertyId);
-      if (property) {
-        setSelectedProperty(property);
+  // Open property directly if initialPropertyId is provided
+  useEffect(() => {
+    if (initialPropertyId && properties.length > 0) {
+      const found = properties.find(p => p.id === initialPropertyId);
+      if (found) {
+        setSelectedProperty(found);
         setActiveImageIndex(0);
         setIsSent(false);
-        setContactForm({
-          name: '',
-          email: '',
-          phone: '',
-          msg: `Ich interessiere mich für das Objekt: ${property.title} in ${property.location}. Bitte senden Sie mir das Exposé.`
-        });
-        if (setInitialPropertyId) {
-          setInitialPropertyId(null);
-        }
+      }
+      if (setInitialPropertyId) {
+        setInitialPropertyId(null);
       }
     }
   }, [initialPropertyId, properties, setInitialPropertyId]);
 
   // Filtering & Sorting Logic
   const filteredProperties = properties
-    .filter(p => filterType === 'all' || p.type === filterType)
     .filter(p => {
       if (filterStatus === 'all') return true;
       if (filterStatus === 'verfuegbar') return p.status === 'verfuegbar';
@@ -166,9 +177,15 @@ export const Portfolio: React.FC<PortfolioProps> = ({
 
     if (!selectedProperty) return;
 
+    if (!contactForm.street.trim() || !contactForm.zipCity.trim()) {
+      setErrorMessage("Bitte geben Sie Ihre vollständige Anschrift (Straße, Hausnummer, PLZ und Ort) an.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      const fullAddress = `${contactForm.street.trim()}, ${contactForm.zipCity.trim()}`;
       const response = await fetch("https://friesescholzwebdesign.pages.dev/api/send-email", {
         method: "POST",
         headers: {
@@ -181,10 +198,13 @@ export const Portfolio: React.FC<PortfolioProps> = ({
           name: contactForm.name,
           email: contactForm.email,
           phone: contactForm.phone,
+          street: contactForm.street,
+          zipCity: contactForm.zipCity,
+          address: fullAddress,
           msg: contactForm.msg,
           propertyTitle: selectedProperty.title,
           propertyLocation: selectedProperty.location,
-          propertyPrice: formatPrice(selectedProperty.price),
+          propertyPrice: formatPropertyPrice(selectedProperty),
           exposeUrl: selectedProperty.exposeUrl || ''
         })
       });
@@ -197,7 +217,10 @@ export const Portfolio: React.FC<PortfolioProps> = ({
           name: contactForm.name,
           email: contactForm.email,
           phone: contactForm.phone,
-          details: contactForm.msg,
+          street: contactForm.street,
+          zipCity: contactForm.zipCity,
+          address: fullAddress,
+          details: contactForm.msg ? `Anschrift: ${fullAddress}\nNachricht: ${contactForm.msg}` : `Anschrift: ${fullAddress}`,
           propertyTitle: selectedProperty.title
         });
       } else {
@@ -209,10 +232,6 @@ export const Portfolio: React.FC<PortfolioProps> = ({
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(price);
   };
 
   return (
@@ -232,16 +251,6 @@ export const Portfolio: React.FC<PortfolioProps> = ({
         {/* Filter and Sort Toolbar */}
         <div className={styles.toolbar}>
           <div className={styles.filterGroup}>
-            <div className={styles.filterItem}>
-              <ListFilter size={16} />
-              <span>Objektart:</span>
-              <div className={styles.btnGroup}>
-                <button className={filterType === 'all' ? styles.activeFilter : ''} onClick={() => setFilterType('all')}>Alle</button>
-                <button className={filterType === 'haus' ? styles.activeFilter : ''} onClick={() => setFilterType('haus')}>Häuser</button>
-                <button className={filterType === 'mehrfamilienhaus' ? styles.activeFilter : ''} onClick={() => setFilterType('mehrfamilienhaus')}>MFH</button>
-              </div>
-            </div>
-
             <div className={styles.filterItem}>
               <Grid size={16} />
               <span>Status:</span>
@@ -289,6 +298,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                       name: '',
                       email: '',
                       phone: '',
+                      street: '',
+                      zipCity: '',
                       msg: `Ich interessiere mich für das Objekt: ${item.title} in ${item.location}. Bitte senden Sie mir das Exposé.`
                     });
                   }}
@@ -315,7 +326,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                     <div className={styles.stats}>
                       <div className={styles.stat}>
                         <span className={styles.statLabel}>Preis</span>
-                        <span className={styles.statVal}>{formatPrice(item.price)}</span>
+                        <span className={styles.statVal}>{formatPropertyPrice(item)}</span>
                       </div>
                       <div className={styles.stat}>
                         <span className={styles.statLabel}>Fläche</span>
@@ -340,6 +351,8 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                             name: '',
                             email: '',
                             phone: '',
+                            street: '',
+                            zipCity: '',
                             msg: `Ich interessiere mich für das Objekt: ${item.title} in ${item.location}. Bitte senden Sie mir das Exposé.`
                           });
                         }}
@@ -491,7 +504,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                         </div>
                         <div className={styles.specRow}>
                           <span className={styles.specName}>Kaufpreis</span>
-                          <span className={styles.specValue}>{formatPrice(selectedProperty.price)}</span>
+                          <span className={styles.specValue}>{formatPropertyPrice(selectedProperty)}</span>
                         </div>
                         <div className={styles.specRow}>
                           <span className={styles.specName}>Wohnfläche</span>
@@ -584,7 +597,7 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                   <div className={styles.stickyPanel}>
                     <div className={styles.priceHighlightCard}>
                       <span className={styles.priceLabel}>Kaufpreis</span>
-                      <h3 className={styles.priceVal}>{formatPrice(selectedProperty.price)}</h3>
+                      <h3 className={styles.priceVal}>{formatPropertyPrice(selectedProperty)}</h3>
                       <div className={styles.quickStatsGrid}>
                         <div className={styles.quickStat}>
                           <strong>{selectedProperty.area} m²</strong>
@@ -606,37 +619,62 @@ export const Portfolio: React.FC<PortfolioProps> = ({
                           </p>
 
                           <div className={styles.formGroup}>
-                            <label>Ihr Name</label>
+                            <label>Ihr Name *</label>
                             <input 
                               type="text" 
                               value={contactForm.name}
                               onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
                               className={styles.input} 
+                              placeholder="Vor- und Nachname"
                               required 
                             />
                           </div>
                           <div className={styles.formGroup}>
-                            <label>E-Mail-Adresse</label>
+                            <label>Straße & Hausnummer *</label>
+                            <input 
+                              type="text" 
+                              value={contactForm.street}
+                              onChange={(e) => setContactForm({ ...contactForm, street: e.target.value })}
+                              className={styles.input} 
+                              placeholder="z.B. Musterstraße 12"
+                              required 
+                            />
+                          </div>
+                          <div className={styles.formGroup}>
+                            <label>PLZ & Ort *</label>
+                            <input 
+                              type="text" 
+                              value={contactForm.zipCity}
+                              onChange={(e) => setContactForm({ ...contactForm, zipCity: e.target.value })}
+                              className={styles.input} 
+                              placeholder="z.B. 31582 Nienburg"
+                              required 
+                            />
+                          </div>
+                          <div className={styles.formGroup}>
+                            <label>E-Mail-Adresse *</label>
                             <input 
                               type="email" 
                               value={contactForm.email}
                               onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
                               className={styles.input} 
+                              placeholder="ihre.mail@beispiel.de"
                               required 
                             />
                           </div>
                           <div className={styles.formGroup}>
-                            <label>Telefonnummer</label>
+                            <label>Telefonnummer *</label>
                             <input 
                               type="tel" 
                               value={contactForm.phone}
                               onChange={(e) => handlePhoneChange(e.target.value)}
                               className={styles.input} 
+                              placeholder="0170 1234567"
                               required 
                             />
                           </div>
                           <div className={styles.formGroup}>
-                            <label>Ihre Nachricht</label>
+                            <label>Ihre Nachricht (optional)</label>
                             <textarea 
                               rows={3}
                               value={contactForm.msg}

@@ -4,8 +4,9 @@ import { Plus, Trash2, Edit3, Key, LogOut, CheckCircle, X, FileText, Inbox, Sear
 import styles from './AdminDashboard.module.css';
 import Button from './ui/Button';
 import Card from './ui/Card';
-import { type Property } from './Portfolio';
+import { type Property, formatPropertyPrice } from './Portfolio';
 import { getLeads, updateLeadStatus, deleteLead, type LeadInquiry } from '../utils/leadStorage';
+import { saveExposePdf } from '../utils/pdfStorage';
 
 interface AdminDashboardProps {
   properties: Property[];
@@ -48,9 +49,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
         alert('Bitte wählen Sie eine gültige PDF-Datei aus.');
         return;
       }
+      if (file.size > 20 * 1024 * 1024) {
+        alert('Die PDF-Datei ist zu groß (max. 20 MB). Bitte verkleinern Sie die Datei oder nutzen Sie einen direkten R2-Link.');
+        return;
+      }
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = async (event) => {
         const result = event.target?.result as string;
+        try {
+          const tempKey = editingId !== null ? `prop_${editingId}` : `temp_${Date.now()}`;
+          await saveExposePdf(tempKey, result);
+        } catch (err) {
+          console.warn('Could not save to IndexedDB:', err);
+        }
         setFormState(prev => ({ ...prev, exposeUrl: result }));
       };
       reader.readAsDataURL(file);
@@ -64,7 +75,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
     title: '',
     type: 'haus' as 'haus' | 'wohnung' | 'mehrfamilienhaus',
     location: '',
+    priceType: 'festpreis' as 'festpreis' | 'auf_anfrage' | 'gegen_gebot',
     price: '',
+    customPriceText: '',
     area: '',
     rooms: '',
     img: '',
@@ -199,7 +212,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       title: '',
       type: 'haus',
       location: '',
+      priceType: 'festpreis',
       price: '',
+      customPriceText: '',
       area: '',
       rooms: '',
       img: '',
@@ -232,9 +247,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       title: property.title,
       type: property.type,
       location: property.location,
-      price: property.price.toString(),
-      area: property.area.toString(),
-      rooms: property.rooms.toString(),
+      priceType: property.priceType || (property.price === 0 ? 'auf_anfrage' : 'festpreis'),
+      price: property.price ? property.price.toString() : '',
+      customPriceText: property.customPriceText || '',
+      area: property.area ? property.area.toString() : '',
+      rooms: property.rooms ? property.rooms.toString() : '',
       img: property.img,
       images: property.images || [],
       status: property.status,
@@ -267,12 +284,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       return;
     }
 
+    const calculatedPrice = formState.priceType === 'festpreis' 
+      ? (parseFloat(formState.price) || 0) 
+      : 0;
+
     const preparedProperty: Property = {
       id: editingId !== null ? editingId : Date.now(),
       title: formState.title,
       type: formState.type,
       location: formState.location,
-      price: parseFloat(formState.price) || 0,
+      price: calculatedPrice,
+      priceType: formState.priceType,
+      customPriceText: formState.priceType === 'gegen_gebot' ? formState.customPriceText : undefined,
       area: parseFloat(formState.area) || 0,
       rooms: parseInt(formState.rooms) || 0,
       img: formState.img,
@@ -428,7 +451,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                         )}
                       </td>
                       <td>{p.location}</td>
-                      <td>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(p.price)}</td>
+                      <td>{formatPropertyPrice(p)}</td>
                       <td>{p.area} m² / {p.rooms} Zi.</td>
                       <td>
                         <span className={`${styles.statusBadge} ${styles[p.status]}`}>
@@ -645,18 +668,96 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                     </div>
                   </div>
 
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label>Kaufpreis (€)</label>
-                      <input 
-                        type="number" 
-                        value={formState.price}
-                        onChange={(e) => setFormState({ ...formState, price: e.target.value })}
-                        className={styles.input} 
-                        placeholder="z.B. 320000"
-                        required 
-                      />
+                  <div className={styles.formGroup} style={{ marginBottom: '1.25rem' }}>
+                    <label style={{ fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Preis-Modell</label>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+                      <button
+                        type="button"
+                        onClick={() => setFormState({ ...formState, priceType: 'festpreis' })}
+                        style={{
+                          padding: '0.6rem 0.5rem',
+                          borderRadius: '8px',
+                          border: formState.priceType === 'festpreis' ? '2px solid var(--color-primary-light)' : '1px solid #cbd5e1',
+                          background: formState.priceType === 'festpreis' ? '#f0f9ff' : '#ffffff',
+                          color: formState.priceType === 'festpreis' ? 'var(--color-primary)' : '#64748b',
+                          fontWeight: formState.priceType === 'festpreis' ? 700 : 500,
+                          cursor: 'pointer',
+                          fontSize: '0.85rem'
+                        }}
+                      >
+                        💶 Festpreis
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFormState({ ...formState, priceType: 'auf_anfrage' })}
+                        style={{
+                          padding: '0.6rem 0.5rem',
+                          borderRadius: '8px',
+                          border: formState.priceType === 'auf_anfrage' ? '2px solid var(--color-primary-light)' : '1px solid #cbd5e1',
+                          background: formState.priceType === 'auf_anfrage' ? '#f0f9ff' : '#ffffff',
+                          color: formState.priceType === 'auf_anfrage' ? 'var(--color-primary)' : '#64748b',
+                          fontWeight: formState.priceType === 'auf_anfrage' ? 700 : 500,
+                          cursor: 'pointer',
+                          fontSize: '0.85rem'
+                        }}
+                      >
+                        ❓ Auf Anfrage
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setFormState({ ...formState, priceType: 'gegen_gebot' })}
+                        style={{
+                          padding: '0.6rem 0.5rem',
+                          borderRadius: '8px',
+                          border: formState.priceType === 'gegen_gebot' ? '2px solid var(--color-primary-light)' : '1px solid #cbd5e1',
+                          background: formState.priceType === 'gegen_gebot' ? '#f0f9ff' : '#ffffff',
+                          color: formState.priceType === 'gegen_gebot' ? 'var(--color-primary)' : '#64748b',
+                          fontWeight: formState.priceType === 'gegen_gebot' ? 700 : 500,
+                          cursor: 'pointer',
+                          fontSize: '0.85rem'
+                        }}
+                      >
+                        🏷️ Gegen Gebot
+                      </button>
                     </div>
+                  </div>
+
+                  <div className={styles.formRow}>
+                    {formState.priceType === 'festpreis' && (
+                      <div className={styles.formGroup}>
+                        <label>Kaufpreis (€) *</label>
+                        <input 
+                          type="number" 
+                          value={formState.price}
+                          onChange={(e) => setFormState({ ...formState, price: e.target.value })}
+                          className={styles.input} 
+                          placeholder="z.B. 320000"
+                          required 
+                        />
+                      </div>
+                    )}
+
+                    {formState.priceType === 'auf_anfrage' && (
+                      <div className={styles.formGroup}>
+                        <label>Preis-Anzeige</label>
+                        <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0.75rem 1rem', color: '#64748b', fontSize: '0.9rem' }}>
+                          ✓ Im Portfolio wird <strong>„Auf Anfrage“</strong> angezeigt.
+                        </div>
+                      </div>
+                    )}
+
+                    {formState.priceType === 'gegen_gebot' && (
+                      <div className={styles.formGroup}>
+                        <label>Preis-Text / Gebot-Hinweis</label>
+                        <input 
+                          type="text" 
+                          value={formState.customPriceText}
+                          onChange={(e) => setFormState({ ...formState, customPriceText: e.target.value })}
+                          className={styles.input} 
+                          placeholder="z.B. Gegen Gebot (oder Mindestgebot: 250.000 €)"
+                        />
+                      </div>
+                    )}
 
                     <div className={styles.formGroup}>
                       <label>Badge-Tag (z.B. "Neu", "Reserviert")</label>
@@ -1071,6 +1172,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                       </div>
                     )}
                   </div>
+
+                  {(selectedLead.address || selectedLead.street) && (
+                    <div>
+                      <span style={{ fontSize: '0.75rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '0.25rem' }}>Vollständige Anschrift</span>
+                      <strong style={{ color: '#071B33', fontSize: '0.95rem' }}>
+                        {selectedLead.address || `${selectedLead.street}, ${selectedLead.zipCity}`}
+                      </strong>
+                    </div>
+                  )}
 
                   {selectedLead.propertyTitle && (
                     <div>
