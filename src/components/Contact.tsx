@@ -38,8 +38,8 @@ export const Contact: React.FC<ContactProps> = ({ currentPage, setCurrentPage })
 
   return (
     <section id="kontakt" className={styles.contactSection}>
-      {/* Upper CTA Area */}
-      {currentPage !== 'admin' && currentPage !== 'location-nienburg' && (
+      {/* Upper CTA Area (only on homepage - location pages have their own dedicated valuation card) */}
+      {currentPage === 'home' && (
         <div id="bewertung" className={`${styles.ctaContainer} container section-padding`}>
           <motion.div 
             className={styles.ctaBox}

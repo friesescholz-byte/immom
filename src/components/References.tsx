@@ -190,12 +190,51 @@ export const References: React.FC = () => {
           </div>
 
           <div className={styles.partnerSection}>
+            {/* Prominenter 5-Sterne Makler-Empfehlung Banner / Button */}
+            <a 
+              href="https://www.makler-empfehlung.de/immobilienmakler/32106" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={styles.maklerEmpfehlungCard}
+              title="Profil & echte Bewertungen auf Makler-Empfehlung.de ansehen"
+            >
+              <div className={styles.maklerEmpfehlungLeft}>
+                <img 
+                  src="https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Partner/Makler-Empfehlung-de-Siegel-a3715c37-84ef8e6f%40248ll-1-150x150_ergebnis.webp" 
+                  alt="Makler Empfehlung Auszeichnungssiegel" 
+                  className={styles.maklerSiegelImg} 
+                />
+                <div className={styles.maklerEmpfehlungInfo}>
+                  <div className={styles.maklerScoreRow}>
+                    <span className={styles.maklerStars}>★★★★★</span>
+                    <span className={styles.maklerScoreText}>5,0 / 5,0 Sterne</span>
+                    <span className={styles.maklerBadgePill}>Top-Makler</span>
+                  </div>
+                  <h3 className={styles.maklerCardTitle}>Ausgezeichnet bewertet auf Makler-Empfehlung.de</h3>
+                  <p className={styles.maklerCardDesc}>
+                    Höchste Zufriedenheit bei Eigentümern & Käufern im Raum Nienburg, Weserland und überregional.
+                  </p>
+                </div>
+              </div>
+              <div className={styles.maklerActionBtn}>
+                <span>Echte Bewertungen ansehen</span>
+                <ArrowRight size={18} />
+              </div>
+            </a>
+
             <span className={styles.partnerTitle}>Auswahl unserer Partner & Auszeichnungen</span>
             <div className={styles.partnersGrid}>
               {partners.map((partner, index) => (
-                <div key={index} className={styles.partnerLogoWrapper}>
+                <a 
+                  key={index} 
+                  href={index === 0 ? "https://www.makler-empfehlung.de/immobilienmakler/32106" : undefined}
+                  target={index === 0 ? "_blank" : undefined}
+                  rel={index === 0 ? "noopener noreferrer" : undefined}
+                  className={styles.partnerLogoWrapper}
+                  title={partner.alt}
+                >
                   <img src={partner.img} alt={partner.alt} className={styles.partnerLogo} />
-                </div>
+                </a>
               ))}
             </div>
           </div>

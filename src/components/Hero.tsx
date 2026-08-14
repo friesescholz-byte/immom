@@ -348,10 +348,17 @@ export const Hero: React.FC<HeroProps> = ({ properties }) => {
             ))}
           </div>
           
-          <div className={styles.ratingBadge}>
+          <a 
+            href="https://www.makler-empfehlung.de/immobilienmakler/32106"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.ratingBadge}
+            title="Zu den echten Kundenbewertungen auf Makler-Empfehlung.de"
+            style={{ textDecoration: 'none', cursor: 'pointer' }}
+          >
             <div className={styles.stars}>★★★★★</div>
-            <p><strong>Exzellenter Service:</strong> Über 30 Jahre Immobilienkompetenz in der Region</p>
-          </div>
+            <p><strong>5.0 Sterne auf Makler-Empfehlung.de:</strong> Ausgezeichnete Immobilienberatung ↗</p>
+          </a>
         </motion.div>
       </div>
       

@@ -20,7 +20,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
 
   // Tab & Lead State
   const [activeTab, setActiveTab] = useState<'properties' | 'leads'>('properties');
-  const [leadsFilter, setLeadsFilter] = useState<'all' | 'expose' | 'valuation' | 'checklist'>('all');
+  const [leadsFilter, setLeadsFilter] = useState<'all' | 'expose' | 'valuation' | 'checklist' | 'tippgeber'>('all');
   const [leads, setLeads] = useState<LeadInquiry[]>([]);
   const [leadSearch, setLeadSearch] = useState('');
   const [selectedLead, setSelectedLead] = useState<LeadInquiry | null>(null);
@@ -503,6 +503,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                 >
                   Checklisten ({leads.filter(l => l.type === 'checklist').length})
                 </button>
+                <button 
+                  className={`${styles.filterPill} ${leadsFilter === 'tippgeber' ? styles.filterPillActive : ''}`}
+                  onClick={() => setLeadsFilter('tippgeber')}
+                >
+                  💰 Tippgeber ({leads.filter(l => l.type === 'tippgeber').length})
+                </button>
               </div>
 
               <div style={{ position: 'relative', width: '260px' }}>
@@ -546,8 +552,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                           {lead.date}
                         </td>
                         <td>
-                          <span className={styles.badgeMuted} style={{ background: lead.type === 'expose' ? '#e0f2fe' : lead.type === 'valuation' ? '#fef3c7' : '#f3e8ff', color: '#071B33', fontWeight: 700 }}>
-                            {lead.type === 'expose' ? '🏡 Exposé' : lead.type === 'valuation' ? '🏛️ Wertermittlung' : '📚 Checkliste'}
+                          <span 
+                            className={styles.badgeMuted} 
+                            style={{ 
+                              background: lead.type === 'expose' ? '#e0f2fe' : lead.type === 'valuation' ? '#fef3c7' : lead.type === 'tippgeber' ? '#dcfce7' : '#f3e8ff', 
+                              color: lead.type === 'tippgeber' ? '#14532d' : '#071B33', 
+                              fontWeight: 700 
+                            }}
+                          >
+                            {lead.type === 'expose' ? '🏡 Exposé' : lead.type === 'valuation' ? '🏛️ Wertermittlung' : lead.type === 'tippgeber' ? '💰 Tippgeber' : '📚 Checkliste'}
                           </span>
                         </td>
                         <td>
@@ -1143,8 +1156,21 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
               </button>
 
               <div className={styles.modalBody} style={{ padding: '2rem 1.5rem 1rem' }}>
-                <span className={styles.badgeMuted} style={{ background: selectedLead.type === 'expose' ? '#e0f2fe' : selectedLead.type === 'valuation' ? '#fef3c7' : '#f3e8ff', color: '#071B33', fontWeight: 800, fontSize: '0.8rem', padding: '0.35rem 0.75rem', borderRadius: '4px', textTransform: 'uppercase', marginBottom: '1.25rem', display: 'inline-block' }}>
-                  {selectedLead.type === 'expose' ? '🏡 Exposé-Anfrage' : selectedLead.type === 'valuation' ? '🏛️ Online-Wertermittlung' : '📚 Ratgeber-Checkliste'}
+                <span 
+                  className={styles.badgeMuted} 
+                  style={{ 
+                    background: selectedLead.type === 'expose' ? '#e0f2fe' : selectedLead.type === 'valuation' ? '#fef3c7' : selectedLead.type === 'tippgeber' ? '#dcfce7' : '#f3e8ff', 
+                    color: selectedLead.type === 'tippgeber' ? '#14532d' : '#071B33', 
+                    fontWeight: 800, 
+                    fontSize: '0.8rem', 
+                    padding: '0.35rem 0.75rem', 
+                    borderRadius: '4px', 
+                    textTransform: 'uppercase', 
+                    marginBottom: '1.25rem', 
+                    display: 'inline-block' 
+                  }}
+                >
+                  {selectedLead.type === 'expose' ? '🏡 Exposé-Anfrage' : selectedLead.type === 'valuation' ? '🏛️ Online-Wertermittlung' : selectedLead.type === 'tippgeber' ? '💰 Tippgeber-Prämie & Hinweis' : '📚 Ratgeber-Checkliste'}
                 </span>
                 
                 <h3 style={{ margin: '0 0 1.5rem 0', fontFamily: 'var(--font-serif)', fontSize: '1.6rem', color: 'var(--color-primary)' }}>Anfrage Details</h3>

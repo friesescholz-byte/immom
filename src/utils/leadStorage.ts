@@ -1,7 +1,7 @@
 export interface LeadInquiry {
   id: string;
   date: string;
-  type: 'valuation' | 'expose' | 'checklist';
+  type: 'valuation' | 'expose' | 'checklist' | 'tippgeber';
   name: string;
   email: string;
   phone?: string;
@@ -23,6 +23,9 @@ const DEFAULT_LEADS: LeadInquiry[] = [
     name: 'Michael Schmidt',
     email: 'm.schmidt@beispiel.de',
     phone: '0171 8849201',
+    street: 'Lange Str. 14',
+    zipCity: '31582 Nienburg',
+    address: 'Lange Str. 14, 31582 Nienburg',
     details: 'Möchte gerne das Exposé und Grundrissunterlagen erhalten.',
     propertyTitle: 'Klassisches Einfamilienhaus in Nienburg',
     status: 'neu'
@@ -34,7 +37,23 @@ const DEFAULT_LEADS: LeadInquiry[] = [
     name: 'Sabine & Peter Meyer',
     email: 'meyer-nienburg@gmx.de',
     phone: '05021 44920',
+    street: 'Am Weserufer 3',
+    zipCity: '31582 Nienburg',
+    address: 'Am Weserufer 3, 31582 Nienburg',
     details: 'Bewertung Haus (Einfamilienhaus), ca. 140 m² Wohnfläche, Baujahr 1995.',
+    status: 'neu'
+  },
+  {
+    id: 'lead-104',
+    date: '06.07.2026 09:20',
+    type: 'tippgeber',
+    name: 'Torsten Bergmann',
+    email: 't.bergmann@web.de',
+    phone: '0151 7739201',
+    street: 'Mühlenweg 8',
+    zipCity: '31608 Marklohe',
+    address: 'Mühlenweg 8, 31608 Marklohe',
+    details: 'Tippgeber-Hinweis:\nObjekt: Einfamilienhaus in Marklohe (Hermann-Löns-Weg)\nEigentümer: Familie Wagner\nNotiz: Eigentümer planen Umzug ins Seniorenwohnen.',
     status: 'neu'
   },
   {

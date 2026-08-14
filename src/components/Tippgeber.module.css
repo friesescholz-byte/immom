@@ -444,6 +444,262 @@
   transform: translateY(-2px);
 }
 
+/* ──────────────── Interactive Tippgeber Form Styles ──────────────── */
+.formSectionWrapper {
+  margin: 3.5rem 0 3.5rem;
+}
+
+.formContainerCard {
+  background: rgba(10, 31, 56, 0.95);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: var(--border-radius-lg);
+  padding: 3rem 2.5rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.formHeaderRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+  padding-bottom: 2rem;
+}
+
+.formIconBadge {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.formSmallTag {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #38bdf8;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.formTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+  line-height: 1.25;
+}
+
+.formSubtext {
+  color: rgba(226, 232, 240, 0.85);
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tippForm {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.formFieldset {
+  background: rgba(5, 20, 38, 0.6);
+  border: 1px solid rgba(56, 189, 248, 0.12);
+  border-radius: var(--border-radius-md);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.fieldsetTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+  padding-bottom: 0.75rem;
+}
+
+.fieldsetIcon {
+  color: #38bdf8;
+}
+
+.fieldsetTitle h4 {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.formRow3 {
+  display: grid;
+  grid-template-columns: 140px 1fr 1fr;
+  gap: 1rem;
+}
+
+.formRow2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.formGroup label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: rgba(10, 31, 56, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--border-radius-sm);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: var(--transition-fast);
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  background: rgba(14, 43, 77, 0.95);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+}
+
+select.input {
+  cursor: pointer;
+}
+
+select.input option {
+  background: #071B33;
+  color: #ffffff;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.errorAlert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.85);
+  line-height: 1.5;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  margin-top: 0.2rem;
+  accent-color: var(--color-accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.submitRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.submitBtn {
+  width: 100%;
+  max-width: 480px;
+  justify-content: center;
+  font-size: 1.05rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 10px 30px rgba(217, 162, 74, 0.35);
+}
+
+/* Success State */
+.successState {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.successIcon {
+  color: #4ade80;
+  margin-bottom: 1.25rem;
+  filter: drop-shadow(0 0 15px rgba(74, 222, 128, 0.4));
+}
+
+.successState h3 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.successState p {
+  color: rgba(226, 232, 240, 0.9);
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+  font-size: 1.05rem;
+}
+
+.successNote {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--border-radius-full);
+  color: #7dd3fc;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 @media (max-width: 1024px) {
   .heroGrid {
     grid-template-columns: 1fr;

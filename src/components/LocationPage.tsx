@@ -13,21 +13,21 @@ interface LocationPageProps {
 export const LocationPage: React.FC<LocationPageProps> = ({ locationId = 'nienburg', config }) => {
   const loc = config || getLocationConfig(locationId);
 
-  // References showcase (reuses high quality reference images)
+  // References showcase (all sold successfully zum Bestpreis without specific location mention)
   const referenceList = [
     {
       title: 'Klassisches Einfamilienhaus',
-      sub: `Erfolgreich vermittelt zum Bestpreis in ${loc.shortName}`,
+      sub: 'Erfolgreich verkauft zum Bestpreis',
       img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/EFH-Nienburg-1024x768_ergebnis.webp'
     },
     {
       title: 'Großes Wohnhaus mit Naturgarten',
-      sub: `Zügige Abwicklung für Eigentümer in ${loc.shortName}`,
+      sub: 'Erfolgreich verkauft zum Bestpreis',
       img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/5_ergebnis.webp'
     },
     {
       title: 'Massives Klinker-Einfamilienhaus',
-      sub: `Diskrete Off-Market Vermittlung in ${loc.shortName}`,
+      sub: 'Erfolgreich verkauft zum Bestpreis',
       img: 'https://pub-b33108412309406a9a941ddc51e9a5b9.r2.dev/ImmoM/Referenzen/EFH-Nienburg-1_ergebnis.webp'
     }
   ];
