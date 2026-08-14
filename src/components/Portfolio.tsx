@@ -12,8 +12,7 @@ export interface Property {
   type: 'haus' | 'wohnung' | 'mehrfamilienhaus';
   location: string;
   price: number;
-  priceType?: 'festpreis' | 'auf_anfrage' | 'gegen_gebot';
-  customPriceText?: string;
+  priceType?: 'festpreis' | 'auf_anfrage';
   area: number;
   rooms: number;
   img: string;
@@ -38,17 +37,11 @@ export interface Property {
   exposeUrl?: string;
 }
 
-export const formatPropertyPrice = (item: { price: number; priceType?: string; customPriceText?: string } | number) => {
+export const formatPropertyPrice = (item: { price: number; priceType?: string } | number) => {
   if (typeof item === 'number') {
     return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(item);
   }
-  if (item.priceType === 'auf_anfrage') {
-    return 'Auf Anfrage';
-  }
-  if (item.priceType === 'gegen_gebot') {
-    return item.customPriceText && item.customPriceText.trim() ? item.customPriceText.trim() : 'Gegen Gebot';
-  }
-  if (item.price === 0 && item.priceType !== 'festpreis') {
+  if (item.priceType === 'auf_anfrage' || (item.price === 0 && item.priceType !== 'festpreis')) {
     return 'Auf Anfrage';
   }
   return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(item.price);

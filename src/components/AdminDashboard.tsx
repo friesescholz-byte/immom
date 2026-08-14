@@ -75,9 +75,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
     title: '',
     type: 'haus' as 'haus' | 'wohnung' | 'mehrfamilienhaus',
     location: '',
-    priceType: 'festpreis' as 'festpreis' | 'auf_anfrage' | 'gegen_gebot',
+    priceType: 'festpreis' as 'festpreis' | 'auf_anfrage',
     price: '',
-    customPriceText: '',
     area: '',
     rooms: '',
     img: '',
@@ -214,7 +213,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       location: '',
       priceType: 'festpreis',
       price: '',
-      customPriceText: '',
       area: '',
       rooms: '',
       img: '',
@@ -249,7 +247,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       location: property.location,
       priceType: property.priceType || (property.price === 0 ? 'auf_anfrage' : 'festpreis'),
       price: property.price ? property.price.toString() : '',
-      customPriceText: property.customPriceText || '',
       area: property.area ? property.area.toString() : '',
       rooms: property.rooms ? property.rooms.toString() : '',
       img: property.img,
@@ -295,7 +292,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
       location: formState.location,
       price: calculatedPrice,
       priceType: formState.priceType,
-      customPriceText: formState.priceType === 'gegen_gebot' ? formState.customPriceText : undefined,
       area: parseFloat(formState.area) || 0,
       rooms: parseInt(formState.rooms) || 0,
       img: formState.img,
@@ -683,54 +679,46 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
 
                   <div className={styles.formGroup} style={{ marginBottom: '1.25rem' }}>
                     <label style={{ fontWeight: 600, display: 'block', marginBottom: '0.5rem' }}>Preis-Modell</label>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem' }}>
                       <button
                         type="button"
                         onClick={() => setFormState({ ...formState, priceType: 'festpreis' })}
                         style={{
-                          padding: '0.6rem 0.5rem',
+                          padding: '0.75rem 0.75rem',
                           borderRadius: '8px',
                           border: formState.priceType === 'festpreis' ? '2px solid var(--color-primary-light)' : '1px solid #cbd5e1',
                           background: formState.priceType === 'festpreis' ? '#f0f9ff' : '#ffffff',
                           color: formState.priceType === 'festpreis' ? 'var(--color-primary)' : '#64748b',
                           fontWeight: formState.priceType === 'festpreis' ? 700 : 500,
                           cursor: 'pointer',
-                          fontSize: '0.85rem'
+                          fontSize: '0.9rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.4rem'
                         }}
                       >
-                        💶 Festpreis
+                        💶 Preis angeben (€)
                       </button>
                       <button
                         type="button"
                         onClick={() => setFormState({ ...formState, priceType: 'auf_anfrage' })}
                         style={{
-                          padding: '0.6rem 0.5rem',
+                          padding: '0.75rem 0.75rem',
                           borderRadius: '8px',
                           border: formState.priceType === 'auf_anfrage' ? '2px solid var(--color-primary-light)' : '1px solid #cbd5e1',
                           background: formState.priceType === 'auf_anfrage' ? '#f0f9ff' : '#ffffff',
                           color: formState.priceType === 'auf_anfrage' ? 'var(--color-primary)' : '#64748b',
                           fontWeight: formState.priceType === 'auf_anfrage' ? 700 : 500,
                           cursor: 'pointer',
-                          fontSize: '0.85rem'
+                          fontSize: '0.9rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.4rem'
                         }}
                       >
                         ❓ Auf Anfrage
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setFormState({ ...formState, priceType: 'gegen_gebot' })}
-                        style={{
-                          padding: '0.6rem 0.5rem',
-                          borderRadius: '8px',
-                          border: formState.priceType === 'gegen_gebot' ? '2px solid var(--color-primary-light)' : '1px solid #cbd5e1',
-                          background: formState.priceType === 'gegen_gebot' ? '#f0f9ff' : '#ffffff',
-                          color: formState.priceType === 'gegen_gebot' ? 'var(--color-primary)' : '#64748b',
-                          fontWeight: formState.priceType === 'gegen_gebot' ? 700 : 500,
-                          cursor: 'pointer',
-                          fontSize: '0.85rem'
-                        }}
-                      >
-                        🏷️ Gegen Gebot
                       </button>
                     </div>
                   </div>
@@ -756,19 +744,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ properties, setP
                         <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '0.75rem 1rem', color: '#64748b', fontSize: '0.9rem' }}>
                           ✓ Im Portfolio wird <strong>„Auf Anfrage“</strong> angezeigt.
                         </div>
-                      </div>
-                    )}
-
-                    {formState.priceType === 'gegen_gebot' && (
-                      <div className={styles.formGroup}>
-                        <label>Preis-Text / Gebot-Hinweis</label>
-                        <input 
-                          type="text" 
-                          value={formState.customPriceText}
-                          onChange={(e) => setFormState({ ...formState, customPriceText: e.target.value })}
-                          className={styles.input} 
-                          placeholder="z.B. Gegen Gebot (oder Mindestgebot: 250.000 €)"
-                        />
                       </div>
                     )}
 
