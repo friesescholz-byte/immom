@@ -12,7 +12,7 @@ interface ContactProps {
 }
 
 export const Contact: React.FC<ContactProps> = ({ currentPage, setCurrentPage }) => {
-  const [modalType, setModalType] = useState<'impressum' | 'datenschutz' | null>(null);
+  const [modalType, setModalType] = useState<'impressum' | 'datenschutz' | 'barrierefreiheit' | null>(null);
 
   const handlePortfolioClick = () => {
     setCurrentPage('portfolio');
@@ -169,6 +169,8 @@ export const Contact: React.FC<ContactProps> = ({ currentPage, setCurrentPage })
               <button onClick={() => setModalType('impressum')}>Impressum</button>
               <span className={styles.separator}>•</span>
               <button onClick={() => setModalType('datenschutz')}>Datenschutz</button>
+              <span className={styles.separator}>•</span>
+              <button onClick={() => setModalType('barrierefreiheit')}>Barrierefreiheit</button>
             </div>
           </div>
         </div>
