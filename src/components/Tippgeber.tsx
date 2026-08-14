@@ -124,6 +124,12 @@ export const Tippgeber: React.FC = () => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.tippgeberEmail.trim())) {
+      setErrorMessage('Bitte geben Sie eine vollständige und gültige E-Mail-Adresse ein (z.B. name@domain.de).');
+      return;
+    }
+
     if (!formData.objektAdresse.trim()) {
       setErrorMessage('Bitte geben Sie die Adresse oder den Standort des empfohlenen Objekts an.');
       return;
